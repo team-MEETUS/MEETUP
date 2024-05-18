@@ -1,5 +1,5 @@
 /build/
-src/main/java/config
+src/main/java/config/
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,java,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,java,eclipse
 
