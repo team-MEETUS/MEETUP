@@ -1,4 +1,4 @@
-package kr.co.meetup.web.main;
+package kr.co.meetup.web.control;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -7,9 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.co.meetup.web.main.Action;
+import kr.co.meetup.web.action.Action;
 
-@SuppressWarnings("serial")
 @WebServlet("/meetup.do")
 public class MainController extends HttpServlet {
 	
