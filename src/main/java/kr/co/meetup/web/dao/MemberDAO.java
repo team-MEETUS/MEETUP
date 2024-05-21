@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.io.Reader;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import kr.co.meetup.web.vo.MemberVO;
 
 public class MemberDAO {
 	private SqlSessionFactory factory;
@@ -22,5 +25,9 @@ public class MemberDAO {
 		}
 	}
 	
-	
+	public void addMember(MemberVO vo ) {
+		SqlSession ss = factory.openSession(true);
+		ss.insert("kr.co.meetup.member.addMember", vo);
+		ss.close();
+	}
 }
