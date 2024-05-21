@@ -1,5 +1,5 @@
 package kr.co.meetup.web.dao;
 
-public class MemberDAO {
+public class BoardDAO {
 
 }
