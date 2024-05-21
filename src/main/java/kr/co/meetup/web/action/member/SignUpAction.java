@@ -2,6 +2,7 @@ package kr.co.meetup.web.action.member;
 
 import java.io.UnsupportedEncodingException;
 
+import common.AES128;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
@@ -17,8 +18,18 @@ public class SignUpAction implements Action {
 			req.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html;charset=UTF-8");
 			
+			// 암호화 key
+			String key = "1234567890123456";
+			AES128 aes = new AES128(key);
+			
 			String memberPhone = req.getParameter("memberPhone");
+			// 핸드폰번호 암호화
+			memberPhone = aes.encrypt(memberPhone);
+			
 			String memberPw = req.getParameter("memberPw");
+			// 비밀번호 암호화
+			memberPw = aes.encrypt(memberPw);
+			
 			String memberNickname = req.getParameter("memberNickname");
 			String geoCity = req.getParameter("geoCity");
 			String geoDistrict = req.getParameter("geoDistrict");

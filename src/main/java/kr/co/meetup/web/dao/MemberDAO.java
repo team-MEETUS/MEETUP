@@ -25,7 +25,7 @@ public class MemberDAO {
 		}
 	}
 	
-	public void addMember(MemberVO vo ) {
+	public void addMember(MemberVO vo) {
 		SqlSession ss = factory.openSession(true);
 		ss.insert("kr.co.meetup.member.addMember", vo);
 		ss.close();
