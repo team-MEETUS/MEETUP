@@ -7,9 +7,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.co.meetup.web.action.Action;
 
-@WebServlet("/meetup.do")
+import kr.co.meetup.web.action.Action;
+import kr.co.meetup.web.action.board.DeleteBoardAction;
+import kr.co.meetup.web.action.board.DetailBoardAction;
+import kr.co.meetup.web.action.board.ListBoardAction;
+import kr.co.meetup.web.action.board.WriteBoardAction;
+import kr.co.meetup.web.action.board.WriteFormBoardAction;
+import kr.co.meetup.web.action.board.updateBoardAction;
+import kr.co.meetup.web.action.board.updateFormBoardAction;
+
+@SuppressWarnings("serial")
+@WebServlet("/board")
 public class BoardController extends HttpServlet {
 	
 	private void doProcess(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
@@ -20,6 +29,27 @@ public class BoardController extends HttpServlet {
 		String cmd = req.getParameter("cmd");
 		String url = "";
 		Action action = null;
+		
+		if (cmd == null || cmd.equals("listBoard")) {
+			action = new ListBoardAction();
+		} else if (cmd.equals("writeBoard")) {
+			action = new WriteFormBoardAction();
+		} else if (cmd.equals("writeOkBoard")) {
+			action = new WriteBoardAction();
+		} else if (cmd.equals("detailBoard")) {
+			action = new DetailBoardAction();
+		} else if (cmd.equals("updateBoard")) {
+			action = new updateFormBoardAction();
+		} else if (cmd.equals("updateOkBoard")) {
+			action = new updateBoardAction();
+		} else if (cmd.equals("deleteBoard")) {
+			action = new DeleteBoardAction();
+		}
+		
+		/*
+		 * url = action.execute(req, resp); RequestDispatcher rd =
+		 * req.getRequestDispatcher(url); rd.forward(req, resp);
+		 */
 		
 	}
 	
