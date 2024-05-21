@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.meetup.meeting">
+	<!-- 모임별 정모 조회 -->
+	<select id="selectAllMeetingByCrewNo" parameterType="Hashmap" resultType="MeetingVO">
+	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
+	FROM (SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
+	      FROM meeting
+	      WHERE crewNo = #{crewNo}
+	      ORDER BY meetingNo DESC
+	      LIMIT #{endNo} OFFSET #{startNo}) AS T;
+	</select>
+	
+	<!-- 날짜별 정모 조회 -->
+	<select id="selectAllMeetingByDate" parameterType="Hashmap" resultType="MeetingVO">
+	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
+	FROM (SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
+	      FROM meeting
+	      WHERE meetingDate between #{dateStart} and #{dateEnd}
+	      ORDER BY meetingNo DESC
+	      LIMIT #{endNo} OFFSET #{startNo}) AS T;
+	</select>
+	
+	<!-- 정모 모집 등록 -->
+	<insert id="addMeeting" parameterType="MeetingVO">
+		INSERT INTO meeting (crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingOriginalImg, meetingSaveImg)
+		VALUES (#{crewNo}, #{memberNo}, #{meetingName}, #{meetingDate}, #{meetingLoc}, #{meetingPrice}, #{meetingMax}, #{meetingOriginalImg}, #{meetingSaveImg})	
+	</insert>
+	
+	<!-- 정모 삭제 (update) -->
+	<update id="deleteMeeting" parameterType="Hashmap">
+		UPDATE meeting
+		SET meetingStatus = 0
+		WHERE meetingNo = #{meetingNo}
+	</update>
+	
+	<!-- 정모 모집 마감 (update) -->
+	<update id="updateMeeting" parameterType="Hashmap">
+		UPDATE meeting
+		SET meetingStatus = 2
+		WHERE meetingNo = #{meetingNo}
+	</update>
+	
+	<!-- 정모 회원 추가 (정모 참가) -->
+	<insert id="addMeetingMember" parameterType="MeetingMemberVO">
+		INSERT INTO meeting_member (meetingNo, memberNo)
+		VALUES (#{meetingNo}, #{memberNo})	
+	</insert>
+	
+	<!-- 정모 회원 삭제 (정모 나가기) -->
+	<delete id="deleteMeetingMember" parameterType="Hashmap">
+		DELETE FROM meeting_member
+		WHERE memberNo = #{memberNo} AND meetingNo = #{meetingNo}
+	</delete>
+</mapper>
