@@ -3,3 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
+<mapper namespace="kr.co.meetup.member">
+	<insert id="addMember" parameterType="MemberVO">
+		INSERT INTO member (geoCode, memberPhone, memberPw, memberNickname, memberStatus, createdAt, updatedAt) 
+		VALUES (#{geoCode}, #{memberPhone}, #{memberPw}, #{memberNickname}, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+</mapper>
