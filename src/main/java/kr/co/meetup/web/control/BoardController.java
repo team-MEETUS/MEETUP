@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 
 @WebServlet("/meetup.do")
-public class MainController extends HttpServlet {
+public class BoardController extends HttpServlet {
 	
 	private void doProcess(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
 		req.setCharacterEncoding("UTF-8");

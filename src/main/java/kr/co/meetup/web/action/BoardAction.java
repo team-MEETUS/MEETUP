@@ -1,5 +1,5 @@
 package kr.co.meetup.web.action;
 
-public class MainAction {
+public class BoardAction {
 
 }
