@@ -1,6 +1,5 @@
 package kr.co.meetup.web.vo;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ public class MemberVO {
 	private int memberStatus;
 	private String memberOriginalImg;
 	private String memberSaveImg;
-	private Date memberDeadDate;
+	private Timestamp memberDeadDate;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 }

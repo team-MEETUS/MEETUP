@@ -1,15 +1,20 @@
-package kr.co.meetup.web.action.member;
+package kr.co.meetup.web.action.board;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 
-public class SignUpFormAction implements Action {
+public class WriteFormBoardAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		
-		return "member/signup.jsp";
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

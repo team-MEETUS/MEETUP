@@ -1,6 +1,5 @@
 package kr.co.meetup.web.vo;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +14,7 @@ public class MeetingVO {
 	private int crewNo;
 	private int memberNo;
 	private String meetingName;
-	private Date meetingDate;
+	private Timestamp meetingDate;
 	private String meetingLoc;
 	private int meetingPrice;
 	private int meetingMax;

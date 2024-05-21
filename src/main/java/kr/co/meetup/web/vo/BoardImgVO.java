@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryBigVO {
-	private int categoryBigNo;
-	private String categoryBigName;
-	private String categoryBigIcon;
-	private Timestamp createdAt;
+public class BoardImgVO {
+	private int boardImgNo;
+	private int boardNo;
+	private String boardImgOriginalImg;
+	private String boardImgSaveImg;
+	
 }
