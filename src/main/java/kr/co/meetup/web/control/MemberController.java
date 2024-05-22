@@ -1,7 +1,6 @@
 package kr.co.meetup.web.control;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,6 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
+import kr.co.meetup.web.action.ListAction;
+import kr.co.meetup.web.action.member.FindGeoDistrictAction;
 import kr.co.meetup.web.action.member.LoginAction;
 import kr.co.meetup.web.action.member.LoginFormAction;
 import kr.co.meetup.web.action.member.LogoutAction;
@@ -26,6 +27,7 @@ public class MemberController extends HttpServlet {
 		String cmd = req.getParameter("cmd");
 		String url = "";
 		Action action = null;
+		ListAction listAction = null;
 		
 		if(cmd.equals("signup")) {
 			action = new SignUpFormAction();
@@ -37,6 +39,9 @@ public class MemberController extends HttpServlet {
 			action = new LoginAction();
 		} else if (cmd.equals("logout")) {
 			action = new LogoutAction();
+		} else if (cmd.equals("geoDistricts")) {
+			listAction = new FindGeoDistrictAction();
+			action = new SignUpFormAction();
 		}
 		
 		url = action.execute(req, resp);

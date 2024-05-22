@@ -14,4 +14,15 @@
 		FROM geo
 		WHERE geoCity = #{geoCity} AND geoDistrict = #{geoDistrict}
 	</select>
+	
+	<select id="selectAllGeoCity" resultType="String">
+		SELECT DISTINCT geoCity 
+		FROM geo
+	</select>
+	
+	<select id="selectAllGeoDistrictByGeoCity" parameterType="String" resultType="String">
+		SELECT DISTINCT geoDistrict 
+		FROM geo
+		WHERE geoCity = #{geoCity}
+	</select>
 </mapper>
