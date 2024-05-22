@@ -1,13 +1,17 @@
 package kr.co.meetup.web.vo;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GeoVO {
+@EqualsAndHashCode
+public class GeoVO implements Serializable {
 	private int geoCode;
 	private String geoCity;
 	private String geoDistrict;

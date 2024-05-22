@@ -37,10 +37,10 @@
 				<tr>
 					<th>시/도</th>
 					<td>
-						<select id="step1" name="geoCity">
+						<select id="geoCity" name="geoCity">
 							<option value="">시/도</option>
-							<c:forEach var="city" items="${geoCities}">
-								<option value="${city}">${city}</option>
+							<c:forEach var="geoCity" items="${geoCities}">
+								<option value="${geoCity}">${geoCity}</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -71,13 +71,14 @@
 			$('#geoCity').change(function(){
 				var geoCity = $(this).val();
 				$.ajax({
-					url: '/geoDistricts',
-					type: 'get',
+					url: '/meetup/member?cmd=geoDistricts',
+					type: 'post',
 					data: {geoCity: geoCity},
 					success: function(data) {
+						console.log(geoCity);
 						var select = $('#geoDistrict');
 						select.empty();
-						data.forEach(function(geoDistrict) {
+						data.forEach(function(geoDistricts) {
 							var option = $('<option>').text(geoDistrict);
 							select.append(option);
 						});

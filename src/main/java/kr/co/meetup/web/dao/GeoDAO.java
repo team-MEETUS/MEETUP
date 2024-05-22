@@ -29,6 +29,8 @@ public class GeoDAO {
 	public List<GeoVO> selectAllGeo() {
 		SqlSession ss = factory.openSession(true);
 		List<GeoVO> list = ss.selectList("kr.co.meetup.geo.selectAllGeo");
+		
+		ss.close();
 		return list;
 	}
 	
@@ -42,5 +44,21 @@ public class GeoDAO {
 		
 		ss.close();
 		return geoCode;
+	}
+	
+	public List<String> selectAllGeoCity() {
+		SqlSession ss = factory.openSession(true);
+		List<String> list = ss.selectList("kr.co.meetup.geo.selectAllGeoCity");
+		ss.close();
+		
+		return list;
+	}
+	
+	public List<String> selectAllGeoDistrictByGeoCity(String geoCity) {
+		SqlSession ss = factory.openSession(true);
+		List<String> list = ss.selectList("kr.co.meetup.geo.selectAllGeoDistrictByGeoCity", geoCity);
+		ss.close();
+		
+		return list;
 	}
 }
