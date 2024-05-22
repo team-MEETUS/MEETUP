@@ -10,7 +10,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
+import kr.co.meetup.web.action.member.LoginAction;
 import kr.co.meetup.web.action.member.LoginFormAction;
+import kr.co.meetup.web.action.member.LogoutAction;
 import kr.co.meetup.web.action.member.SignUpAction;
 import kr.co.meetup.web.action.member.SignUpFormAction;
 
@@ -31,6 +33,10 @@ public class MemberController extends HttpServlet {
 			action = new SignUpAction();
 		} else if (cmd.equals("login")) {
 			action = new LoginFormAction();
+		} else if (cmd.equals("loginOk")) {
+			action = new LoginAction();
+		} else if (cmd.equals("logout")) {
+			action = new LogoutAction();
 		}
 		
 		url = action.execute(req, resp);

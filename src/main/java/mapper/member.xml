@@ -8,4 +8,10 @@
 		INSERT INTO member (geoCode, memberPhone, memberPw, memberNickname, memberStatus, createdAt, updatedAt) 
 		VALUES (#{geoCode}, #{memberPhone}, #{memberPw}, #{memberNickname}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
+	
+	<select id="selectOneMemberByPhone" parameterType="Hashmap" resultType="MemberVO">
+		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt
+		FROM member
+		WHERE memberPhone = #{memberPhone}
+	</select>
 </mapper>
