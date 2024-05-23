@@ -25,4 +25,10 @@
 		FROM geo
 		WHERE geoCity = #{geoCity}
 	</select>
+	
+	<select id="selectOneGeoCityGeoDistrictByGeoCode" parameterType="int" resultType="GeoVO">
+		SELECT geoCity, geoDistrict 
+		FROM geo
+		WHERE geoCode = #{geoCode}
+	</select>
 </mapper>

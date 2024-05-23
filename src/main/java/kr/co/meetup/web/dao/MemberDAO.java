@@ -52,4 +52,26 @@ public class MemberDAO {
 		
 		return vo;
 	}
+	
+	public Integer selectMemberNoByPhone(String phone) {
+		SqlSession ss = factory.openSession(true);
+		
+		AES128 aes = new AES128(key);
+		phone = aes.encrypt(phone);
+		
+		Integer memberNo = ss.selectOne("kr.co.meetup.member.selectMemberNoByPhone", phone);
+		ss.close();
+		
+		if (memberNo == null) {
+			memberNo = -1;
+		}
+		
+		return memberNo;
+	}
+	
+	public void updateOneMemberByMemberNo(MemberVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.member.updateOneMemberByMemberNo", vo);
+		ss.close();
+	}
 }

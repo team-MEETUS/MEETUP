@@ -61,4 +61,12 @@ public class GeoDAO {
 		
 		return list;
 	}
+	
+	public GeoVO selectOneGeoCityGeoDistrictByGeoCode(int geoCode) {
+		SqlSession ss = factory.openSession(true);
+		GeoVO vo = ss.selectOne("kr.co.meetup.geo.selectOneGeoCityGeoDistrictByGeoCode", geoCode);
+		ss.close();
+		
+		return vo;
+	}
 }

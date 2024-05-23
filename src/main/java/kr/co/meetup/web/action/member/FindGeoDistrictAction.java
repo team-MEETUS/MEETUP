@@ -15,9 +15,6 @@ public class FindGeoDistrictAction implements ListAction {
 		GeoDAO dao = new GeoDAO();
 		List<String> geoDistricts = dao.selectAllGeoDistrictByGeoCity(geoCity);
 		
-		for(String str : geoDistricts) {
-			System.out.println(str);
-		}
 		
 		req.setAttribute("geoDistricts", geoDistricts);
 		return geoDistricts;
