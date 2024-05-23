@@ -6,8 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.co.meetup.crew">
 	<!-- 모든 모임 조회 -->
 	<select id="selectAllCrew" resultType="CrewVO">
-		SELECT crewNo, geoCode, categoryBigNo, categorySmallNo, crewName, crewContent, crewMax, crewStatus, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner, crewDeadDate, createdAt, updatedAt
-		FROM crew
+		SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, crewName, crewIntro, crewContent, crewMax, crewAttend, crewStatus, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner, crewDeadDate, c.createdAt, updatedAt, geoCity, geoDistrict, categoryBigName, categorySmallName
+		FROM crew c, geo g , category_big cb, category_small cs
+		WHERE c.geoCode = g.geoCode AND c.categoryBigNo = cb.categoryBigNo AND c.categorySmallNo = cs.categorySmallNo
 	</select>
 	
 	<!-- 모든 대 카테고리 조회 -->
@@ -21,4 +22,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT categorySmallNo, categoryBigNo, categorySmallName, createdAt
 		FROM category_small
 	</select>
+	
+	<!-- 모든 지역 조회 -->
+	<select id="selectAllGeo" resultType="GeoVO">
+		SELECT geoCode, geoCity, geoDistrict
+		FROM geo
+	</select>
+	
+	<!-- 한개 모임 등록 -->
+	<insert id="addCrew" parameterType="CrewVO">
+		INSERT INTO crew (geoCode, categoryBigNo, categorySmallNo, crewName, crewContent, crewMax, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner)
+		VALUES(#{geoCode}, #{categoryBigNo}, #{categorySmallNo}, #{crewName}, #{crewContent}, #{crewMax}, #{crewOriginalImg}, #{crewSaveImg}, #{crewOriginalBanner}, #{crewSaveBanner})
+	</insert>
 </mapper>

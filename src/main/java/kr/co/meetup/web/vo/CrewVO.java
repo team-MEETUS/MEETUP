@@ -15,8 +15,10 @@ public class CrewVO {
 	private int categoryBigNo;
 	private int categorySmallNo;
 	private String crewName;
+	private String crewIntro;
 	private String crewContent;
 	private int crewMax;
+	private int crewAttend;
 	private int crewStatus;
 	private String crewOriginalImg;
 	private String crewSaveImg;
@@ -25,4 +27,10 @@ public class CrewVO {
 	private Timestamp crewDeadDate;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
+	
+	// 조인으로 가져오는 필드
+	private String categoryBigName;
+	private String categorySmallName;
+	private String geoCity;
+	private String geoDistrict;
 }
