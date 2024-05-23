@@ -28,17 +28,29 @@ public class WriteAction implements Action {
 			String crewSaveImg = (String) req.getAttribute("crewSaveImg");
 			String crewOriginalBanner = (String) req.getAttribute("crewOriginalBanner");
 			String crewSaveBanner = (String) req.getAttribute("crewSaveBanner");
+			
+			// crewContent 의 첫 줄을 crewIntro 로 저장 
+			String crewIntro = "";
+			if (crewContent != null && !crewContent.trim().isEmpty()) {
+				String[] lines = crewContent.split("\\R");
+				if (lines.length > 0) {
+					crewIntro = lines[0];
+				}
+			}
+			System.out.println("한줄소개 : " + crewIntro);
 
 			// DB 에 저장
 			CrewDAO dao = new CrewDAO();
 			CrewVO vo = new CrewVO();
-			// 카테고리&지역코드 임시값 사용
+			// 카테고리&지역코드&작성자 임시값 사용
 			vo.setGeoCode(11110);
 			vo.setCategoryBigNo(1);
 			vo.setCategorySmallNo(3);
+			vo.setMemberNo(2);
 			// 파라미터 값 넣기
 			vo.setCrewName(crewName);
 			vo.setCrewContent(crewContent);
+			vo.setCrewIntro(crewIntro);
 			vo.setCrewMax(Integer.parseInt(crewMax));
 			vo.setCrewOriginalImg(crewOriginalImg);
 			vo.setCrewSaveImg(crewSaveImg);
@@ -49,7 +61,7 @@ public class WriteAction implements Action {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} 
-		return "crew?cmd=list";
+		return "redirect:crew?cmd=list";
 	}
 
 }

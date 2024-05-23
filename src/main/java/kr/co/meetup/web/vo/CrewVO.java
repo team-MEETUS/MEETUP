@@ -14,6 +14,7 @@ public class CrewVO {
 	private int geoCode;
 	private int categoryBigNo;
 	private int categorySmallNo;
+	private int memberNo;
 	private String crewName;
 	private String crewIntro;
 	private String crewContent;
