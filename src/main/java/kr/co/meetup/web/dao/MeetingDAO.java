@@ -2,9 +2,6 @@ package kr.co.meetup.web.dao;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,41 +33,61 @@ public class MeetingDAO {
 		}
 	}
 	
+	// 전체 게시물 수 (crewNo 조건)
+	public int selectAllMeetingByCrewNoCnt(int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		
+		int count = ss.selectOne("kr.co.meetup.meeting.selectAllMeetingByCrewNoCnt", map);
+		
+		ss.close();
+		return count;
+	}
+	
+	// 전체 게시물 수 (meetingDate 조건)
+	public int selectAllMeetingByMeetingDateCnt(String date) {
+		SqlSession ss = factory.openSession(true);
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		
+		int count = ss.selectOne("kr.co.meetup.meeting.selectAllMeetingByMeetingDateCnt", map);
+		
+		ss.close();
+		return count;
+	}
+	
 	// 모임별 정모 조회
-	public List<MeetingVO> selectAllMeetingByCrewNo(int crewNo, int startNo, int endNo) {
+	public List<MeetingVO> selectAllMeetingByCrewNo(int crewNo, int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
 		
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("crewNo", crewNo);
 		map.put("startNo", startNo);
-		map.put("endNo", endNo);
+		map.put("recordPerPage", recordPerPage);
+		System.out.println(map);
 		
 		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingByCrewNo", map);
-		
+		System.out.println(list);
 		ss.close();
 		
 		return list;
 	}
 	
 	// 날짜별 정모 조회
-	public List<MeetingVO> selectAllMeetingByDate(Timestamp meetingDate, int startNo, int endNo) {
+	public List<MeetingVO> selectAllMeetingByDate(String date, int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
 		
-		String date = new SimpleDateFormat("yyyy-MM-dd").format(meetingDate);
-		String dateStart = date + " 00:00:00";
-		String dateEnd = date + " 23:59:59";
-		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("dateStart", dateStart);
-		map.put("dateEnd", dateEnd);
+		map.put("date", date);
 		map.put("startNo", startNo);
-		map.put("endNo", endNo);
-		
-		System.out.println(date);
-		System.out.println(dateStart);
-		System.out.println(dateEnd);
-		
+		map.put("recordPerPage", recordPerPage);
+		System.out.println(map);
 		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingByDate", map);
+		
+		System.out.println(list);
 		
 		ss.close();
 		
@@ -102,7 +119,11 @@ public class MeetingDAO {
 	public void addMeetingMember (MeetingMemberVO vo) {
 		SqlSession ss = factory.openSession(true);
 		
+		// 정모회원 테이블 추가
 		ss.insert("kr.co.meetup.meeting.addMeetingMember", vo);
+		
+		// 모임참석인원 update
+		ss.update("kr.co.meetup.meeting.plusMeetingAttend", vo);
 		
 		ss.close();
 	}
@@ -128,6 +149,8 @@ public class MeetingDAO {
 		map.put("memberNo", memberNo);
 		
 		ss.delete("kr.co.meetup.meeting.deleteMeetingMember", map);
+		
+		ss.update("kr.co.meetup.meeting.minusMeetingAttend", map);
 		
 		ss.close();
 	}

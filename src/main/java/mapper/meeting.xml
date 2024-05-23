@@ -3,24 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.meetup.meeting">
+	<!-- 전체 게시물 수 (crewNo 조건) -->
+	<select id="selectAllMeetingByCrewNoCnt" resultType="int">
+		SELECT count(*) as cnt 
+		  FROM meeting
+		 WHERE crewNo = #{crewNo}
+	</select>
+	
+	<!-- 전체 게시물 수 (meetingDate 조건) -->
+	<select id="selectAllMeetingByMeetingDateCnt" resultType="int">
+		SELECT count(*) as cnt 
+		  FROM meeting
+		 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' )
+	</select>
+
 	<!-- 모임별 정모 조회 -->
 	<select id="selectAllMeetingByCrewNo" parameterType="Hashmap" resultType="MeetingVO">
 	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
-	FROM (SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
-	      FROM meeting
-	      WHERE crewNo = #{crewNo}
-	      ORDER BY meetingNo DESC
-	      LIMIT #{endNo} OFFSET #{startNo}) AS T;
+	  FROM meeting
+	 WHERE crewNo = #{crewNo}
+	 ORDER BY meetingNo
+	 LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
 	
 	<!-- 날짜별 정모 조회 -->
 	<select id="selectAllMeetingByDate" parameterType="Hashmap" resultType="MeetingVO">
 	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
-	FROM (SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
-	      FROM meeting
-	      WHERE meetingDate between #{dateStart} and #{dateEnd}
-	      ORDER BY meetingNo DESC
-	      LIMIT #{endNo} OFFSET #{startNo}) AS T;
+	  FROM meeting
+<!-- 	 WHERE meetingDate BETWEEN '2024-05-21 00:00:00' AND '2024-05-21 23:59:59' -->
+	 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' )
+	 ORDER BY meetingNo
+	 LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
 	
 	<!-- 정모 모집 등록 -->
@@ -54,4 +67,18 @@
 		DELETE FROM meeting_member
 		WHERE memberNo = #{memberNo} AND meetingNo = #{meetingNo}
 	</delete>
+	
+	<!-- 정모참석인원 plus -->
+	<update id="plusMeetingAttend" parameterType="MeetingMemberVO">
+		UPDATE meeting
+		SET meetingAttend = meetingAttend + 1
+		WHERE meetingNo = #{meetingNo}
+	</update>
+	
+	<!-- 정모참석인원 minus -->
+	<update id="minusMeetingAttend" parameterType="Hashmap">
+		UPDATE meeting
+		SET meetingAttend = meetingAttend - 1
+		WHERE meetingNo = #{meetingNo}
+	</update>
 </mapper>
