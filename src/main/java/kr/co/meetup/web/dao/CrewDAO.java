@@ -42,6 +42,14 @@ public class CrewDAO {
 		return list;
 	}
 	
+	// 카테고리 별 전체 모임 조회
+	public List<CrewVO> selectCrewByCategory(int ctg) {
+		SqlSession ss = factory.openSession(true);
+		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectCrewByCategory", ctg);
+		ss.close();
+		return list;
+	}
+	
 	// 전체 대 카테고리 조회
 	public List<CategoryBigVO> selectAllCategoryBig() {
 		SqlSession ss = factory.openSession(true);
@@ -72,5 +80,6 @@ public class CrewDAO {
 		ss.insert("kr.co.meetup.crew.addCrew", vo);
 		ss.close();
 	}
+	
 	
 }

@@ -7,8 +7,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 모든 모임 조회 -->
 	<select id="selectAllCrew" resultType="CrewVO">
 		SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, crewName, crewIntro, crewContent, crewMax, crewAttend, crewStatus, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner, crewDeadDate, c.createdAt, updatedAt, geoCity, geoDistrict, categoryBigName, categorySmallName
-		FROM crew c, geo g , category_big cb, category_small cs
-		WHERE c.geoCode = g.geoCode AND c.categoryBigNo = cb.categoryBigNo AND c.categorySmallNo = cs.categorySmallNo
+		FROM crew c
+		    LEFT JOIN geo g ON c.geoCode = g.geoCode
+		    LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+		    LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	</select>
+	
+	<!-- 카테고리 별 모든 모임 조회 -->
+	<select id="selectCrewByCategory" parameterType="int" resultType="CrewVO">
+		SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, crewName, crewIntro, crewContent, crewMax, crewAttend, crewStatus, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner, crewDeadDate, c.createdAt, updatedAt, geoCity, geoDistrict, categoryBigName, categorySmallName
+		FROM crew c
+		    LEFT JOIN geo g ON c.geoCode = g.geoCode
+		    LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+		    LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+		WHERE c.categoryBigNo = #{ctg}
 	</select>
 	
 	<!-- 모든 대 카테고리 조회 -->
@@ -31,7 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 한개 모임 등록 -->
 	<insert id="addCrew" parameterType="CrewVO">
-		INSERT INTO crew (geoCode, categoryBigNo, categorySmallNo, crewName, crewContent, crewMax, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner)
-		VALUES(#{geoCode}, #{categoryBigNo}, #{categorySmallNo}, #{crewName}, #{crewContent}, #{crewMax}, #{crewOriginalImg}, #{crewSaveImg}, #{crewOriginalBanner}, #{crewSaveBanner})
-	</insert>
+    INSERT INTO crew (geoCode, categoryBigNo, categorySmallNo, memberNo, crewName, crewContent, crewIntro, crewMax, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner)
+    VALUES(#{geoCode}, #{categoryBigNo}, #{categorySmallNo}, #{memberNo}, #{crewName}, #{crewContent}, #{crewIntro}, #{crewMax}, #{crewOriginalImg}, #{crewSaveImg}, #{crewOriginalBanner}, #{crewSaveBanner})
+</insert>
+
 </mapper>

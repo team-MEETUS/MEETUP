@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import common.FileLoader;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -50,16 +51,16 @@ public class CrewController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// upload 디렉토리 실제 경로
-	    String saveDir = req.getServletContext().getRealPath("/upload");
-	    //System.out.println("saveDir : " + saveDir); // 경로 확인용
+	    // file.properties 로 부터 파일 업로드 경로 읽기
+        String uploadDir = FileLoader.getProperty("file.upload-dir");
+	    System.out.println("uploadDir : " + uploadDir);
 	    
 	    // 최대 파일 크기 지정 
 	    int maxFileSize = 1024 * 1024 * 30;
 	    
 	    try {
 	    	// MultipartRequest 객체 생성 
-	    	MultipartRequest mr = new MultipartRequest(req, saveDir, maxFileSize, "UTF-8", new DefaultFileRenamePolicy());
+	    	MultipartRequest mr = new MultipartRequest(req, uploadDir, maxFileSize, "UTF-8", new DefaultFileRenamePolicy());
 	        // cmd 파라미터 값 가져오기
 	    	String cmd = mr.getParameter("cmd");
 	        // writeOk 라면 파라미터 값 가져오기
