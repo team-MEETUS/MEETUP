@@ -1,3 +1,5 @@
+package kr.co.meetup.web.dao;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import kr.co.meetup.web.vo.BoardCategoryVO;
 import kr.co.meetup.web.vo.BoardVO;
 
 public class BoardDAO {
@@ -28,26 +31,48 @@ public class BoardDAO {
 
 	// 게시판 총 데이터 수 조회
 	public int selectTotalCountBoard() {
-		// openSession(true) : autocommit 옵션
 		SqlSession ss = factory.openSession(true);
-		// 별칭 : namespace명.id
 		int count = ss.selectOne("kr.co.meetup.web.board.selectTotalCountBoard");
 		ss.close();
 		return count;
 	}
 	
-	// 게시판 -전체 조회
-	public List<BoardVO> selectAllBoard(int boardStartNo, int boardEndNo) {
+	// 모임별 게시판 전체 조회
+	public List<BoardVO> selectAllBoardBycrewNo(int crewNo, int boardStartNo, int boardEndNo) {
 		SqlSession ss = factory.openSession(true);
+		
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
 		map.put("boardStartNo", boardStartNo);
 		map.put("boardEndNo", boardEndNo);
-		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.allSelectBoard", map);
+		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectAllBoardBycrewNo", map);
 		ss.close();
 		return list;
 	}
+	
+	// 게시판 카테고리 조회
+	public List<BoardCategoryVO> selectAllBoardCategory(int boardStartNo, int boardEndNo) {
+		SqlSession ss = factory.openSession(true);
+		List<BoardCategoryVO> list = ss.selectList("kr.co.meetup.web.board.selectAllBoardCategory");
+		ss.close();
+		return list;	
+	}
+	
+	// 게시판 카테고리별 게시글 조회
+	public List<BoardVO> selectBoardByCategory(int boardCategoryNo, int boardStartNo, int boardEndNo) {
+	    SqlSession ss = factory.openSession(true);
+	    
+	    HashMap<String, Object> map = new HashMap<>();
+	    map.put("boardCategoryNo", boardCategoryNo);
+	    map.put("boardStartNo", boardStartNo);
+	    map.put("boardEndNo", boardEndNo);
+	    
+	    List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardByCategory", map);
+	    ss.close();
+	    return list;
+	}
 
-	// 게시판 - 1건 조회
+	// 게시글 1건 조회
 	public BoardVO selectOneBoard(int boardNo) {
 		SqlSession ss = factory.openSession(true);
 		BoardVO vo = ss.selectOne("kr.co.meetup.web.board.selectOneBoard", boardNo);
@@ -55,28 +80,33 @@ public class BoardDAO {
 		return vo;
 	}
 
-	// 게시판 - 게시글 작성
+	// 게시글 작성
 	public void addOneBoard(BoardVO vo) {
 		SqlSession ss = factory.openSession(true);
-		ss.insert("kr.co.meetup.web.board.addBoardOne", vo);
+		ss.insert("kr.co.meetup.web.board.addOneBoard", vo);
 		ss.close();
 	}
-
-	// 게시판 - 1건 게시글 수정
+	
+	// 게시글 수정
 	public void updateOneBoard(BoardVO vo) {
 		SqlSession ss = factory.openSession(true);
 		ss.update("kr.co.meetup.web.board.updateOneBoard", vo);
 		ss.close();
 	}
 
-	// 게시판 - 1건 게시글 삭제
+	// 게시글 삭제(update)
 	public void deleteOneBoard(int boardNo) {
 		SqlSession ss = factory.openSession(true);
-		ss.delete("kr.co.meetup.web.board.deleteOneBoard", boardNo);
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("boardNo", boardNo);
+		
+		ss.update("kr.co.meetup.web.board.deleteOneBoard", map);
+		
 		ss.close();
 	}
 
-	// 게시판- 조회수 1 증가
+	// 게시글 조회수 1 증가
 	public void raiseHitBoard(int boardNo) {
 		SqlSession ss = factory.openSession(true);
 		ss.update("kr.co.meetup.web.board.raiseHitBoard", boardNo);
