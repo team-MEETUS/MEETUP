@@ -29,7 +29,7 @@ public class LoginAction implements Action {
 			
 			if(vo != null) {
 				HttpSession session = req.getSession();
-				session.setAttribute("vo", vo);
+				session.setAttribute("MemberVO", vo);
 				
 				url = "index.jsp";
 			} else {

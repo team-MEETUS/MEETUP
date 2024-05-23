@@ -10,8 +10,20 @@
 	</insert>
 	
 	<select id="selectOneMemberByPhone" parameterType="Hashmap" resultType="MemberVO">
-		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt
+		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberIntro, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt
 		FROM member
 		WHERE memberPhone = #{memberPhone}
 	</select>
+	
+	<select id="selectMemberNoByPhone" parameterType="String" resultType="Integer">
+		SELECT memberNo 
+		FROM member
+		WHERE memberPhone = #{memberPhone}
+	</select>
+	
+	<update id="updateOneMemberByMemberNo" parameterType="MemberVO">
+		UPDATE member 
+		SET memberNickname = #{memberNickname}, geoCode = #{geoCode}, memberIntro = #{memberIntro} 
+		WHERE memberNo = #{memberNo}
+	</update>
 </mapper>
