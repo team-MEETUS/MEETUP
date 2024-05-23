@@ -11,8 +11,15 @@
 </head>
 <body>
 	<div>
-		<form action="member" method="post">
+		<form action="member" method="post" enctype="multipart/form-data">
 			<table>
+				<tr>
+					<th>프로필 사진</th>
+					<td>
+						<input type="file" name="memberImg" />
+					</td>
+				</tr>
+				
 				<tr>
 					<th>닉네임</th>
 					<td>
