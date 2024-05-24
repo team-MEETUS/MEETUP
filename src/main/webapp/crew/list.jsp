@@ -1,4 +1,3 @@
-<%@page import="common.FileLoader"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -92,6 +91,7 @@
 		color: black;
 		display: block;
 	}
+	/* 등록 버튼 */
 	.btn-main {
         border-radius: 20px;
         background-color: #FB9B00;
@@ -100,12 +100,36 @@
         margin-bottom: 10px;
         color: white;
 	}
+	/* 페이지 */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding-left: 0;
+        list-style: none;
+    }
+    /* .page-item {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+    }
+    .page-link {
+        border: 1px solid #dee2e6;
+        padding: 0.375rem 0.75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #007bff;
+        text-decoration: none;
+        background-color: #fff;
+    }
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    } */
 </style>
 </head>
 <body>
-<%
-	String uploadDir = FileLoader.getProperty("file.upload-dir");
-%>
 <div class="container">
 	
     <!-- 카테고리 -->
@@ -135,7 +159,7 @@
 	<div class="crew-container">
         <c:forEach var="crewVO" items="${crewList}">
             <div class="crew-item">
-        		<a href=""><div class="card-crew">
+        		<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}"><div class="card-crew">
                     <img class="crew-img" src="upload/${crewVO.crewSaveImg}" alt="${crewVO.crewName}" />
                     <div class="crew-details">
                         <span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
@@ -147,7 +171,47 @@
             </div>
         </c:forEach>
     </div>
-	
+
+    <!-- 페이지 -->
+    <nav aria-label="Page navigation example">
+	    <ul class="pagination">
+	        <!-- 이전 페이지 -->
+	        <c:if test="${isPrev}">
+	            <c:if test="${not empty ctg}">
+	                <li class="page-item"><a class="page-link" href="crew?cmd=list&ctg=${ctg}&cp=${startPage - 1}">Previous</a></li>
+	            </c:if>
+	            <c:if test="${empty ctg}">
+	                <li class="page-item"><a class="page-link" href="crew?cmd=list&cp=${startPage - 1}">Previous</a></li>
+	            </c:if>
+	        </c:if>
+	        <!-- 페이지 목록 -->
+	        <c:forEach var="i" begin="${startPage}" end="${endPage}">    
+	            <c:choose>
+	                <c:when test="${i == currentPage}">
+	                    <li class="page-item active"><a class="page-link" >${i}</a></li>
+	                </c:when>
+	                <c:otherwise>
+	                    <c:if test="${not empty ctg}">
+	                        <li class="page-item"><a class="page-link" href="crew?cmd=list&ctg=${ctg}&cp=${i}">${i}</a></li>
+	                    </c:if>
+	                    <c:if test="${empty ctg}">
+	                        <li class="page-item"><a class="page-link" href="crew?cmd=list&cp=${i}">${i}</a></li>
+	                    </c:if>
+	                </c:otherwise>
+	            </c:choose>
+	        </c:forEach>
+	        <!-- 다음 페이지 -->
+	        <c:if test="${isNext}">
+	            <c:if test="${not empty ctg}">
+	                <li class="page-item"><a class="page-link" href="crew?cmd=list&ctg=${ctg}&cp=${endPage + 1}">Next</a></li>
+	            </c:if>
+	            <c:if test="${empty ctg}">
+	                <li class="page-item"><a class="page-link" href="crew?cmd=list&cp=${endPage + 1}">Next</a></li>
+	            </c:if>
+	        </c:if>
+	    </ul>
+	</nav>
+    
 </div>
 </body>
 </html>
