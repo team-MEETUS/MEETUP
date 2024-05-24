@@ -74,4 +74,16 @@ public class MemberDAO {
 		ss.update("kr.co.meetup.member.updateOneMemberByMemberNo", vo);
 		ss.close();
 	}
+	
+	public void updateMemberPw(MemberVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.member.updateMemberPw", vo);
+		ss.close();
+	}
+	
+	public void deleteOneMemberByMemberNo(int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.member.deleteOneMemberByMemberNo", memberNo);
+		ss.close();
+	}
 }

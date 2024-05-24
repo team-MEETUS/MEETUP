@@ -27,11 +27,25 @@ public class LoginAction implements Action {
 			MemberDAO dao = new MemberDAO();		
 			MemberVO vo = dao.selectOneMemberByPhone(memberPhone, memberPw);
 			
+			
 			if(vo != null) {
-				HttpSession session = req.getSession();
-				session.setAttribute("MemberVO", vo);
+				int memberStatus = vo.getMemberStatus();
 				
-				url = "index.jsp";
+				if (memberStatus == 1) {
+					HttpSession session = req.getSession();
+					session.setAttribute("MemberVO", vo);
+					
+					url = "index.jsp";
+				} else if (memberStatus == 0) {
+					req.setAttribute("memberNotice", "deleteMember");
+					
+					url = "member/login.jsp";
+				} else if (memberStatus == 2) {
+					req.setAttribute("memberNotice", "warningMember");
+					
+					url = "member/login.jsp";
+				}
+				
 			} else {
 				url = "member/login.jsp";
 			}

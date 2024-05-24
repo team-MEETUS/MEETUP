@@ -22,6 +22,7 @@
 					<th>비밀번호</th>
 					<td>
 						<input type="password" name="memberPw" />
+						<input type="hidden" name="memberNotice" id="memberNotice" value="${memberNotice}" />
 					</td>
 				</tr>
 				
@@ -34,5 +35,16 @@
 			</table>
 		</form>
 	</div>
+	
+	<script>
+		window.onload = function() {
+	        var memberNotice = document.getElementById('memberNotice').value;
+	        if(memberNotice === 'deleteMember') {
+	            alert("탈퇴 처리된 회원입니다.");
+	        } else if(memberNotice == 'warningMember') {
+	        	alert("정지 처리된 회원입니다.");
+	        }
+	    }
+	</script>
 </body>
 </html>

@@ -36,7 +36,7 @@ public class SignUpAction implements Action {
 			
 			// geoCode 가져오기
 			GeoDAO gdao = new GeoDAO();
-			int geoCode = (int) gdao.selectOneGeoByCity(geoCity, geoDistrict);
+			int geoCode = gdao.selectOneGeoByCity(geoCity, geoDistrict);
 			
 			// MemberVO 값 넣기
 			MemberDAO mdao = new MemberDAO();
