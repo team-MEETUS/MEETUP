@@ -23,7 +23,7 @@
 	
 	<update id="updateOneMemberByMemberNo" parameterType="MemberVO">
 		UPDATE member 
-		SET memberNickname = #{memberNickname}, geoCode = #{geoCode}, memberIntro = #{memberIntro} 
+		SET memberNickname = #{memberNickname}, geoCode = #{geoCode}, memberIntro = #{memberIntro}, memberOrigialImg = #{memberOrigialImg}, memberSaveImg = #{memberSaveImg} 
 		WHERE memberNo = #{memberNo}
 	</update>
 </mapper>
