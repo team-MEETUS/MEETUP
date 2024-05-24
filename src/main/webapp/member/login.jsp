@@ -28,6 +28,7 @@
 				<tr>
 					<td colspan="2">
 						<input type="submit" value="로그인" />
+						<a href="member?cmd=find">비밀번호 찾기</a>
 					</td>
 				</tr>
 			</table>

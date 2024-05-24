@@ -16,6 +16,7 @@ public class MemberPhoneCheckAction implements Action {
 			String phoneCheckResult = dao.selectMemberNoByPhone(memberPhone).toString();
 			
 			req.setAttribute("phoneCheckResult", phoneCheckResult);
+			req.setAttribute("memberPhone", memberPhone);
 			return phoneCheckResult;
 	}
 

@@ -11,12 +11,13 @@
 </head>
 <body>
 	<div>
-		<form action="member" method="post" enctype="multipart/form-data">
+		<form action="memberUpload" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<th>프로필 사진</th>
 					<td>
-						<input type="file" name="memberImg" />
+						<img id="profileImg" src="upload/${MemberVO.memberSaveImg}" alt="" />
+						<input type="file" name="memberImg" id="memberImg" value="${MemberVO.memberSaveImg}" />
 					</td>
 				</tr>
 				
@@ -24,7 +25,7 @@
 					<th>닉네임</th>
 					<td>
 						<input type="text" name="memberNickname" value="${MemberVO.memberNickname}" />
-						<input type="hidden" name="cmd" value="updateOk" />
+						<input type="hidden" name="memberNo" value="${MemberVO.memberNo}" />
 					</td>
 				</tr>
 				
@@ -101,6 +102,17 @@
 			$('#geoCity').change(function(){
 				var geoCity = $(this).val();
 				loadGeoDistricts(geoCity, null); // 시/도가 변경된 경우 군/구는 선택되지 않도록 null 전달
+			});
+			
+			$('#memberImg').change(function() {
+				var file = this.files[0];
+				if(file) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$('#profileImg').attr('src', e.target.result);
+					}
+					reader.readAsDataURL(file);
+				}
 			});
 		});
 	</script>
