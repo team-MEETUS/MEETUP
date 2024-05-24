@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.action.ListAction;
 import kr.co.meetup.web.action.member.FindGeoDistrictAction;
+import kr.co.meetup.web.action.member.FindPasswordFormAction;
 import kr.co.meetup.web.action.member.LoginAction;
 import kr.co.meetup.web.action.member.LoginFormAction;
 import kr.co.meetup.web.action.member.LogoutAction;
@@ -23,6 +24,7 @@ import kr.co.meetup.web.action.member.SignUpAction;
 import kr.co.meetup.web.action.member.SignUpFormAction;
 import kr.co.meetup.web.action.member.UpdateAction;
 import kr.co.meetup.web.action.member.UpdateFormAction;
+import kr.co.meetup.web.action.member.UpdatePasswordNoLoginFormAction;
 
 @WebServlet("/member")
 public class MemberController extends HttpServlet {
@@ -64,6 +66,7 @@ public class MemberController extends HttpServlet {
 		} else if (cmd.equals("phoneCheck")) {
 			action = new MemberPhoneCheckAction();
 			String phoneCheckResult = action.execute(req, resp);
+			String findCheckResult = "";
 			int randomNumber = 0;
 			
 			if (phoneCheckResult.equals("-1")) {
@@ -71,23 +74,30 @@ public class MemberController extends HttpServlet {
 				phoneCheckResult = Integer.toString(randomNumber);
 			} else {
 				phoneCheckResult = "isValidMember";
+				randomNumber = (int) (Math.random() * (9999-1000+1)) + 1000;
+				findCheckResult = Integer.toString(randomNumber);
 			}
 			
 			System.out.println(phoneCheckResult);
+			System.out.println(findCheckResult);
+//			System.out.println(req.getParameter("memberPhone"));
 			
 			resp.setContentType("application/json");
 			PrintWriter out = resp.getWriter();
 			
 			JSONArray jsonArray = new JSONArray();
 			jsonArray.add(phoneCheckResult);
+			jsonArray.add(findCheckResult);
 			
 			out.println(jsonArray.toString());
 			out.flush();
 			return;
 		} else if (cmd.equals("update")) {
 			action = new UpdateFormAction();
-		} else if (cmd.equals("updateOk")) {
-			action = new UpdateAction();
+		} else if (cmd.equals("find")) {
+			action = new FindPasswordFormAction();
+		} else if (cmd.equals("updatePwNoLogin")) {
+			action = new UpdatePasswordNoLoginFormAction();
 		}
 		
 		url = action.execute(req, resp);
