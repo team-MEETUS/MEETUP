@@ -14,16 +14,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.action.ListAction;
+import kr.co.meetup.web.action.member.DeleteAction;
 import kr.co.meetup.web.action.member.FindGeoDistrictAction;
 import kr.co.meetup.web.action.member.FindPasswordFormAction;
 import kr.co.meetup.web.action.member.LoginAction;
 import kr.co.meetup.web.action.member.LoginFormAction;
 import kr.co.meetup.web.action.member.LogoutAction;
 import kr.co.meetup.web.action.member.MemberPhoneCheckAction;
+import kr.co.meetup.web.action.member.MyMenuAction;
 import kr.co.meetup.web.action.member.SignUpAction;
 import kr.co.meetup.web.action.member.SignUpFormAction;
-import kr.co.meetup.web.action.member.UpdateAction;
 import kr.co.meetup.web.action.member.UpdateFormAction;
+import kr.co.meetup.web.action.member.UpdatePasswordNoLoginAction;
 import kr.co.meetup.web.action.member.UpdatePasswordNoLoginFormAction;
 
 @WebServlet("/member")
@@ -92,12 +94,18 @@ public class MemberController extends HttpServlet {
 			out.println(jsonArray.toString());
 			out.flush();
 			return;
+		} else if(cmd.equals("myMenu")) {
+			action = new MyMenuAction();
 		} else if (cmd.equals("update")) {
 			action = new UpdateFormAction();
 		} else if (cmd.equals("find")) {
 			action = new FindPasswordFormAction();
 		} else if (cmd.equals("updatePwNoLogin")) {
 			action = new UpdatePasswordNoLoginFormAction();
+		} else if (cmd.equals("updatePwNoLoginOk")) {
+			action = new UpdatePasswordNoLoginAction();
+		} else if (cmd.equals("delete")) {
+			action = new DeleteAction();
 		}
 		
 		url = action.execute(req, resp);

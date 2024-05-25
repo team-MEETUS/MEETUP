@@ -26,4 +26,16 @@
 		SET memberNickname = #{memberNickname}, geoCode = #{geoCode}, memberIntro = #{memberIntro}, memberOriginalImg = #{memberOriginalImg}, memberSaveImg = #{memberSaveImg}, updatedAt = DEFAULT 
 		WHERE memberNo = #{memberNo}
 	</update>
+	
+	<update id="updateMemberPw" parameterType="MemberVO">
+		UPDATE member 
+		SET memberPw = #{memberPw} 
+		WHERE memberPhone = #{memberPhone}
+	</update>
+	
+	<update id="deleteOneMemberByMemberNo" parameterType="int">
+		UPDATE member
+		SET memberStatus = 0 
+		WHERE memberNo = #{memberNo}
+	</update>
 </mapper>

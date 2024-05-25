@@ -149,10 +149,21 @@
 		});
 		
 		$("#memberForm").submit(function(event) {
+			var memberPw = $("input[name='memberPw']").val();
+		    var memberNickname = $("input[name='memberNickname']").val();
+		    var geoCity = $("#geoCity").val();
+		    var geoDistrict = $("#geoDistrict").val();
+			
 			if (!isVerified) {
 				alert("인증확인을 먼저 해주세요.");
 				event.preventDefault();
+				return;
 			}
+			
+			if (!memberPw || !memberNickname || geoCity === "" || geoDistrict === "") {
+		        alert("모든 필드를 입력해주세요.");
+		        event.preventDefault();
+		    }
 		});
 	</script>
 </body>
