@@ -2,6 +2,7 @@ package kr.co.meetup.web.dao;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -35,17 +36,24 @@ public class CrewDAO {
 	}
 	
 	// 전체 모임 조회
-	public List<CrewVO> selectAll() {
+	public List<CrewVO> selectAll(int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
-		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrew");
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
+		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrew", map);
 		ss.close();
 		return list;
 	}
 	
 	// 카테고리 별 전체 모임 조회
-	public List<CrewVO> selectCrewByCategory(int ctg) {
+	public List<CrewVO> selectCrewByCategory(int ctg, int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
-		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectCrewByCategory", ctg);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("ctg", ctg);
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
+		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectCrewByCategory", map);
 		ss.close();
 		return list;
 	}
@@ -79,6 +87,22 @@ public class CrewDAO {
 		SqlSession ss = factory.openSession(true);
 		ss.insert("kr.co.meetup.crew.addCrew", vo);
 		ss.close();
+	}
+
+	// 전체 모임 수 조회
+	public int selectAllCrewCnt() {
+		SqlSession ss = factory.openSession(true);
+		int cnt = ss.selectOne("kr.co.meetup.crew.selectCrewCnt");
+		ss.close();
+		return cnt;
+	}
+	
+	// 카테고리 별 전체 모임 수 조회
+	public int selectAllCrewByCategoryCnt(int categoryBigNo) {
+		SqlSession ss = factory.openSession(true);
+		int cnt = ss.selectOne("kr.co.meetup.crew.selectCrewByCategoryCnt", categoryBigNo);
+		ss.close();
+		return cnt;
 	}
 	
 	

@@ -5,22 +5,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.co.meetup.crew">
 	<!-- 모든 모임 조회 -->
-	<select id="selectAllCrew" resultType="CrewVO">
-		SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, crewName, crewIntro, crewContent, crewMax, crewAttend, crewStatus, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner, crewDeadDate, c.createdAt, updatedAt, geoCity, geoDistrict, categoryBigName, categorySmallName
-		FROM crew c
-		    LEFT JOIN geo g ON c.geoCode = g.geoCode
-		    LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
-		    LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	<select id="selectAllCrew" parameterType="HashMap" resultType="CrewVO">
+	    SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	    ORDER BY c.createdAt DESC
+	    LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
 	
 	<!-- 카테고리 별 모든 모임 조회 -->
-	<select id="selectCrewByCategory" parameterType="int" resultType="CrewVO">
-		SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, crewName, crewIntro, crewContent, crewMax, crewAttend, crewStatus, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner, crewDeadDate, c.createdAt, updatedAt, geoCity, geoDistrict, categoryBigName, categorySmallName
-		FROM crew c
-		    LEFT JOIN geo g ON c.geoCode = g.geoCode
-		    LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
-		    LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
-		WHERE c.categoryBigNo = #{ctg}
+	<select id="selectCrewByCategory" parameterType="HashMap" resultType="CrewVO">
+	    SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	    WHERE c.categoryBigNo = #{ctg}
+	    ORDER BY c.createdAt DESC
+	    LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
 	
 	<!-- 모든 대 카테고리 조회 -->
@@ -43,8 +47,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 한개 모임 등록 -->
 	<insert id="addCrew" parameterType="CrewVO">
-    INSERT INTO crew (geoCode, categoryBigNo, categorySmallNo, memberNo, crewName, crewContent, crewIntro, crewMax, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner)
-    VALUES(#{geoCode}, #{categoryBigNo}, #{categorySmallNo}, #{memberNo}, #{crewName}, #{crewContent}, #{crewIntro}, #{crewMax}, #{crewOriginalImg}, #{crewSaveImg}, #{crewOriginalBanner}, #{crewSaveBanner})
-</insert>
+	    INSERT INTO crew (geoCode, categoryBigNo, categorySmallNo, memberNo, crewName, crewContent, crewIntro, crewMax, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner)
+	    VALUES(#{geoCode}, #{categoryBigNo}, #{categorySmallNo}, #{memberNo}, #{crewName}, #{crewContent}, #{crewIntro}, #{crewMax}, #{crewOriginalImg}, #{crewSaveImg}, #{crewOriginalBanner}, #{crewSaveBanner})
+	</insert>
+	
+	<!-- 전체 모임 수 조회 -->
+	<select id="selectCrewCnt" resultType="int">
+		SELECT count(*)
+		FROM crew
+	</select>
+	
+	<!-- 카테고리 별 전체 모임 수 조회 -->
+	<select id="selectCrewByCategoryCnt" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM crew
+		WHERE categoryBigNo = #{categoryBigNo}
+	</select>
 
 </mapper>
