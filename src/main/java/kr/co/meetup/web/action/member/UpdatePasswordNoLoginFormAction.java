@@ -9,6 +9,7 @@ public class UpdatePasswordNoLoginFormAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		// 암호화 키
 		String key = "1234567890123456";
 		AES128 aes = new AES128(key);
 		

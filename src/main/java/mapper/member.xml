@@ -4,35 +4,36 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="kr.co.meetup.member">
+	<!-- 회원가입 성공 시 추가 -->
 	<insert id="addMember" parameterType="MemberVO">
 		INSERT INTO member (geoCode, memberPhone, memberPw, memberNickname, memberStatus, createdAt, updatedAt) 
 		VALUES (#{geoCode}, #{memberPhone}, #{memberPw}, #{memberNickname}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
-	
+	<!-- 핸드폰 번호로 회원의 정보 조회 -->
 	<select id="selectOneMemberByPhone" parameterType="Hashmap" resultType="MemberVO">
 		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberIntro, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt
 		FROM member
-		WHERE memberPhone = #{memberPhone}
+		WHERE memberPhone = #{memberPhone} AND memberPw = #{memberPw}
 	</select>
-	
+	<!-- 핸드폰 번호로 회원PK 조회 -->
 	<select id="selectMemberNoByPhone" parameterType="String" resultType="Integer">
 		SELECT memberNo 
 		FROM member
 		WHERE memberPhone = #{memberPhone}
 	</select>
-	
+	<!-- 내 정보 수정 -->
 	<update id="updateOneMemberByMemberNo" parameterType="MemberVO">
 		UPDATE member 
 		SET memberNickname = #{memberNickname}, geoCode = #{geoCode}, memberIntro = #{memberIntro}, memberOriginalImg = #{memberOriginalImg}, memberSaveImg = #{memberSaveImg}, updatedAt = DEFAULT 
 		WHERE memberNo = #{memberNo}
 	</update>
-	
+	<!-- 회원의 비밀번호 변경 -->
 	<update id="updateMemberPw" parameterType="MemberVO">
 		UPDATE member 
 		SET memberPw = #{memberPw} 
 		WHERE memberPhone = #{memberPhone}
 	</update>
-	
+	<!-- 회원 탈퇴(memberStatus 0으로 업데이트 -->
 	<update id="deleteOneMemberByMemberNo" parameterType="int">
 		UPDATE member
 		SET memberStatus = 0 

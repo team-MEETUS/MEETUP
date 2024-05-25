@@ -3,11 +3,12 @@ package kr.co.meetup.web.action.member;
 import common.AES128;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.MemberDAO;
 import kr.co.meetup.web.vo.MemberVO;
 
-public class UpdatePasswordNoLoginAction implements Action {
+public class UpdatePwLoginAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -15,16 +16,15 @@ public class UpdatePasswordNoLoginAction implements Action {
 		String key = "1234567890123456";
 		AES128 aes = new AES128(key);
 		
-		String memberPhone = req.getParameter("memberPhone");
+		// 변경 할 비밀번호
 		String memberPw = req.getParameter("memberPw");
-		// 페이지에서 받은 비밀번호 암호화
 		memberPw = aes.encrypt(memberPw);
 		
-		MemberDAO dao = new MemberDAO();
-		MemberVO vo = new MemberVO();
-		vo.setMemberPhone(memberPhone);
+		HttpSession session = req.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("MemberVO");
 		vo.setMemberPw(memberPw);
 		
+		MemberDAO dao = new MemberDAO();
 		dao.updateMemberPw(vo);
 		
 		return "member?cmd=login";

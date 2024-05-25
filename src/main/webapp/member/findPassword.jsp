@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비밀번호 찾기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -39,7 +39,9 @@
 	</div>
 	
 	<script>
+		// 인증번호 비교용 변수
 		var code = "";
+		// 인증확인을 하였는지 확인하는 변수
 		var isVerified = false;
 		
 		$("#phoneChk").click(function(event) {

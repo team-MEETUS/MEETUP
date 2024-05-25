@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>마이메뉴</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function() {
-	    // 폼 제출 이벤트를 처리합니다.
+	    // 회원탈퇴 click하면 재확인용 창 나오게함
 	    $('form').submit(function(e) {
 	        e.preventDefault();
 
@@ -30,6 +30,12 @@
 				<tr>
 					<td>
 						<a href="member?cmd=update">내 정보 수정</a>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>
+						<a href="member?cmd=confirmPw">비밀번호 변경(로그인시)</a>
 					</td>
 				</tr>
 				

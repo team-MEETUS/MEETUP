@@ -11,9 +11,11 @@ public class DeleteAction implements Action {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String no = req.getParameter("memberNo");
 		
+		// 로그인된 회원이라면
 		if(no != null) {
 			int memberNo = Integer.parseInt(no);
 			
+			// memberStatus 업데이트
 			MemberDAO dao = new MemberDAO();
 			dao.deleteOneMemberByMemberNo(memberNo);
 		}

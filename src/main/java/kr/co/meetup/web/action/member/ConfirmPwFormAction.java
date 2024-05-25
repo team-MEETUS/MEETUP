@@ -4,16 +4,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
+import kr.co.meetup.web.vo.MemberVO;
 
-public class LogoutAction implements Action {
+public class ConfirmPwFormAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		String url = "";
+		
 		HttpSession session = req.getSession();
-		// 세션에 담긴 회원 MemberVO 정보 삭제
-		session.invalidate();
-		// 메인페이지로 보냄
-		return "index.jsp";
+		MemberVO vo = (MemberVO) session.getAttribute("MemberVO");
+		
+		if (vo != null) {
+			url = "member/confirmPw.jsp";
+		} else {
+			url = "member/login.jsp";
+		}
+		
+		return url;
 	}
 
 }
