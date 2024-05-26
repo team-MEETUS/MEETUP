@@ -13,7 +13,7 @@ public class CrewVO {
 	private int crewNo;
 	private int geoCode;
 	private int categoryBigNo;
-	private int categorySmallNo;
+	private Integer categorySmallNo;
 	private int memberNo;
 	private String crewName;
 	private String crewIntro;

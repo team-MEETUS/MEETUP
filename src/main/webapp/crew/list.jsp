@@ -151,9 +151,11 @@
     </ul>
 	
 	<!-- 모임등록 버튼 -->
-	<div class="d-flex justify-content-end">
-		<a href="crew?cmd=write" class="btn btn-main">모임등록</a>
-	</div>
+	<c:if test="${not empty sessionScope.MemberVO}">
+		<div class="d-flex justify-content-end">
+			<a href="crew?cmd=write" class="btn btn-main">모임등록</a>
+		</div>
+	</c:if>
 	
 	<!-- 모임 -->
 	<div class="crew-container">
