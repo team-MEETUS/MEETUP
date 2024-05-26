@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -76,7 +76,9 @@
 	</div>
 	
 	<script>
+		// 인증번호 비교용 변수
 		var code = "";
+		// 인증확인 하였는지 확인용 변수
 		var isVerified = false;
 		
 		$(document).ready(function(){
@@ -159,7 +161,7 @@
 				event.preventDefault();
 				return;
 			}
-			
+			// 필요한 정보를 모두 입력하였는지 확인용
 			if (!memberPw || !memberNickname || geoCity === "" || geoDistrict === "") {
 		        alert("모든 필드를 입력해주세요.");
 		        event.preventDefault();

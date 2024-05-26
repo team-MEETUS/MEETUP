@@ -14,6 +14,7 @@ public class AES128 {
 	private String ips;
 	private Key keySpec;
 	
+	// 전달받은 키를 암호화 로직에 적용
 	public AES128(String key) {
 		try {
 			byte[] keyBytes = new byte[16];
@@ -27,6 +28,7 @@ public class AES128 {
 		}
 	}
 	
+	// 암호화 하기
 	@SuppressWarnings("deprecation")
 	public String encrypt(String str) {
 		Cipher cipher;
@@ -43,6 +45,7 @@ public class AES128 {
 		}
 	}
 	
+	// 암호화 풀기
 	@SuppressWarnings("deprecation")
 	public String decrypt(String str) {
 		try {

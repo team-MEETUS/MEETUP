@@ -11,6 +11,7 @@ public class SignUpFormAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		// 회원가입 페이지에서 필요한 geoCity값 전송
 		GeoDAO dao = new GeoDAO();
 		List<String> geoCities = dao.selectAllGeoCity();
 		

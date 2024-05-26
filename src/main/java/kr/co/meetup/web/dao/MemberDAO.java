@@ -28,13 +28,13 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-	
+	// 회원가입 시 회원 추가
 	public void addMember(MemberVO vo) {
 		SqlSession ss = factory.openSession(true);
 		ss.insert("kr.co.meetup.member.addMember", vo);
 		ss.close();
 	}
-	
+	// 로그인 시 회원 정보 가져오기
 	public MemberVO selectOneMemberByPhone(String phone, String pw) {
 		SqlSession ss = factory.openSession(true);
 		
@@ -52,7 +52,7 @@ public class MemberDAO {
 		
 		return vo;
 	}
-	
+	// 회원가입 시 회원 중복 가입 방지
 	public Integer selectMemberNoByPhone(String phone) {
 		SqlSession ss = factory.openSession(true);
 		
@@ -68,19 +68,19 @@ public class MemberDAO {
 		
 		return memberNo;
 	}
-	
+	// 내 정보 회원 정보 업데이트
 	public void updateOneMemberByMemberNo(MemberVO vo) {
 		SqlSession ss = factory.openSession(true);
 		ss.update("kr.co.meetup.member.updateOneMemberByMemberNo", vo);
 		ss.close();
 	}
-	
+	// 비밀번호 변경
 	public void updateMemberPw(MemberVO vo) {
 		SqlSession ss = factory.openSession(true);
 		ss.update("kr.co.meetup.member.updateMemberPw", vo);
 		ss.close();
 	}
-	
+	// 회원탈퇴
 	public void deleteOneMemberByMemberNo(int memberNo) {
 		SqlSession ss = factory.openSession(true);
 		ss.update("kr.co.meetup.member.deleteOneMemberByMemberNo", memberNo);

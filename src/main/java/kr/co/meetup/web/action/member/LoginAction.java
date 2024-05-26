@@ -27,26 +27,36 @@ public class LoginAction implements Action {
 			MemberDAO dao = new MemberDAO();		
 			MemberVO vo = dao.selectOneMemberByPhone(memberPhone, memberPw);
 			
-			
+			// 가압된 정보가 있는 회원이라면
 			if(vo != null) {
 				int memberStatus = vo.getMemberStatus();
 				
+				// memberStatus가 정상이라면
 				if (memberStatus == 1) {
+					// 로그인 성공
 					HttpSession session = req.getSession();
 					session.setAttribute("MemberVO", vo);
 					
 					url = "index.jsp";
-				} else if (memberStatus == 0) {
+				} 
+				// 탈퇴 처리된 회원이라면
+				else if (memberStatus == 0) {
+					// 탈퇴 처리된 메시지 전송
 					req.setAttribute("memberNotice", "deleteMember");
 					
 					url = "member/login.jsp";
-				} else if (memberStatus == 2) {
+				} 
+				// 정지 처리된 회원이라면
+				else if (memberStatus == 2) {
+					// 정지 처리된 메시지 전송
 					req.setAttribute("memberNotice", "warningMember");
 					
 					url = "member/login.jsp";
 				}
 				
-			} else {
+			} 
+			// 로그인 실패시 로그인 페이지 다시
+			else {
 				url = "member/login.jsp";
 			}
 			
