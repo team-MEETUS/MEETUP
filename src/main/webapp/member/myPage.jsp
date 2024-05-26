@@ -11,28 +11,28 @@
 </head>
 <body>
 	<div>
-		<form action="memberUpload" method="post" enctype="multipart/form-data">
+		<form id="memberForm" action="memberUpload" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<th>프로필 사진</th>
 					<td>
-						<img id="profileImg" src="upload/${MemberVO.memberSaveImg}" alt="" />
-						<input type="file" name="memberImg" id="memberImg" value="${MemberVO.memberSaveImg}" />
+						<img id="profileImg" src="upload/${loginMember.memberSaveImg}" alt="" />
+						<input type="file" name="memberImg" id="memberImg" value="${loginMember.memberSaveImg}" />
 					</td>
 				</tr>
 				
 				<tr>
 					<th>닉네임</th>
 					<td>
-						<input type="text" name="memberNickname" value="${MemberVO.memberNickname}" />
-						<input type="hidden" name="memberNo" value="${MemberVO.memberNo}" />
+						<input type="text" name="memberNickname" value="${loginMember.memberNickname}" />
+						<input type="hidden" name="memberNo" value="${loginMember.memberNo}" />
 					</td>
 				</tr>
 				
 				<tr>
 					<th>한줄소개</th>
 					<td>
-						<input type="text" name="memberIntro" value="${MemberVO.memberIntro}" />
+						<input type="text" name="memberIntro" value="${loginMember.memberIntro}" />
 					</td>
 				</tr>
 				
@@ -114,6 +114,15 @@
 					reader.readAsDataURL(file);
 				}
 			});
+		});
+		
+		$("#memberForm").submit(function(event) {
+			var memberNickname = $("input[name='memberNickname']").val();
+			
+			if (!memberNickname) {
+				alert("닉네임은 필수 항목입니다.");
+				event.preventDefault();
+			}
 		});
 	</script>
 </body>

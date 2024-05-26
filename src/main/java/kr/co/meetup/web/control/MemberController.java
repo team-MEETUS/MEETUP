@@ -22,6 +22,7 @@ import kr.co.meetup.web.action.member.FindPasswordFormAction;
 import kr.co.meetup.web.action.member.LoginAction;
 import kr.co.meetup.web.action.member.LoginFormAction;
 import kr.co.meetup.web.action.member.LogoutAction;
+import kr.co.meetup.web.action.member.MainAction;
 import kr.co.meetup.web.action.member.MemberPhoneCheckAction;
 import kr.co.meetup.web.action.member.MyMenuAction;
 import kr.co.meetup.web.action.member.SignUpAction;
@@ -44,8 +45,11 @@ public class MemberController extends HttpServlet {
 		Action action = null;
 		ListAction listAction = null;
 		
+		if(cmd == null) {
+			action = new MainAction();
+		}
 		// 회원가입 페이지 action
-		if(cmd == null || cmd.equals("signup")) {
+		else if(cmd.equals("signup")) {
 			action = new SignUpFormAction();
 		} 
 		// 회원가입 처리 action

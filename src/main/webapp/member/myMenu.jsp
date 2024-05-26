@@ -41,7 +41,7 @@
 				
 				<tr>
 					<td>
-						<input type="hidden" name="memberNo" value="${MemberVO.memberNo}" />
+						<input type="hidden" name="memberNo" value="${loginMember.memberNo}" />
 						<input type="hidden" name="cmd" value="delete" />
 						<input type="submit" value="회원탈퇴" />
 					</td>

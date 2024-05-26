@@ -15,7 +15,7 @@ public class UpdateFormAction implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("MemberVO");
+		MemberVO mvo = (MemberVO) session.getAttribute("loginMember");
 		if(mvo != null) {
 			GeoDAO dao = new GeoDAO();
 			GeoVO gvo = dao.selectOneGeoCityGeoDistrictByGeoCode(mvo.getGeoCode());

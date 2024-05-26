@@ -35,7 +35,7 @@ public class LoginAction implements Action {
 				if (memberStatus == 1) {
 					// 로그인 성공
 					HttpSession session = req.getSession();
-					session.setAttribute("MemberVO", vo);
+					session.setAttribute("loginMember", vo);
 					
 					url = "index.jsp";
 				} 

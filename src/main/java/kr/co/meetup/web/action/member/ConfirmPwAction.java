@@ -22,7 +22,7 @@ public class ConfirmPwAction implements Action {
 		confirmPw = aes.encrypt(confirmPw);
 				
 		HttpSession session = req.getSession();
-		MemberVO vo = (MemberVO) session.getAttribute("MemberVO");
+		MemberVO vo = (MemberVO) session.getAttribute("loginMember");
 		
 		if (confirmPw.equals(vo.getMemberPw())) {
 			url = "member?cmd=updatePwLogin";
