@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>writeFormBoard.jsp</title>
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -15,13 +15,13 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link
+<!-- <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script type="text/javascript" src="../js/summernote-ko-KR.js"></script>
-<script>
+<script type="text/javascript" src="../js/summernote-ko-KR.js"></script> -->
+<!-- <script>
 	$(document).ready(function() {
 		$(".summernote").summernote({
 			height : 150,
@@ -43,7 +43,7 @@
 		$.ajax({
 			data : form_data,
 			type : "POST",
-			url : "/boardImgSaveImg",
+			url : "/boardImgSaveImgImg",
 			cache : false,
 			dataType : "JSON",
 			contentType : false,
@@ -55,11 +55,12 @@
 
 				// 이미지 파일명을 옵션으로 추가
 				$("#thumbnailPath").append(
-						"<option value=" + data.url + ">" + data.boardImgOriginalImg + "</option>");
+						"<option value=" + data.url + ">"
+								+ data.boardImgOriginalImg + "</option>");
 			}
 		});
 	}
-</script>
+</script> -->
 
 <style>
 table {
@@ -99,34 +100,34 @@ td .btn {
 	width: 100%;
 }
 </style>
-<!-- jsp - action - xml -->
 </head>
 <body>
+	<h1>게시글 작성</h1>
+
 	<div class="container">
-		<form action="board" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="cmd" value="writeOkBoard" />
+		<form action="board?cmd=writeOkBoard" method="post">
+			<input type="hidden" name="crewNo" value="${crewNo}" />
+			<input type="hidden" name="memberNo" value="${memberNo}" />
 			<table class="table table-nonbordered">
-
 				<tr>
-					<h3>게시글 등록</h3>
-
+				
 					<th>카테고리</th>
-					<td><input class="btn btn-success" type="button"
-						name="boardCategoryName" value="공지사항" />
-						<input class="btn btn-success" type="button" name="boardCategoryName" value="가입인사" />
-						<input class="btn btn-success" type="button" name="boardCategoryName" value="정모후기" />
-						<input class="btn btn-success" type="button" name="boardCategoryName" value="자유" /></td>
-				</tr>
+						<td>
+							<input class="btn btn-success category-btn" type="button" name="boardCategoryName1" value="공지사항" data-category-no="1">
+			                <input class="btn btn-success category-btn" type="button" name="boardCategoryName2" value="가입인사" data-category-no="2">
+			                <input class="btn btn-success category-btn" type="button" name="boardCategoryName3" value="정모후기" data-category-no="3">
+			                <input class="btn btn-success category-btn" type="button" name="boardCategoryName4" value="자유" data-category-no="4">
+			                <input class="btn btn-success category-btn" type="button" name="boardCategoryName5" value="투표" data-category-no="5">
+			                <input type="hidden" name="boardCategoryNo" id="selectedCategoryNo" value="" />
+						</td>
 
-				<th>제목</th>
-					<th class="input-container">
-					<input type="text" name="boardTitle" /></th>
-				</tr>
-
+					<th>제목</th>
+						<td class="input-container"><input type="text" name="boardTitle" /></td>
+					</tr>
 
 				<tr>
-					<th>설명</th>
-					<td><textarea class="summernote" name="boardContent" id="" cols="30" rows="10"></textarea></td>
+					<th>내용</th>
+						<td><textarea name="boardContent" id="" cols="30" rows="10"></textarea></td>
 				</tr>
 				<tr>
 					<td class="button-container">
@@ -136,4 +137,15 @@ td .btn {
 		</form>
 	</div>
 </body>
+<script>
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const selectedCategoryNoInput = document.getElementById('selectedCategoryNo');
+
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const categoryNo = btn.dataset.categoryNo;
+            selectedCategoryNoInput.value = categoryNo;
+        });
+    });
+</script>
 </html>
