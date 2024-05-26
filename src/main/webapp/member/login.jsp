@@ -5,10 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 	<div>
-		<form action="member" method="post">
+		<form id="memberForm" action="member" method="post">
 			<table>
 				<tr>
 					<th>핸드폰번호</th>
@@ -37,6 +38,18 @@
 	</div>
 	
 	<script>
+		var isVerified = false;
+		
+		$("#memberForm").submit(function(event) {
+			var memberPhone = $("input[name='memberPhone']").val();
+			var memberPw = $("input[name='memberPw']").val();
+			
+			if(!memberPhone || !memberPw) {
+				alert("모든 필드를 입력해주세요.");
+		        event.preventDefault();
+			}
+		});
+	
 		window.onload = function() {
 	        var memberNotice = document.getElementById('memberNotice').value;
 	        if(memberNotice === 'deleteMember') {

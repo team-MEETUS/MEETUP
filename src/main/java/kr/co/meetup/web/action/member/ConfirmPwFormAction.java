@@ -13,7 +13,7 @@ public class ConfirmPwFormAction implements Action {
 		String url = "";
 		
 		HttpSession session = req.getSession();
-		MemberVO vo = (MemberVO) session.getAttribute("MemberVO");
+		MemberVO vo = (MemberVO) session.getAttribute("loginMember");
 		
 		if (vo != null) {
 			url = "member/confirmPw.jsp";

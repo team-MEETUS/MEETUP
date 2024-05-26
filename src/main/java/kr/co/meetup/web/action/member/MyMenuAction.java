@@ -12,7 +12,7 @@ public class MyMenuAction implements Action {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String url = "";
 		HttpSession session = req.getSession();
-		MemberVO vo = (MemberVO) session.getAttribute("MemberVO");
+		MemberVO vo = (MemberVO) session.getAttribute("loginMember");
 		
 		// 로그인이 되어있는 상태라면 마이페이지
 		if(vo != null) {

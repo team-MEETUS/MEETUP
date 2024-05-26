@@ -21,7 +21,7 @@ public class UpdatePwLoginAction implements Action {
 		memberPw = aes.encrypt(memberPw);
 		
 		HttpSession session = req.getSession();
-		MemberVO vo = (MemberVO) session.getAttribute("MemberVO");
+		MemberVO vo = (MemberVO) session.getAttribute("loginMember");
 		vo.setMemberPw(memberPw);
 		
 		MemberDAO dao = new MemberDAO();
