@@ -36,7 +36,7 @@ public class CrewController extends HttpServlet {
 			action = new WriteFormAction();
 		} else if (cmd.equals("detail")) {
 			action = new DetailAction();
-		}
+		} 
 		
 		url = action.execute(req, resp);
 		RequestDispatcher rd = req.getRequestDispatcher(url);

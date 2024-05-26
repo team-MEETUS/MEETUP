@@ -47,6 +47,22 @@ public class CrewDAO {
 		return list;
 	}
 	
+	// 한개 모임 조회
+	public CrewVO selectOneCrew(int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		CrewVO vo = ss.selectOne("kr.co.meetup.crew.selectOneCrew", crewNo);
+		ss.close();
+		return vo;
+	}
+	
+	// 전체 모임회원 조회
+	public List<CrewMemberVO> selectAllCrewMember(int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		List<CrewMemberVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrewMember", crewNo);
+		ss.close();
+		return list;
+	}
+	
 	// 카테고리 별 전체 모임 조회
 	public List<CrewVO> selectCrewByCategory(int ctg, int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);

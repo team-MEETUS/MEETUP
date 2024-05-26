@@ -27,6 +27,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
 	
+	<!-- 한개 모임 조회 -->
+	<select id="selectOneCrew" parameterType="int" resultType="CrewVO">
+		SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	    WHERE c.crewNo = #{crewNo}
+	</select>
+	
+	<!-- 전체 모임회원 조회 -->
+	<select id="selectAllCrewMember" parameterType="int" resultType="CrewMemberVO">
+		SELECT cm.crewMemberNo, cm.crewNo, m.memberNo, cm.crewMemberStatus, cm.createdAt, m.memberNickname, m.memberSaveImg
+		FROM crew_member cm
+			LEFT JOIN member m ON cm.memberNo = m.memberNo 
+		WHERE crewNo = #{crewNo}
+	</select>
+	
 	<!-- 모든 대 카테고리 조회 -->
 	<select id="selectAllCategoryBig" resultType="CategoryBigVO">
 		SELECT categoryBigNo, categoryBigName, categoryBigIcon, createdAt
@@ -37,12 +55,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAllCategorySmall" resultType="CategorySmallVO">
 		SELECT categorySmallNo, categoryBigNo, categorySmallName, createdAt
 		FROM category_small
-	</select>
-	
-	<!-- 모든 지역 조회 -->
-	<select id="selectAllGeo" resultType="GeoVO">
-		SELECT geoCode, geoCity, geoDistrict
-		FROM geo
 	</select>
 	
 	<!-- 한개 모임 등록 -->
