@@ -29,7 +29,6 @@
 	 				<th>
 	 					<input type="hidden" name="cmd" value="updateOkBoard" />
 	 					<input type="hidden" name="boardNo" value="${vo.boardNo}" />
-	 					<%-- <input type="text" name="writer" value="${vo.writer}" /> --%>
 	 				</th>
 	 			</tr>
 	 			<tr>

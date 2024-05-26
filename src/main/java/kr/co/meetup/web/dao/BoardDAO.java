@@ -29,47 +29,48 @@ public class BoardDAO {
 		}
 	}
 
-	// 게시판 총 데이터 수 조회
-	public int selectTotalCountBoard() {
+	// 게시판 총 데이터 수 조회(crewNo 조건)
+	public int selectAllBoardByCrewNoCnt(int crewNo) {
 		SqlSession ss = factory.openSession(true);
-		int count = ss.selectOne("kr.co.meetup.web.board.selectTotalCountBoard");
+		int count = ss.selectOne("kr.co.meetup.web.board.selectAllBoardByCrewNoCnt");
 		ss.close();
 		return count;
 	}
-	
-	// 모임별 게시판 전체 조회
-	public List<BoardVO> selectAllBoardBycrewNo(int crewNo, int boardStartNo, int boardEndNo) {
+
+	// 모임별 게시판 전체 조회(crewNo 조건 포함)
+	public List<BoardVO> selectAllBoardBycrewNo(int crewNo, int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
-		
+
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("crewNo", crewNo);
-		map.put("boardStartNo", boardStartNo);
-		map.put("boardEndNo", boardEndNo);
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
 		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectAllBoardBycrewNo", map);
 		ss.close();
 		return list;
 	}
-	
+
 	// 게시판 카테고리 조회
-	public List<BoardCategoryVO> selectAllBoardCategory(int boardStartNo, int boardEndNo) {
+	public List<BoardCategoryVO> selectAllBoardCategory() {
 		SqlSession ss = factory.openSession(true);
 		List<BoardCategoryVO> list = ss.selectList("kr.co.meetup.web.board.selectAllBoardCategory");
 		ss.close();
-		return list;	
+		return list;
+	}
+
+	// 게시판 카테고리별 모든 게시글 조회
+	public List<BoardVO> selectBoardByCategory(int bc) {
+		SqlSession ss = factory.openSession(true);
+		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardByCategory", bc);
+		ss.close();
+		return list;
 	}
 	
-	// 게시판 카테고리별 게시글 조회
-	public List<BoardVO> selectBoardByCategory(int boardCategoryNo, int boardStartNo, int boardEndNo) {
-	    SqlSession ss = factory.openSession(true);
-	    
-	    HashMap<String, Object> map = new HashMap<>();
-	    map.put("boardCategoryNo", boardCategoryNo);
-	    map.put("boardStartNo", boardStartNo);
-	    map.put("boardEndNo", boardEndNo);
-	    
-	    List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardByCategory", map);
-	    ss.close();
-	    return list;
+	public List<BoardVO> selectBoardAllByCategory() {
+		SqlSession ss = factory.openSession(true);
+		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardAllByCategory");
+		ss.close();
+		return list;
 	}
 
 	// 게시글 1건 조회
@@ -86,7 +87,7 @@ public class BoardDAO {
 		ss.insert("kr.co.meetup.web.board.addOneBoard", vo);
 		ss.close();
 	}
-	
+
 	// 게시글 수정
 	public void updateOneBoard(BoardVO vo) {
 		SqlSession ss = factory.openSession(true);
@@ -97,12 +98,12 @@ public class BoardDAO {
 	// 게시글 삭제(update)
 	public void deleteOneBoard(int boardNo) {
 		SqlSession ss = factory.openSession(true);
-		
+
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("boardNo", boardNo);
-		
+
 		ss.update("kr.co.meetup.web.board.deleteOneBoard", map);
-		
+
 		ss.close();
 	}
 

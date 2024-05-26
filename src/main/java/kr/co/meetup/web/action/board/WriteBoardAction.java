@@ -1,55 +1,72 @@
 package kr.co.meetup.web.action.board;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.BoardDAO;
-import kr.co.meetup.web.vo.MemberVO;
+import kr.co.meetup.web.vo.BoardImgVO;
+import kr.co.meetup.web.vo.BoardVO;
 
 public class WriteBoardAction implements Action {
 
 
     	@Override
     	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-    		BoardDAO dao = new BoardDAO();
-        // 1. 로그인 여부 확인
-		/* HttpSession session = request.getSession(); */
-//        MemberVO member = (MemberVO) session.getAttribute("member");
-//        if (member == null) {
-//            // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
-//            return "redirect:/login.jsp";
-//        }
-//
-//        // 2. 모임 회원 여부 확인
-//        if (!isMeetupMember(member.getMemberNo())) {
-//            // 모임 회원이 아닌 경우 접근 불가 페이지로 리다이렉트
-//            return "redirect:/accessDenied.jsp";
-//        }
+    		try {
+				req.setCharacterEncoding("UTF-8");
+				resp.setContentType("text/html;charset=UTF-8");
+				
 
-        // 3. 게시글 작성 로직 수행
-        String boardNo = req.getParameter("boardNo");
-        String boardCategoryNo = req.getParameter("boardCategoryNo");
-        String memberNo = req.getParameter("memberNo");
+        // 게시글 작성 로직 수행
+				//임시로그인 
+		//String crewNo =  (String) req.getAttribute("crewNo");
+		//String memberNo = (String) req.getAttribute("memberNo");
+		
+		String crewNo = "1";
+		String memberNo = "1";
+		
+		if(crewNo == null || memberNo==null) {
+			  return "redirect:/member?cmd=login";
+		}
+        String boardCategoryNo = (String) req.getParameter("boardCategoryNo");
         String boardTitle = req.getParameter("boardTitle");
         String boardContent = req.getParameter("boardContent");
-        String boardHit = req.getParameter("boardHit");
-        String boardImgOriginalImg = req.getParameter("boardImgOriginalImg");
-        String boardImgSaveImg = req.getParameter("boardImgSaveImg");
+        //String boardHit = req.getParameter("boardHit");
+        //이미지의 원본파일명, 저장파일명
+        //이미지 처리 제외
+        //String boardImgOriginalImg = req.getParameter("boardImg");
+        //String boardImgSaveImg = req.getParameter("boardImg");
+        
+        BoardDAO dao = new BoardDAO();
+        BoardVO vo = new BoardVO();
+        BoardImgVO iv = new BoardImgVO();
+        
+    
+   
+        int categoryNo = Integer.parseInt(boardCategoryNo);
+        vo.setCrewNo(Integer.parseInt(crewNo));
+        vo.setMemberNo(Integer.parseInt(memberNo));
+        vo.setBoardCategoryNo(Integer.parseInt(boardCategoryNo));
+        vo.setBoardTitle(boardTitle);
+        vo.setBoardContent(boardContent);
+        vo.setBoardStatus(categoryNo==1?1:2);
+        System.out.println(vo);
+   
+        //vo.setBoardHit(Integer.parseInt(boardHit));
+		//iv.setBoardImgOriginalImg(boardImgOriginalImg);
+		//iv.setBoardImgSaveImg(boardImgSaveImg);
+		     
+		dao.addOneBoard(vo);
 
-        // 게시글 작성 로직 구현
-        // ...
+    		} catch (UnsupportedEncodingException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
 
         // 작성 완료 후 게시글 목록 페이지로 리다이렉트
-        return "redirect:/board?cmd=listBoard";
+        return "redirect:board?cmd=listBoard";
     }
 
-    private boolean isMeetupMember(int memberNo) {
-        // 회원 번호를 이용하여 모임 회원 여부를 확인하는 로직 구현
-        // 예: DB 조회 등을 통해 확인
-        return true; // 임시로 true 반환
-    }
 }
