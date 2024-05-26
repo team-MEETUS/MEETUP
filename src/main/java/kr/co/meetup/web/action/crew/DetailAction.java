@@ -31,16 +31,22 @@ public class DetailAction implements Action {
 		HttpSession session = req.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("loginMember");
 		
+		if (mvo != null) {
+			System.out.println(mvo.toString());
+			
+		}
+		
 		// 유저의 역할 확인
 		String role = "guest";
 		if (mvo != null) {
 			for (CrewMemberVO vo : cmvo) {
 				if (vo.getMemberNo() == mvo.getMemberNo()) {
 					if (vo.getCrewMemberStatus() == 1) role = "crewMember";		// 일반회원
-					else if (vo.getCrewMemberStatus() == 2) role = "leader";		// 모임장
-					else if (vo.getCrewMemberStatus() == 3) role = "admin";		// 운영진
+					else if (vo.getCrewMemberStatus() == 2) role = "admin";		// 모임장
+					else if (vo.getCrewMemberStatus() == 3) role = "leader";		// 운영진
 					else if (vo.getCrewMemberStatus() == 4) role = "pendingMember";	// 승인대기
 					else role = "kick";	// 강퇴
+					break;
 				} else {
 					role = "member";
 				}

@@ -106,10 +106,26 @@
 		width: 30px;
 	}
 	/* 모임멤버 */
-	.crew-member {
+	.crew-member-wrap {
+		display: flex;
+		justify-content: space-between;
 		width: 100%;
+		margin-top: 10px;
+	}
+	.crew-member {
+		width: 50%;
 		font-weight: bold;
 		margin-bottom: 20px;
+		display: flex;
+	}
+	.member-management-wrap {
+		display: flex;
+	}
+	.group-icon member-management {
+		display: inline-block;
+	}
+	.member-management {
+		color: black;
 	}
 	.crew-member-item {
 		display: flex;
@@ -156,6 +172,36 @@
 		color: black;
 		margin-bottom: 5px;
 	}
+	/* 모달 */
+	/* .modal {
+		display: none; 
+	    position: absolute;
+	    top:0;
+	    left: 0;
+	    width: 100%;
+	    height: 100vh;
+	    overflow: hidden;
+	    background: rgba(0,0,0,0.5);
+	}
+	.modal .modal_popup {
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    padding: 20px;
+	    background: #ffffff;
+	    border-radius: 20px;
+	}
+	.modal .modal_popup .close_btn {
+	    display: block;
+	    padding: 10px 20px;
+	    background-color: rgb(116, 0, 0);
+	    border: none;
+	    border-radius: 5px;
+	    color: #fff;
+	    cursor: pointer;
+	    transition: box-shadow 0.2s;
+	} */
 </style>
 </head>
 <body>
@@ -188,8 +234,19 @@
 		</div>
 		<box-icon class="crew-info-icon" name='dots-vertical-rounded'></box-icon>
 		<div class="edit-delete-popup">
-	        <a href="#">수정하기</a>
-	        <a href="#">삭제하기</a>
+			<c:choose>
+			<c:when test="${role eq 'guest' || role eq 'member' || role eq 'pendingMember'}">
+				<a href="#">신고하기</a>
+			</c:when>
+	        <c:when test="${role eq 'crewMember' || role eq 'admin'}">
+				<a href="#">신고하기</a>
+	        		<a href="#">모임퇴장</a>
+			</c:when>
+			<c:otherwise>
+				<a href="#">수정하기</a>
+	        		<a href="#">삭제하기</a>
+			</c:otherwise>
+			</c:choose>
 	    </div>
 	</div>
 	<!-- 모임 -->
@@ -204,7 +261,7 @@
 						<a href="member?cmd=login" class="btn btn-main">로그인하고 모임 가입하기</a>
 					</c:when>
 					<c:when test="${role eq 'member'}">
-						<a href="crew?cmd=signup" class="btn btn-main">가입신청</a>
+						<a href="crew?cmd=signup&crewNo=${crewVO.crewNo}" class="btn btn-main">가입신청</a>
 					</c:when>
 					<c:when test="${role eq 'pendingMember'}">
 						<a href="" class="btn btn-main">승인중</a>
@@ -219,8 +276,17 @@
 		</div>
 		<!-- 모임 멤버 -->
 		<div class="right-section">
-			<p class="crew-member">모임 멤버 (${crewVO.crewAttend})</p>
+			<div class="crew-member-wrap">
+				<p class="crew-member">모임 멤버 (${crewVO.crewAttend})</p>
+				<c:if test="${role eq 'leader' or role eq 'admin'}">
+					<div class="member-management-wrap">
+						<box-icon class="group-icon" type='solid' name='group'></box-icon>
+						<p class="member-management">관리</p>
+					</div>
+				</c:if>
+			</div>
 			<c:forEach var="crewMemberVO" items="${crewMemberList}">
+			<c:if test="${crewMemberVO.crewMemberStatus != 4}">
 				<a href="" style="text-decoration: none;"><div class="crew-member-item">
 					<c:if test="${empty crewMemberVO.memberSaveImg}">
 						<box-icon type='solid' name='user-circle'></box-icon>
@@ -230,6 +296,7 @@
 					</c:if>
 					<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
 				</div></a>
+			</c:if>
 			</c:forEach>
 		</div>
 	</div>
@@ -238,12 +305,41 @@
 	<div class="meeting-container">
 		<p class="meeting-logo">정모</p>
 	</div>
+	<!--모달 팝업-->
+	<%-- <div class="modal">
+	    <div class="modal_popup">
+	        <h3>멤버관리</h3>
+	        <c:forEach var="crewMemberVO" items="${crewMemberList}">
+			<c:if test="${crewMemberVO.crewMemberStatus != 4}">
+				<a href="" style="text-decoration: none;"><div class="crew-member-item">
+					<c:if test="${empty crewMemberVO.memberSaveImg}">
+						<box-icon type='solid' name='user-circle'></box-icon>
+					</c:if>
+					<c:if test="${not empty crewMemberVO.memberSaveImg}">
+						<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
+					</c:if>
+					<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
+					<c:if test="${crewMemberVO.crewMemberStatus == 4}">
+						<a href="">승인</a>
+						<a href="">거절</a>
+ 					</c:if>
+				</div></a>
+			</c:if>
+			</c:forEach>
+	        <button type="button" class="close_btn">닫기</button>
+	    </div>
+	</div> --%>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var infoIcon = document.querySelector('.crew-info-icon');
     var popup = document.querySelector('.edit-delete-popup');
     
+    /* var memberManagementWrap = document.querySelector('.member-management-wrap');
+    var modal = document.querySelector('.modal');
+    var closeBtn = document.querySelector('.close_btn'); */
+    
+    // 팝업
     infoIcon.addEventListener('click', function(event) {
         var iconRect = infoIcon.getBoundingClientRect();
         var popupRect = popup.getBoundingClientRect();
@@ -266,6 +362,30 @@ document.addEventListener('DOMContentLoaded', function() {
             popup.style.display = 'none';
         }
     });
+    
+ 	/* // 모달 띄우기
+    memberManagementWrap.addEventListener('click', function(event) {
+        modal.style.display = 'block';
+        event.stopPropagation(); // 이벤트 전파 막기
+    });
+
+    // 모달 닫기
+    closeBtn.addEventListener('click', function(event) {
+        modal.style.display = 'none';
+    });
+
+    // 클릭 시 모달을 숨기기 위한 이벤트 리스너 추가
+    document.addEventListener('click', function(event) {
+        if (!popup.contains(event.target) && event.target !== infoIcon) {
+            popup.style.display = 'none';
+        }
+    });
+
+    // 모달 클릭 시 이벤트 전파 막기
+    modal.addEventListener('click', function(event) {
+        event.stopPropagation();
+    }); */
+
 });
 </script>
 </body>

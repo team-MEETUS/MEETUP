@@ -42,7 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT cm.crewMemberNo, cm.crewNo, m.memberNo, cm.crewMemberStatus, cm.createdAt, m.memberNickname, m.memberSaveImg
 		FROM crew_member cm
 			LEFT JOIN member m ON cm.memberNo = m.memberNo 
-		WHERE crewNo = #{crewNo}
+		WHERE crewNo = #{crewNo} 
+		ORDER BY cm.crewMemberStatus DESC
 	</select>
 	
 	<!-- 모든 대 카테고리 조회 -->
@@ -65,8 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 한개 모임회원 등록 -->
 	<insert id="addCrewMember" parameterType="CrewVO">
-		INSERT INTO crew_member (crewNo, memberNo, crewMemberStatus)
-		VALUES(#{crewNo}, #{memberNo}, #{crewMemberStatus})
+		INSERT INTO crew_member (crewNo, memberNo <if test="crewMemberStatus != 0">, crewMemberStatus</if>)
+		VALUES(#{crewNo}, #{memberNo} <if test="crewMemberStatus != 0">, #{crewMemberStatus}</if>)
 	</insert>
 	
 	<!-- 전체 모임 수 조회 -->

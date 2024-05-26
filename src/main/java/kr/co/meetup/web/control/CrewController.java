@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.action.crew.DetailAction;
 import kr.co.meetup.web.action.crew.ListAction;
+import kr.co.meetup.web.action.crew.SignUpAction;
 import kr.co.meetup.web.action.crew.WriteFormAction;
 
 @SuppressWarnings("serial")
@@ -36,7 +37,9 @@ public class CrewController extends HttpServlet {
 			action = new WriteFormAction();
 		} else if (cmd.equals("detail")) {
 			action = new DetailAction();
-		} 
+		} else if (cmd.equals("signup")) {
+			action = new SignUpAction();
+		}
 		
 		url = action.execute(req, resp);
 		RequestDispatcher rd = req.getRequestDispatcher(url);

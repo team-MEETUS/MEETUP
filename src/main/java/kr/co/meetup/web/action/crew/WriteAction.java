@@ -106,7 +106,7 @@ public class WriteAction extends HttpServlet {
 			// DB 에 모임회원 저장
 			cmvo.setCrewNo(crewNo);
 			cmvo.setMemberNo(loginMember.getMemberNo());
-			cmvo.setCrewMemberStatus(2);
+			cmvo.setCrewMemberStatus(3);
 			
 			dao.addCrewMember(cmvo);
 			
