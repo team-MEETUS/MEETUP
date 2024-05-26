@@ -17,6 +17,7 @@ import kr.co.meetup.web.vo.CrewMemberVO;
 import kr.co.meetup.web.vo.CrewVO;
 import kr.co.meetup.web.vo.MemberVO;
 
+@SuppressWarnings("serial")
 @WebServlet("/crewWrite")
 public class WriteAction extends HttpServlet {
 	
@@ -24,7 +25,7 @@ public class WriteAction extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 현재 로그인한 회원 vo 가져오기
 		HttpSession session = req.getSession();
-		MemberVO loginMember = (MemberVO) session.getAttribute("MemberVO");
+		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
 		
 		// 로그인한 회원일 경우
 		if (loginMember != null) {

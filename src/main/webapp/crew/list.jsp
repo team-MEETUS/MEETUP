@@ -151,7 +151,7 @@
     </ul>
 	
 	<!-- 모임등록 버튼 -->
-	<c:if test="${not empty sessionScope.MemberVO}">
+	<c:if test="${not empty sessionScope.loginMember}">
 		<div class="d-flex justify-content-end">
 			<a href="crew?cmd=write" class="btn btn-main">모임등록</a>
 		</div>
