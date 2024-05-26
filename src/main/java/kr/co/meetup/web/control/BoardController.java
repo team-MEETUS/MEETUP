@@ -15,7 +15,7 @@ import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.action.board.DetailBoardAction;
 import kr.co.meetup.web.action.board.ListBoardAction;
 import kr.co.meetup.web.action.board.WriteBoardAction;
-import kr.co.meetup.web.action.board.WriteFormBoardAction;
+import kr.co.meetup.web.action.board.*;
 
 @SuppressWarnings("serial")
 @WebServlet("/board")
@@ -40,14 +40,15 @@ public class BoardController extends HttpServlet {
 			action = new WriteFormBoardAction();
 		} else if (cmd.equals("writeOkBoard")) {
 			action = new WriteBoardAction();
-		} else if (cmd.equals("detailBoard")) {
+		} else if (cmd.equals("detailboard")) {
 			action = new DetailBoardAction();
+		} else if (cmd.equals("updateBoard")) {
+			action = new updateFormBoardAction();
+		} else if (cmd.equals("updateOkBoard")) {
+			action = new updateBoardAction();
+		} else if (cmd.equals("deleteBoard")) {
+			action = new DeleteBoardAction();
 		}
-		/*
-		 * else if (cmd.equals("updateBoard")) { action = new updateFormBoardAction(); }
-		 * else if (cmd.equals("updateOkBoard")) { action = new updateBoardAction(); }
-		 * else if (cmd.equals("deleteBoard")) { action = new DeleteBoardAction(); }
-		 */
 
 		url = action.execute(req, resp);
 

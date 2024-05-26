@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,14 @@
 	<table class="table table-striped">
 		<tr>
 			<th>카테고리</th>
-			<td>${vo.boardCategoryName}</td>
+		      <c:choose>
+		            <c:when test="${vo.boardCategoryNo == 1}">공지사항</c:when>
+		            <c:when test="${vo.boardCategoryNo == 2}">가입인사</c:when>
+		            <c:when test="${vo.boardCategoryNo == 3}">정모후기</c:when>
+		            <c:when test="${vo.boardCategoryNo == 4}">자유</c:when>
+		            <c:when test="${vo.boardCategoryNo == 5}">투표</c:when>
+		            <c:otherwise>${vo.boardCategoryNo}</c:otherwise>
+		        </c:choose>
 			<th>조회수</th>
 			<td>${vo.boardHit}</td>
 			<th>작성일시</th>

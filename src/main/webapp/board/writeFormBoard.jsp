@@ -113,7 +113,7 @@ td .btn {
 				
 					<th>카테고리</th>
 						<td>
-							<input class="btn btn-success category-btn" type="button" name="boardCategoryName1" value="공지사항" data-category-no="1">
+						<input class="btn btn-success category-btn" type="button" name="boardCategoryName1" value="공지사항" data-category-no="1">
 			                <input class="btn btn-success category-btn" type="button" name="boardCategoryName2" value="가입인사" data-category-no="2">
 			                <input class="btn btn-success category-btn" type="button" name="boardCategoryName3" value="정모후기" data-category-no="3">
 			                <input class="btn btn-success category-btn" type="button" name="boardCategoryName4" value="자유" data-category-no="4">

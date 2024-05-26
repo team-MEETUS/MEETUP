@@ -25,7 +25,9 @@
 	<div class="container">
 		<table class="table table-striped">
 			<tr>
-				<td><c:forEach var="BoardCategoryVO"
+				<td>
+					<a href="board?cmd=listBoard">전체</a>
+					<c:forEach var="BoardCategoryVO"
 						items="${BoardCategoryList}">
 						<a
 							href="board?cmd=listBoard&boardCategoryNo=${BoardCategoryVO.boardCategoryNo}">${BoardCategoryVO.boardCategoryName}</a>
@@ -55,8 +57,45 @@
 						class="btn btn-primary">등록</a></td>
 				</tr>
 			</table>
+			
+			<div>
+			<nav aria-label="Page navigation example">
+			 	<ul class="pagination">
+			 		<c:if test="${isPrev}">
+				    	<li class="page-item"><a href="board?cmd=listBoard&cp=${currentPage-1}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link"><</a></li>
+				    </c:if>
+				    
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">
+						<li class="page-item"><a class="page-link" href="board?cmd=listBoard&cp=${i}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>">[${i}]</a></li>
+					</c:forEach>
+				    
+				    <c:if test="${isNext}">
+				    	<li class="page-item"><a
+								href="board?cmd=listBoard&cp=${currentPage+1}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>"
+								class="page-link">></a></li>
+				    </c:if>
+			 	</ul>
+			</nav>
+		</div>
+			
 	</div>
 </body>
+<script>
+
+function getQueryParam(param) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+function checkAndShowAlert() {
+    var msgParam = getQueryParam('msg');
+    if (msgParam !== null) {
+        alert('모임 회원에게만 공개됩니다.');
+    }
+}
+
+window.onload = checkAndShowAlert;
+</script>
 </html>
 
 

@@ -19,17 +19,24 @@ public class DetailBoardAction implements Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		BoardDAO dao = new BoardDAO();
 		resp.setContentType("text/html;charset=UTF-8");
 		String b = req.getParameter("boardNo");
+		int boardNo = Integer.parseInt(b); // 게시글 조회수 1 증가 new
 		if(b==null) {
 			return "redirect:board?cmd=listBoard";
 		}
+		//Integer crewNo = (Integer) req.getSession().getAttribute("crew");
+		Integer crewNo=1;
+		BoardVO vo= dao.selectOneBoard(boardNo);
 		
-		int boardNo = Integer.parseInt(b); // 게시글 조회수 1 증가 new
-		BoardDAO dao = new BoardDAO();
+		if(vo.getCrewNo()!=crewNo) {
+			return "redirect:board?cmd=listBoard&msg=crewN";
+		}
+		
 		dao.raiseHitBoard(boardNo); 
 		dao.selectOneBoard(boardNo); 
-		BoardVO vo= dao.selectOneBoard(boardNo);
+		vo.setBoardHit(vo.getBoardHit()+1);
 		req.setAttribute("vo", vo);
 		return "board/detailBoard.jsp";
 	}
