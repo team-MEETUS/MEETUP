@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.co.meetup.web.vo.CategoryBigVO;
 import kr.co.meetup.web.vo.CategorySmallVO;
+import kr.co.meetup.web.vo.CrewMemberVO;
 import kr.co.meetup.web.vo.CrewVO;
 import kr.co.meetup.web.vo.GeoVO;
 
@@ -83,9 +84,17 @@ public class CrewDAO {
 	}
 	
 	// 모임 등록 
-	public void addCrew(CrewVO vo) {
+	public int addCrew(CrewVO vo) {
 		SqlSession ss = factory.openSession(true);
 		ss.insert("kr.co.meetup.crew.addCrew", vo);
+		ss.close();
+		return vo.getCrewNo();
+	}
+	
+	// 모임 회원 등록
+	public void addCrewMember(CrewMemberVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.insert("kr.co.meetup.crew.addCrewMember", vo);
 		ss.close();
 	}
 

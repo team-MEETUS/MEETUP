@@ -9,6 +9,65 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+	window.onload = function() {
+		let btn = document.getElementById("btn");
+		
+		// 유효성 검사
+		btn.onclick = function(event) {
+			let frm = document.forms[0];
+			
+			if (frm.categoryBigNo.value == '') {
+				alert("카테고리를 선택하세요");
+				frm.categoryBigNo.focus();
+				event.preventDefault();
+				return;
+			}
+			
+			if (frm.geoCity.value == '') {
+				alert("지역을 선택하세요");
+				frm.geoCity.focus();
+				event.preventDefault();
+				return;
+			}
+
+			if (frm.crewName.value.trim() == '') {
+				alert("모임명을 입력하세요");
+				frm.crewName.focus();
+				event.preventDefault();
+				return;
+			}
+
+			if (frm.crewName.value.length > 25) {
+				alert("모임명은 최대 25자까지 입력 가능합니다");
+				frm.crewName.focus();
+				event.preventDefault();
+				return;
+			}
+
+			if (frm.crewMax.value.trim() == '' || isNaN(frm.crewMax.value) || frm.crewMax.value <= 0 || frm.crewMax.value > 300) {
+				alert("정원을 올바르게 입력하세요 (1~300)");
+				frm.crewMax.focus();
+				event.preventDefault();
+				return;
+			}
+
+			if (frm.crewContent.value.trim() == '') {
+				alert("설명을 입력하세요");
+				frm.crewContent.focus();
+				event.preventDefault();
+				return;
+			}
+
+			if (frm.crewContent.value.length > 2000) {
+				alert("설명은 최대 2000자까지 입력 가능합니다");
+				frm.crewContent.focus();
+				event.preventDefault();
+				return;
+			}
+		}
+	}
+</script>
 </head>
 <body>
 <div class="container">
@@ -51,7 +110,7 @@
 		<p>배너 이미지</p>
 		<input type="file" name="crewBanner" id="" />
 		
-		<input type="submit" value="등록" class="btn btn-primary" />
+		<input type="submit" value="등록" id="btn" class="btn btn-primary" /> 
 	</form>
 </div>
 <script>

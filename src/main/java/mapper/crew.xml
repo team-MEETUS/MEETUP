@@ -46,9 +46,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 한개 모임 등록 -->
-	<insert id="addCrew" parameterType="CrewVO">
-	    INSERT INTO crew (geoCode, categoryBigNo, categorySmallNo, memberNo, crewName, crewContent, crewIntro, crewMax, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner)
-	    VALUES(#{geoCode}, #{categoryBigNo}, #{categorySmallNo}, #{memberNo}, #{crewName}, #{crewContent}, #{crewIntro}, #{crewMax}, #{crewOriginalImg}, #{crewSaveImg}, #{crewOriginalBanner}, #{crewSaveBanner})
+	<insert id="addCrew" parameterType="CrewVO" useGeneratedKeys="true" keyProperty="crewNo">
+	    INSERT INTO crew (geoCode, categoryBigNo, <if test="categorySmallNo != null">categorySmallNo,</if> memberNo, crewName, crewContent, crewIntro, crewMax, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner)
+	    VALUES(#{geoCode}, #{categoryBigNo}, <if test="categorySmallNo != null">#{categorySmallNo},</if> #{memberNo}, #{crewName}, #{crewContent}, #{crewIntro}, #{crewMax}, #{crewOriginalImg}, #{crewSaveImg}, #{crewOriginalBanner}, #{crewSaveBanner})
+	</insert>
+	
+	<!-- 한개 모임회원 등록 -->
+	<insert id="addCrewMember" parameterType="CrewVO">
+		INSERT INTO crew_member (crewNo, memberNo, crewMemberStatus)
+		VALUES(#{crewNo}, #{memberNo}, #{crewMemberStatus})
 	</insert>
 	
 	<!-- 전체 모임 수 조회 -->
