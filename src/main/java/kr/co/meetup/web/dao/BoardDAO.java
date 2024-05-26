@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -36,19 +37,31 @@ public class BoardDAO {
 		ss.close();
 		return count;
 	}
-
-	// 모임별 게시판 전체 조회(crewNo 조건 포함)
-	public List<BoardVO> selectAllBoardBycrewNo(int crewNo, int startNo, int recordPerPage) {
+	public int selectAllBoardCount() {
 		SqlSession ss = factory.openSession(true);
-
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("crewNo", crewNo);
-		map.put("startNo", startNo);
-		map.put("recordPerPage", recordPerPage);
-		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectAllBoardBycrewNo", map);
+		int count = ss.selectOne("kr.co.meetup.web.board.selectAllBoardCount");
 		ss.close();
-		return list;
+		return count;
 	}
+	public int selectAllBoardByBoardCategoryNo(int boardCategoryNo) {
+		SqlSession ss = factory.openSession(true);
+		int count = ss.selectOne("kr.co.meetup.web.board.selectAllBoardByBoardCategoryNo",boardCategoryNo);
+		ss.close();
+		return count;
+	}
+
+//	// 모임별 게시판 전체 조회(crewNo 조건 포함)
+//	public List<BoardVO> selectAllBoardBycrewNo(int crewNo, int startNo, int recordPerPage) {
+//		SqlSession ss = factory.openSession(true);
+//
+//		HashMap<String, Integer> map = new HashMap<String, Integer>();
+//		map.put("crewNo", crewNo);
+//		map.put("startNo", startNo);
+//		map.put("recordPerPage", recordPerPage);
+//		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectAllBoardBycrewNo", map);
+//		ss.close();
+//		return list;
+//	}
 
 	// 게시판 카테고리 조회
 	public List<BoardCategoryVO> selectAllBoardCategory() {
@@ -58,17 +71,22 @@ public class BoardDAO {
 		return list;
 	}
 
-	// 게시판 카테고리별 모든 게시글 조회
-	public List<BoardVO> selectBoardByCategory(int bc) {
+	// 게시판 카테고리별 게시글 조회
+	public List<BoardVO> selectBoardByCategory(int bc,int startNo,int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
-		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardByCategory", bc);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("boardCategoryNo", bc);
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
+		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardByCategory", map);
 		ss.close();
 		return list;
 	}
 	
-	public List<BoardVO> selectBoardAllByCategory() {
+	public List<BoardVO> selectBoardAllByCategory(int startNo,int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
-		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardAllByCategory");
+		Map<String, Integer> map = Map.of("startNo", startNo,"recordPerPage", recordPerPage);
+		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardAllByCategory",map);
 		ss.close();
 		return list;
 	}

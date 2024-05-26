@@ -10,6 +10,14 @@
 		SELECT count(*) as cnt FROM board
 		WHERE crewNo=#{crewNo}
 	</select>
+	<select id="selectAllBoardCount" resultType="int">
+		SELECT count(*) as cnt FROM board
+		   where boardStatus !=0 
+	</select>
+	<select id="selectAllBoardByBoardCategoryNo" resultType="int">
+		SELECT count(*) as cnt FROM board
+		where boardCategoryNo =#{boardCategoryNo} and boardStatus !=0 
+	</select>
 	
 	<!-- 게시판 모임별 모든 게시글 조회 -->
 	<select id="selectAllBoardBycrewNo" parameterType="HashMap"	resultType="BoardVO">
@@ -32,22 +40,25 @@
 	</select>	
 	
 	<!-- 게시판 카테고리별 모든 게시글 조회 -->
-	 <select id="selectBoardByCategory" parameterType="int" resultType="BoardVO">
+	 <select id="selectBoardByCategory" parameterType="HashMap" resultType="BoardVO">
 		SELECT b.boardNo, b.crewNo, b.boardCategoryNo, b.memberNo, b.boardTitle, b.boardContent, b.boardHit, b.boardStatus, b.createdAt, b.updatedAt
         FROM board b
         LEFT JOIN board_category c ON b.boardCategoryNo = c.boardCategoryNo
         LEFT JOIN board_img i ON b.boardNo = i.boardNo
         LEFT JOIN crew cc ON b.crewNo = cc.crewNo
         LEFT JOIN member m ON b.memberNo = m.memberNo
-        WHERE b.boardCategoryNo =#{boardCategoryNo}
+        WHERE b.boardCategoryNo =#{boardCategoryNo} and boardStatus !=0
+        LIMIT #{recordPerPage} OFFSET #{startNo};
     </select>
-    	 <select id="selectBoardAllByCategory" parameterType="int" resultType="BoardVO">
+    <select id="selectBoardAllByCategory" parameterType="HashMap" resultType="BoardVO">
 		SELECT b.boardNo, b.crewNo, b.boardCategoryNo, b.memberNo, b.boardTitle, b.boardContent, b.boardHit, b.boardStatus, b.createdAt, b.updatedAt
         FROM board b
         LEFT JOIN board_category c ON b.boardCategoryNo = c.boardCategoryNo
         LEFT JOIN board_img i ON b.boardNo = i.boardNo
         LEFT JOIN crew cc ON b.crewNo = cc.crewNo
         LEFT JOIN member m ON b.memberNo = m.memberNo
+        where boardStatus !=0 
+        LIMIT #{recordPerPage} OFFSET #{startNo};
     </select>
 	
 	<!-- 게시글 1건 조회 -->
@@ -67,7 +78,7 @@
 	<!-- 게시글 수정 -->
 	<update id="updateOneBoard" parameterType="BoardVO">
 	    UPDATE board
-	    SET boardCategoryNo = #{boardCategoryNo},
+	    SET 
 	        boardTitle = #{boardTitle},
 	        boardContent = #{boardContent}
 	    WHERE boardNo = #{boardNo}

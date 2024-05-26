@@ -32,8 +32,15 @@ public class ListBoardAction implements Action {
 		}
 		
 		// 총 게시물 수
-		int totalCount = dao.selectAllBoardByCrewNoCnt(crewNo);
+		int totalCount =0;
 		
+		if (bc != null) {
+			totalCount = dao.selectAllBoardByBoardCategoryNo(Integer.parseInt(bc));
+		}else {
+		//bc 값이 없으면 모임별 전체 게시글 출력
+			totalCount = dao.selectAllBoardCount();
+		}
+
 		// 한 페이지당 게시글 수 : 10
 		int recordPerPage = 10;
 		// 총 페이지 수
@@ -89,17 +96,24 @@ public class ListBoardAction implements Action {
 			isNext = true;
 		}
 
-		//bc 값이 있으면 해당 카테고리의 게시글만 가져오기
+		//bc(boardCategory)값이 있으면 해당 카테고리의 게시글만 가져오기
 		List<BoardVO> boardList;
 		if (bc != null) {
-			boardList = dao.selectBoardByCategory(Integer.parseInt(bc));
+			boardList = dao.selectBoardByCategory(Integer.parseInt(bc),startNo,recordPerPage);
 		}else {
 		//bc 값이 없으면 모임별 전체 게시글 출력
-			boardList = dao.selectBoardAllByCategory();
+			boardList = dao.selectBoardAllByCategory(startNo,recordPerPage);
 		}
-		System.out.println(boardList.toString());
+
 		req.setAttribute("BoardCategoryList", BoardCategoryList);
 		req.setAttribute("boardList", boardList);
+		req.setAttribute("isPrev", isPrev);
+		req.setAttribute("isNext", isNext);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		req.setAttribute("currentPage", currentPage);
+		req.setAttribute("boardCategoryNo",bc);
+		
 
 		return "board/listBoard.jsp";
 	}
