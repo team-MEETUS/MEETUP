@@ -2,11 +2,13 @@
 package kr.co.meetup.web.action.board;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.BoardDAO;
+import kr.co.meetup.web.vo.BoardCommentVO;
 import kr.co.meetup.web.vo.BoardVO;
 
 public class DetailBoardAction implements Action {
@@ -33,11 +35,13 @@ public class DetailBoardAction implements Action {
 		if(vo.getCrewNo()!=crewNo) {
 			return "redirect:board?cmd=listBoard&msg=crewN";
 		}
+		List<BoardCommentVO> commentList=dao.selectComment(boardNo);
 		
 		dao.raiseHitBoard(boardNo); 
 		dao.selectOneBoard(boardNo); 
 		vo.setBoardHit(vo.getBoardHit()+1);
 		req.setAttribute("vo", vo);
+		req.setAttribute("commentList", commentList);
 		return "board/detailBoard.jsp";
 	}
 }

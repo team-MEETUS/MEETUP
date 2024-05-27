@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.co.meetup.web.vo.BoardCategoryVO;
+import kr.co.meetup.web.vo.BoardCommentVO;
 import kr.co.meetup.web.vo.BoardVO;
 
 public class BoardDAO {
@@ -83,6 +84,7 @@ public class BoardDAO {
 		return list;
 	}
 	
+	//리스트 페이징 처리용
 	public List<BoardVO> selectBoardAllByCategory(int startNo,int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
 		Map<String, Integer> map = Map.of("startNo", startNo,"recordPerPage", recordPerPage);
@@ -131,5 +133,29 @@ public class BoardDAO {
 		ss.update("kr.co.meetup.web.board.raiseHitBoard", boardNo);
 		ss.close();
 	}
-
+	
+	
+	//댓글 작성
+	public void addOneComment(BoardCommentVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.insert("kr.co.meetup.web.board.addOneComment", vo);
+		ss.close();
+	}
+	
+	//댓글 목록 조회
+	public List<BoardCommentVO> selectComment(int boardNo) {
+		SqlSession ss = factory.openSession(true);
+		List<BoardCommentVO> list = ss.selectList("kr.co.meetup.web.board.selectComment", boardNo);
+		ss.close();
+		return list;
+	}
+	
+	// 댓글 수정
+	public void updateOneBoardComment(BoardCommentVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.web.board.updateOneBoardComment", vo);
+		System.out.println(vo.getBoardCommentContent());
+		ss.close();
+	}
+	
 }
