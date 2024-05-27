@@ -1,0 +1,85 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  padding: 20px;
+  height: 100px; /* 고정된 높이 설정 */
+  box-sizing: border-box; /* padding을 포함한 전체 높이 계산 */
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+
+    .header-logo a {
+      font-size: 30px;
+      color: var(--orange-5);
+      font-style: italic;
+    }
+
+    .header-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+
+      a:hover {
+        color: var(--orange-5);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    }
+  }
+
+  .header-auth {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    a:hover {
+      color: var(--orange-5);
+    }
+  }
+
+  .header-profile {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    .profile-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      min-width: 140px;
+
+      .link {
+        display: block;
+        padding: 12px 16px;
+        color: black;
+      }
+
+      .link:hover {
+        color: var(--orange-5);
+        background-color: #f1f1f1;
+      }
+    }
+  }
+
+  .header-profile:hover .dropdown-menu {
+    display: block;
+  }
+}
