@@ -26,10 +26,13 @@
 <body>
 	<div class="container">
 		<table class="table table-striped">
-			<input type="hidden" name="loginMember" id="loginMember" value="${loginMember.memberNo}" />
-			<c:forEach var="CrewMemberVO" items="${crewMemberList}">
-				<input type="hidden" name="CrewMember" value="${CrewMemberVO.memberNo}" />
-			</c:forEach>
+			<input type="hidden" name="loginMemberNo" id="loginMemberNo" value="${loginMember.memberNo}" />
+			<script>
+				var crewMemberList = [];
+			    <c:forEach var="CrewMember" items="${crewMemberList}">
+			        crewMemberList.push("${CrewMember.memberNo}");
+			    </c:forEach>
+			</script>
 			<tr>
 				<td>
 					<a href="board?cmd=listBoard&crewNo=${boardCrewNo}">전체</a>
@@ -52,7 +55,7 @@
 						<td>${BoardVO.boardNo}</td>
 						<td>${memberList[status.index].memberNickname}</td>
 						<td>
-							<a href="board?cmd=detailboard&boardNo=${BoardVO.boardNo}&crewNo=${boardCrewNo}" class="boardDetail" data-crewMemberNo="${CrewMemberVO.memberNo}">${BoardVO.boardTitle}</a>
+							<a href="board?cmd=detailboard&boardNo=${BoardVO.boardNo}&crewNo=${boardCrewNo}" class="boardDetail">${BoardVO.boardTitle}</a>
 						</td>
 						<td>${BoardVO.boardHit}</td>
 						<td><fmt:formatDate value="${BoardVO.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
@@ -60,7 +63,7 @@
 				</c:forEach>
 				<tr>
 					<td colspan="5">
-						<a href="board?cmd=writeBoard" class="btn btn-primary">등록</a>
+						<a href="board?cmd=writeBoard" class="btn btn-primary boardDetail">등록</a>
 					</td>
 				</tr>
 			</table>
@@ -70,19 +73,19 @@
 				 	<ul class="pagination">
 				 		<c:if test="${isPrev}">
 					    	<li class="page-item">
-					    		<a href="board?cmd=listBoard&cp=${currentPage-1}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link"><</a>
+					    		<a href="board?cmd=listBoard&cp=${currentPage-1}&crewNo=${boardCrewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link"><</a>
 					    	</li>
 					    </c:if>
 					    
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
 							<li class="page-item">
-								<a class="page-link" href="board?cmd=listBoard&cp=${i}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>">[${i}]</a>
+								<a class="page-link" href="board?cmd=listBoard&cp=${i}&crewNo=${boardCrewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>">[${i}]</a>
 							</li>
 						</c:forEach>
 					    
 					    <c:if test="${isNext}">
 					    	<li class="page-item">
-					    		<a href="board?cmd=listBoard&cp=${currentPage+1}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link">></a>
+					    		<a href="board?cmd=listBoard&cp=${currentPage+1}&crewNo=${boardCrewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link">></a>
 							</li>
 					    </c:if>
 				 	</ul>
@@ -94,17 +97,14 @@
 	<script>
 		$(document).ready(function() {
 			$(".boardDetail").on("click", function(event) {
-				var loginMember = $("#loginMember").val();
-				var crewMemberNo = $(this).data('crewMemberNo');
-				if (!loginMember) {
+				var loginMemberNo = $("#loginMemberNo").val();
+				var crewMemberNoList = crewMemberList;
+				var isCrewMember = crewMemberNoList.includes(loginMemberNo);
+				if (!loginMemberNo || !isCrewMember) {
 					event.preventDefault();
-					alert('모임 회원만 볼 수 있습니다.');
+					alert('모임 회원만 가능한 기능입니다.');
 				}
 				
-				if (loginMemberNo != crewMemberNo) {
-		            event.preventDefault();
-		            alert('모임 회원만 볼 수 있습니다.');
-		        }
 			});
 		});
 	</script>
