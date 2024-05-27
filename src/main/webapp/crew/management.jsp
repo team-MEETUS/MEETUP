@@ -31,6 +31,28 @@
 		color: black;
 		font-weight: bold;
 	}
+	/* 모임회원 */
+	.crew-member-item {
+		display: flex;
+		align-items: center;
+		margin: 10px;
+		width: 100%;
+	}
+	.crew-member-item a {
+	    text-decoration: none;
+	}
+	.crew-member-img, box-icon[type="solid"][name="user-circle"] {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-right: 20px;
+	}
+	.crew-member-nickname {
+		font-weight: bold;
+		line-height: 50px; 
+		margin: 0; 
+		color: black;
+	}
 </style>
 </head>
 <body>
@@ -44,20 +66,43 @@
 			<a href="">가입신청</a>
 		</li>
 	</ul>
-	<!-- 모임회원 -->
+	
 	<c:forEach var="crewMemberVO" items="${crewMemberList}">
-	<c:if test="${crewMemberVO.crewMemberStatus != 0 && crewMemberVO.crewMemberStatus != 4 && crewMemberVO.crewMemberStatus != 5}">
-		<a href="" style="text-decoration: none;"><div class="crew-member-item">
-			<c:if test="${empty crewMemberVO.memberSaveImg}">
-				<box-icon type='solid' name='user-circle'></box-icon>
+		<!-- 회원멤버만 -->
+		<c:if test="${crewMemberVO.crewMemberStatus != 0 && crewMemberVO.crewMemberStatus != 4 && crewMemberVO.crewMemberStatus != 5}">
+			<a href="" style="text-decoration: none;"><div class="crew-member-item">
+				<c:if test="${empty crewMemberVO.memberSaveImg}">
+					<box-icon type='solid' name='user-circle'></box-icon>
+				</c:if>
+				<c:if test="${not empty crewMemberVO.memberSaveImg}">
+					<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
+				</c:if>
+				<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
+			</div></a>
+			<!--  운영진 -->
+			<c:if test="${crewMemberVO.crewMemberStatus == 2}">
+				<!-- 모임장만 가능 -->
+				<c:if test="${role eq 'leader'}">
+					<a href="">모임장양도</a>
+				</c:if>
+				<!-- 모임장 & 운영진(본인 제외) -->
+				<c:if test="${role eq 'leader' || (role eq 'adminMember' && sessionScope.loginMember.memberNo ne crewMemberVO.memberNo)}">
+					<a href="">운영진해제</a>
+				</c:if>
 			</c:if>
-			<c:if test="${not empty crewMemberVO.memberSaveImg}">
-				<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
+			<!-- 일반회원 -->
+			<c:if test="${crewMemberVO.crewMemberStatus == 1}">
+				<!-- 모임장만 가능 -->
+				<c:if test="${role eq 'leader'}">
+					<a href="">모임장양도</a>
+				</c:if>
+				<!-- 모임장 & 운영진 -->
+				<a href="">운영진임명</a>
+				<a href="">강퇴</a>
 			</c:if>
-			<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
-		</div></a>
-	</c:if>
+		</c:if>
 	</c:forEach>
+	
 	
 	<hr />
 	

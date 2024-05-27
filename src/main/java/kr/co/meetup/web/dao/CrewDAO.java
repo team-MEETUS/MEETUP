@@ -63,6 +63,17 @@ public class CrewDAO {
 		return list;
 	}
 	
+	// 한개 모임회원 조회
+	public CrewMemberVO selectCrewMemberByCrewNoMemberNo(int crewNo, int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		map.put("memberNo", memberNo);
+		CrewMemberVO vo = ss.selectOne("kr.co.meetup.crew.selectCrewMemberByCrewNoMemberNo", map);
+		ss.close();
+		return vo;
+	}
+	
 	// 카테고리 별 전체 모임 조회
 	public List<CrewVO> selectCrewByCategory(int ctg, int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);

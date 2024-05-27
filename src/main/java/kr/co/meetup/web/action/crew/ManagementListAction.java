@@ -48,9 +48,13 @@ public class ManagementListAction implements Action {
 			}
 		}
 		
+		// 확인용
+		System.out.println("role : " + role);
+		
 		// attribute 에 추가
 		req.setAttribute("crewNo", crewNo);
 		req.setAttribute("crewMemberList", cmvo);
+		req.setAttribute("role", role);
 		
 		
 		return "crew/management.jsp";
