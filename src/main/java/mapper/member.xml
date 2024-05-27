@@ -39,4 +39,10 @@
 		SET memberStatus = 0 
 		WHERE memberNo = #{memberNo}
 	</update>
+	<!-- 회원 번호로 정보 조회 -->
+	<select id="selectOneMemberByMemberNo" parameterType="int" resultType="MemberVO">
+		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberIntro, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt 
+		FROM member 
+		WHERE memberNo = #{memberNo}
+	</select>
 </mapper>

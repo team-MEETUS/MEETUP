@@ -35,10 +35,17 @@ public class UpdateAction extends HttpServlet {
 			String memberOriginalImg = mr.getOriginalFileName("memberImg");
 			String memberSaveImg = mr.getFilesystemName("memberImg");
 			
+			MemberDAO mdao = new MemberDAO();
+			MemberVO existingMember = mdao.selectOneMemberByMemberNo(memberNo);
+			
+			if(memberOriginalImg == null) {
+				memberOriginalImg = existingMember.getMemberOriginalImg();
+				memberSaveImg = existingMember.getMemberSaveImg();
+			}
+			
 			GeoDAO gdao = new GeoDAO();
 			int geoCode = gdao.selectOneGeoByCity(geoCity, geoDistrict);
 			
-			MemberDAO mdao = new MemberDAO();
 			MemberVO vo = new MemberVO();
 			
 			vo.setMemberNo(memberNo);

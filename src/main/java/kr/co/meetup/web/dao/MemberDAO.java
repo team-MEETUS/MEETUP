@@ -86,4 +86,12 @@ public class MemberDAO {
 		ss.update("kr.co.meetup.member.deleteOneMemberByMemberNo", memberNo);
 		ss.close();
 	}
+	// 회원 번호로 정보 조회
+	public MemberVO selectOneMemberByMemberNo(int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		MemberVO vo = ss.selectOne("kr.co.meetup.member.selectOneMemberByMemberNo", memberNo);
+		ss.close();
+		
+		return vo;
+	}
 }
