@@ -36,16 +36,23 @@
 			<td colspan="5">${vo.boardTitle}</td>
 		</tr>
 		<tr>
+			<th>작성자</th>
+			<td colspan="5">${boardMemberVO.memberNickname}</td>
+		</tr>
+		<tr>
 			<th>내용</th>
 			<td colspan="5">${vo.boardContent}</td>
 		</tr>
 		<tr>
 			<td colspan="6">
-				<a href="board" class="btn btn-primary">목록</a>
-				<a href="board?cmd=updateBoard&bno=${vo.boardNo}" class="btn btn-success">수정</a>
+				<a href="board?cmd=listBoard&crewNo=${crewNo}" class="btn btn-primary">목록</a>
+				<c:if test="${loginMember.memberNo == vo.memberNo}">
+					<a href="board?cmd=updateBoard&bno=${vo.boardNo}" class="btn btn-success">수정</a>
+				</c:if>
 		<%-- <a href="board?cmd=deleteBoard&bno=${vo.boardNo}" class="btn btn-danger">삭제</a> --%>
-				<button type="button" class="btn btn-danger" onclick="deleteBoard(${vo.boardNo})">삭제</button>
-				
+				<c:if test="${loginMember.memberNo == vo.memberNo}">
+					<button type="button" class="btn btn-danger" onclick="deleteBoard(${vo.boardNo})">삭제</button>
+				</c:if>
 			</td>
 		</tr>
 	</table>

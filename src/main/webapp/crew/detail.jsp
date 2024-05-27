@@ -206,10 +206,6 @@
 </head>
 <body>
 <div class="container">
-	<div class="icon-wrapper">
-    <box-icon name='crown' type='solid' color='#ff0000'></box-icon>
-</div>
-
 	<!-- 메뉴 -->
 	<ul class="crew-menu__items">
 		<li>
@@ -296,7 +292,7 @@
 				</c:if>
 			</div>
 			<c:forEach var="crewMemberVO" items="${crewMemberList}">
-			<c:if test="${crewMemberVO.crewMemberStatus != 4}">
+			<c:if test="${crewMemberVO.crewMemberStatus != 0 && crewMemberVO.crewMemberStatus != 4 && crewMemberVO.crewMemberStatus != 5}">
 				<a href="" style="text-decoration: none;"><div class="crew-member-item">
 					<c:if test="${empty crewMemberVO.memberSaveImg}">
 						<box-icon type='solid' name='user-circle'></box-icon>
