@@ -32,10 +32,6 @@ public class ListBoardAction implements Action {
 		if(cn != null) {
 			crewNo =Integer.parseInt(cn);
 		} 
-//		else {
-//			//  임시 crewNo
-//			crewNo = 2;
-//		}
 		
 		// 총 게시물 수
 		int totalCount =0;
