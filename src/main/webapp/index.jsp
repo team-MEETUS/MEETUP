@@ -15,12 +15,14 @@
 		<div><a href="member?cmd=logout">로그아웃</a></div>
 		<div><a href="crew?cmd=list">모임</a></div>
 		<div><a href="meeting?cmd=list">정모</a></div>
+		<div><a href="board?cmd=listBoard">게시판</a></div>
 	</c:if>
 	<c:if test="${empty sessionScope.loginMember}">
 		<div><a href="member?cmd=login">로그인</a></div>
 		<div><a href="member?cmd=signup">회원가입</a></div>
 		<div><a href="crew?cmd=list">모임</a></div>
 		<div><a href="meeting?cmd=list">정모</a></div>
+		<div><a href="board?cmd=listBoard">게시판</a></div>
 	</c:if>
 </body>
 </html>
