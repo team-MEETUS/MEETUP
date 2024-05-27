@@ -132,6 +132,23 @@ public class CrewDAO {
 		ss.close();
 	}
 	
+	// 모임장 수정
+	public void updateCrewMemberLeader(int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.crew.updateCrewMemberLeader", crewNo);
+		ss.close();
+	}
+	
+	// 모임 퇴장
+	public void deleteCrewMember(int crewNo, int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		map.put("memberNo", memberNo);
+		ss.delete("kr.co.meetup.crew.deleteCrewMember", map);
+		ss.close();
+	}
+	
 	// 모임 회원 수 수정 (+1 / -1)
 	public void updateCrewAttend(int crewNo, int no) {
 		SqlSession ss = factory.openSession(true);

@@ -84,6 +84,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE crewNo = #{crewNo} AND memberNo = #{memberNo}
 	</update>
 	
+	<!-- 모임장 수정 -->
+	<update id="updateCrewMemberLeader" parameterType="int">
+		UPDATE crew_member
+		SET crewMemberStatus = 2
+		WHERE crewNo = #{crewNo} AND crewMemberStatus = 3
+	</update>
+	
+	<!-- 모임 퇴장 -->
+	<delete id="deleteCrewMember" parameterType="map">
+		DELETE FROM crew_member
+		WHERE crewNo = #{crewNo} AND memberNo = #{memberNo}
+	</delete>
+	
 	<!-- 모임회원 수 수정 -->
 	<update id="updateCrewAttend" parameterType="map">
 		UPDATE crew

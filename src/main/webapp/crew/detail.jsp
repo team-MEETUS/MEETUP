@@ -245,7 +245,7 @@
 			</c:when>
 	        <c:when test="${role eq 'crewMember' || role eq 'adminMember'}">
 				<a href="#">신고하기</a>
-	        		<a href="#">모임퇴장</a>
+	        		<a href="crew?cmd=mng&requestType=leave&crewNo=${crewVO.crewNo}&memberNo=${sessionScope.loginMember.memberNo}">모임퇴장</a>
 			</c:when>
 			<c:otherwise>
 				<a href="#">수정하기</a>
