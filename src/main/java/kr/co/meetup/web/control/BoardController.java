@@ -49,6 +49,8 @@ public class BoardController extends HttpServlet {
 			action = new CommentWriteAction();
 		} else if (cmd.equals("updateComment")) {
 			action = new CommentUpdateAction();
+		} else if (cmd.equals("deleteComment")) {
+			action = new DeleteBoardCommentAction();
 		}
 
 		url = action.execute(req, resp);

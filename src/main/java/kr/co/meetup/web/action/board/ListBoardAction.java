@@ -35,10 +35,10 @@ public class ListBoardAction implements Action {
 		int totalCount =0;
 		
 		if (bc != null) {
-			totalCount = dao.selectAllBoardByBoardCategoryNo(Integer.parseInt(bc));
+			totalCount = dao.selectAllBoardCntByCategory(crewNo, Integer.parseInt(bc));
 		}else {
 		//bc 값이 없으면 모임별 전체 게시글 출력
-			totalCount = dao.selectAllBoardCount();
+			totalCount = dao.selectAllBoardCnt(crewNo);
 		}
 
 		// 한 페이지당 게시글 수 : 10
@@ -97,13 +97,20 @@ public class ListBoardAction implements Action {
 		}
 
 		//bc(boardCategory)값이 있으면 해당 카테고리의 게시글만 가져오기
-		List<BoardVO> boardList;
-		if (bc != null) {
-			boardList = dao.selectBoardByCategory(Integer.parseInt(bc),startNo,recordPerPage);
-		}else {
-		//bc 값이 없으면 모임별 전체 게시글 출력
-			boardList = dao.selectBoardAllByCategory(startNo,recordPerPage);
-		}
+		List<BoardVO> boardList = null;
+//		if (bc != null) {
+//			//boardList = dao.selectBoardByCategory(crewNo, Integer.parseInt(bc),startNo,recordPerPage);
+//		}else {
+//		//bc 값이 없으면 모임별 전체 게시글 출력
+//		}
+		System.out.println("listBoardAction!!");
+		System.out.println("crewNo : " + req.getParameter("crewNo"));
+		System.out.println("startNo : " + startNo);
+		System.out.println("recordPerPage : " + recordPerPage);
+		
+		// list 가져오기
+		boardList = dao.selectBoardAll(crewNo, startNo, recordPerPage);
+		System.out.println(boardList.toString());
 
 		req.setAttribute("BoardCategoryList", BoardCategoryList);
 		req.setAttribute("boardList", boardList);
