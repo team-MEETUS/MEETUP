@@ -36,6 +36,7 @@ public class ManagementAction implements Action {
 			vo.setMemberNo(memberNo);
 			vo.setCrewMemberStatus(1);
 			dao.updateCrewMember(vo);
+			// 모임 인원수 1 증가
 			dao.updateCrewAttend(crewNo, 1);
 		} 
 		// 요청 거절
