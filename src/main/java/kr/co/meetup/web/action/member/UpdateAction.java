@@ -31,6 +31,8 @@ public class UpdateAction extends HttpServlet {
 			String geoCity = mr.getParameter("geoCity");
 			String geoDistrict = mr.getParameter("geoDistrict");
 			String memberIntro = mr.getParameter("memberIntro");
+			String memberBirth = mr.getParameter("memberBirth");
+			String memberGender = mr.getParameter("memberGender");
 			
 			String memberOriginalImg = mr.getOriginalFileName("memberImg");
 			String memberSaveImg = mr.getFilesystemName("memberImg");
@@ -52,12 +54,16 @@ public class UpdateAction extends HttpServlet {
 			vo.setMemberNickname(memberNickname);
 			vo.setGeoCode(geoCode);
 			vo.setMemberIntro(memberIntro);
+			vo.setMemberBirth(memberBirth);
+			vo.setMemberGender(memberGender);
 			vo.setMemberOriginalImg(memberOriginalImg);
 			vo.setMemberSaveImg(memberSaveImg);
 			
 			mdao.updateOneMemberByMemberNo(vo);
 			
-			resp.sendRedirect("index.jsp");
+			req.getSession().setAttribute("loginMember", vo);
+			
+			resp.sendRedirect("member");
 		}
 		
 

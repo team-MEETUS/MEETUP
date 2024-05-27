@@ -26,7 +26,44 @@
 <body>
 	<div>
 		<form action="member" method="post">
+			<h2>마이페이지</h2>
 			<table>
+				<tr>
+					<th>프로필사진</th>
+					<td>
+						<c:if test="${not empty loginMember.memberSaveImg}">
+							<img id="profileImg" src="upload/${loginMember.memberSaveImg}" alt="" />
+						</c:if>
+						<c:if test="${empty loginMember.memberSaveImg}">
+							<img id="profileImg" src="upload/first.png" alt="" />
+						</c:if>
+					</td>
+				</tr>
+				<tr>
+					<th>닉네임</th>
+					<td>
+						${loginMember.memberNickname}
+					</td>
+				</tr>
+				<tr>
+					<th>생년월일</th>
+					<td>
+						${loginMember.memberBirth}
+					</td>
+				</tr>
+				<tr>
+					<th>성별</th>
+					<td>
+						${loginMember.memberGender}
+					</td>
+				</tr>
+				<tr>
+					<th>지역</th>
+					<td>
+						${GeoVO.geoCity}&nbsp;${GeoVO.geoDistrict}
+					</td>
+				</tr>
+				
 				<tr>
 					<td>
 						<a href="member?cmd=update">내 정보 수정</a>

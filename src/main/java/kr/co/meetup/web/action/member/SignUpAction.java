@@ -31,6 +31,8 @@ public class SignUpAction implements Action {
 			memberPw = aes.encrypt(memberPw);
 			
 			String memberNickname = req.getParameter("memberNickname");
+			String memberBirth = req.getParameter("memberBirth");
+			String memberGender = req.getParameter("memberGender");
 			String geoCity = req.getParameter("geoCity");
 			String geoDistrict = req.getParameter("geoDistrict");
 			
@@ -45,6 +47,8 @@ public class SignUpAction implements Action {
 			vo.setMemberPhone(memberPhone);
 			vo.setMemberPw(memberPw);
 			vo.setMemberNickname(memberNickname);
+			vo.setMemberBirth(memberBirth);
+			vo.setMemberGender(memberGender);
 			mdao.addMember(vo);
 			
 		} catch (UnsupportedEncodingException e) {
