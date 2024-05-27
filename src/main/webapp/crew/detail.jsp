@@ -131,7 +131,7 @@
 		display: flex;
 		align-items: center;
 		margin: 10px;
-		width: 100px;
+		width: 100%;
 	}
 	.crew-member-item a {
 	    text-decoration: none;
@@ -198,7 +198,7 @@
 	    background-color: rgb(116, 0, 0);
 	    border: none;
 	    border-radius: 5px;
-	    color: #fff;
+	    color: #fff;s
 	    cursor: pointer;
 	    transition: box-shadow 0.2s;
 	} */
@@ -206,13 +206,17 @@
 </head>
 <body>
 <div class="container">
+	<div class="icon-wrapper">
+    <box-icon name='crown' type='solid' color='#ff0000'></box-icon>
+</div>
+
 	<!-- 메뉴 -->
 	<ul class="crew-menu__items">
 		<li>
-			<a href="">정보</a>
+			<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}">정보</a>
 		</li>
 		<li>
-			<a href="">게시판</a>
+			<a href="board?cmd=listBoard&crewNo=${crewVO.crewNo}">게시판</a>
 		</li>
 		<li>
 			<a href="">사진첩</a>
@@ -235,10 +239,10 @@
 		<box-icon class="crew-info-icon" name='dots-vertical-rounded'></box-icon>
 		<div class="edit-delete-popup">
 			<c:choose>
-			<c:when test="${role eq 'guest' || role eq 'member' || role eq 'pendingMember'}">
+			<c:when test="${role eq 'guest' || role eq 'member' || role eq 'pendingMember' || role eq 'rejectedMember' || role eq 'kick'}">
 				<a href="#">신고하기</a>
 			</c:when>
-	        <c:when test="${role eq 'crewMember' || role eq 'admin'}">
+	        <c:when test="${role eq 'crewMember' || role eq 'adminMember'}">
 				<a href="#">신고하기</a>
 	        		<a href="#">모임퇴장</a>
 			</c:when>
@@ -266,6 +270,12 @@
 					<c:when test="${role eq 'pendingMember'}">
 						<a href="" class="btn btn-main">승인중</a>
 					</c:when>
+					<c:when test="${role eq 'rejectedMember'}">
+						<a href="" class="btn btn-main">승인 거절</a>
+					</c:when>
+					<c:when test="${role eq 'kick'}">
+						<a href="" class="btn btn-main">강퇴된 모임</a>
+					</c:when>
 					<c:otherwise>
 						<a href="" class="btn btn-main">공유하기</a>
 					</c:otherwise>
@@ -278,11 +288,11 @@
 		<div class="right-section">
 			<div class="crew-member-wrap">
 				<p class="crew-member">모임 멤버 (${crewVO.crewAttend})</p>
-				<c:if test="${role eq 'leader' or role eq 'admin'}">
-					<div class="member-management-wrap">
+				<c:if test="${role eq 'leader' or role eq 'adminMember'}">
+					<a href="crew?cmd=mnglist&crewNo=${crewVO.crewNo}" style="text-decoration: none;"><div class="member-management-wrap">
 						<box-icon class="group-icon" type='solid' name='group'></box-icon>
 						<p class="member-management">관리</p>
-					</div>
+					</div></a>
 				</c:if>
 			</div>
 			<c:forEach var="crewMemberVO" items="${crewMemberList}">
@@ -362,6 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
             popup.style.display = 'none';
         }
     });
+    
     
  	/* // 모달 띄우기
     memberManagementWrap.addEventListener('click', function(event) {
