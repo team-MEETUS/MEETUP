@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 한개 모임회원 조회 -->
 	<select id="selectCrewMemberByCrewNoMemberNo" parameterType="Hashmap" resultType="CrewMemberVO">
-		SELECT crewMemberNo, crewNo, memberNo, crewMeberStatus, createdAt 
+		SELECT crewMemberNo, crewNo, memberNo, crewMemberStatus, createdAt 
 		FROM crew_member 
 		WHERE crewNo = #{crewNo} AND memberNo = #{memberNo}
 	</select>
