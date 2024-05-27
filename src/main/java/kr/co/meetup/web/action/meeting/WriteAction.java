@@ -31,16 +31,6 @@ public class WriteAction implements Action {
 			MeetingDAO dao = new MeetingDAO();
 			MeetingVO vo = new MeetingVO();
 			
-			System.out.println(crewNo);
-			System.out.println(memberNo);
-			System.out.println(meetingName);
-			System.out.println(meetingDate);
-			System.out.println(meetingLoc);
-			System.out.println(meetingPrice);
-			System.out.println(meetingMax);
-			System.out.println(meetingOriginalImg);
-			System.out.println(meetingSaveImg);
-			
 			// 직접 받아오면 수정
 			vo.setCrewNo(Integer.parseInt(crewNo));
 			vo.setMemberNo(Integer.parseInt(memberNo));

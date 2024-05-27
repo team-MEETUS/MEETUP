@@ -4,14 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.meetup.meeting">
 	<!-- 전체 게시물 수 (crewNo 조건) -->
-	<select id="selectAllMeetingByCrewNoCnt" resultType="int">
+	<select id="selectAllMeetingByCrewNoCnt" parameterType="Hashmap" resultType="int">
 		SELECT count(*) as cnt 
 		  FROM meeting
 		 WHERE crewNo = #{crewNo}
 	</select>
 	
 	<!-- 전체 게시물 수 (meetingDate 조건) -->
-	<select id="selectAllMeetingByMeetingDateCnt" resultType="int">
+	<select id="selectAllMeetingByMeetingDateCnt" parameterType="Hashmap" resultType="int">
 		SELECT count(*) as cnt 
 		  FROM meeting
 		 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' )
@@ -68,17 +68,17 @@
 		WHERE memberNo = #{memberNo} AND meetingNo = #{meetingNo}
 	</delete>
 	
-	<!-- 정모참석인원 plus -->
-	<update id="plusMeetingAttend" parameterType="MeetingMemberVO">
+	<!-- meetingAttend 정모참석인원 update -->
+	<update id="updateMeetingAttend" parameterType="Hashmap">
 		UPDATE meeting
-		SET meetingAttend = meetingAttend + 1
+		SET meetingAttend = #{cnt}
 		WHERE meetingNo = #{meetingNo}
 	</update>
 	
-	<!-- 정모참석인원 minus -->
-	<update id="minusMeetingAttend" parameterType="Hashmap">
-		UPDATE meeting
-		SET meetingAttend = meetingAttend - 1
-		WHERE meetingNo = #{meetingNo}
-	</update>
+	<!-- 정모참석인원 조회 -->
+	<select id="selectMeetingMemberCnt" parameterType="Hashmap" resultType="int">
+		SELECT count(*) as cnt 
+		  FROM meeting_member
+		 WHERE meetingNo = #{meetingNo} AND memberNo = #{memberNo}
+	</select>
 </mapper>

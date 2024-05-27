@@ -8,15 +8,13 @@
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../js/summernote-ko-KR.js"></script>
 <!-- input에 오늘날짜 기본값으로 넣기 -->
 <script type="text/javascript">
 	window.onload = function() {
 		today = new Date();
 		today = today.toISOString().slice(0, 10);
-		console.log("today >>>> " + today);
 		meetingDate = document.getElementById("meetingDate");
+		console.log(meetingDate);
 		meetingDate.value = today;
 	}
 </script>
@@ -24,7 +22,7 @@
 <body>
 	<h1>정모 등록</h1>
 	<div class="container">
-		<form action="upload.do" method="post" enctype="multipart/form-data">
+		<form action="meetingUpload" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="crewNo" value="${crewNo}" />
 			<input type="hidden" name="memberNo" value="${memberNo}" />
 			<table class="table table-striped">
@@ -35,7 +33,7 @@
 				<tr>
 					<th>정모날짜</th>
 					<!-- 캘린더 띄우기 -->
-					<td colspan="2"><input type="date" name="meetingDay"></td>
+					<td colspan="2"><input type="date" name="meetingDate" id="meetingDate"></td>
 				</tr>
 				<tr>
 					<th>정모시간</th>

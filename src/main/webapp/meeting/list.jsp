@@ -18,22 +18,90 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <style>
-	.container {
-		text-align: center;
-	}
-	.category {
-		justify-content: space-around;
-	}
-	.meetingOne {
-		border: 1px solid black;
-		width : 30%;
-		display: inline-block;
-	}
+h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333;
+  text-align: center;
+}
+
+.category {
+ width: 100%;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.meetingOne {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center; /* 수직 중앙 정렬 */
+  margin: 10px 0;
+}
+
+.meetingOne:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.meetingOne img {
+  max-width: 100px;
+  height: auto;
+  border-radius: 4px;
+  margin-right: 20px;
+  float: left;
+}
+
+.meetingOne .meetingDate,
+.meetingOne .meetingName,
+.meetingOne .meetingPrice,
+.meetingOne .meetingAttend {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .page-item .page-link {
+  color: #333;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #e9e9e9;
+}
 </style>
 </head>
 <body>
+	<h2>정모 페이지</h2>
 	<div class="container">
-		<h2>정모 페이지</h2>
+		<br />
 		<div class="category">
 		<%
  			String[] dayOfWeekArr = {"일", "월", "화", "수", "목", "금", "토"};
@@ -59,23 +127,22 @@
 		<%
 			}
 		%>
+		<a href="meeting?cmd=write" class="btn btn-primary">모임등록</a>
 		</div>
 		
-		<a href="meeting?cmd=write" class="btn btn-primary">모임등록</a>
-		<br>
-		
-		<c:forEach var="vo" items="${list}">
+		<br />		
+		<c:forEach var="meetingVO" items="${list}">
 			<div class="meetingOne">
-				<div>${vo.meetingSaveImg}</div>
-				<a href="meeting?cmd=detail&crewNo=${vo.crewNo}">${vo.meetingName}</a>
-				<img src="upload/꼬부기.jpg" alt="" />
+				<div>${meetingVO.meetingSaveImg}</div>
+				<a href="meeting?cmd=detail&crewNo=${meetingVO.crewNo}">${meetingVO.meetingName}</a>
+				<img src="upload/${meetingVO.meetingSaveImg}" alt="" />
 				
-				<div>${vo.meetingDate}</div>
-				<div>${vo.meetingAttend}/${vo.meetingMax} </div>
+				<div>${meetingVO.meetingDate}</div>
+				<div>${meetingVO.meetingAttend}/${meetingVO.meetingMax} </div>
 			</div>
 		</c:forEach>
 
-	
+		<br />
 		<div>
 			<nav aria-label="Page navigation example">
 			 	<ul class="pagination">
