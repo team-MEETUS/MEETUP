@@ -44,6 +44,48 @@
 			</td>
 		</tr>
 	</table>
+
+	<!-- 댓글 작성 폼 -->
+	<div class="mt-4">
+		<h3>댓글 쓰기</h3>
+		<form action="board?cmd=addComment" method="post">
+			<input type="hidden" name="boardNo" value="${vo.boardNo}">
+			<div class="mb-3">
+				<label for="commentContent" class="form-label">내용</label>
+				<textarea class="form-control" id="commentContent" name="boardCommentContent" rows="3" required></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">댓글 달기</button>
+		</form>
+	</div>
+
+	<!-- 댓글 목록 -->
+	<div class="mt-4">
+		<h3>댓글 목록</h3>
+		<c:forEach var="comment" items="${commentList}">
+		  <div class="card mb-3">
+		    <div class="card-body">
+		      <h5 class="card-title">${comment.memberNickname}</h5>
+		      <h6 class="card-subtitle mb-2 text-muted">${comment.createdAt}</h6>
+		      <p class="card-text" id="commentContent-${comment.boardCommentNo}">${comment.boardCommentContent}</p>
+		      
+		      <!-- 수정 폼 -->
+		      <form action="board?cmd=updateComment" method="post"">
+		        <input type="hidden" name="boardNo" value="${vo.boardNo}">
+		        <input type="hidden" name="boardCommentNo" value="${comment.boardCommentNo}">
+		        <div class="mb-3">
+		          <textarea class="form-control" name="boardCommentContent" rows="3" required>${comment.boardCommentContent}</textarea>
+		        </div>
+		        <button type="submit" class="btn btn-success">수정 완료</button>
+		      </form>
+		   <!-- 수정 버튼 -->
+			  <button type="button" class="btn btn-primary" onclick="toggleEditForm(${comment.boardCommentNo})">수정</button>
+		   
+		    </div>
+		  </div>
+		</c:forEach>
+	</div>
+
+	
 	</div>
 </body>
 </html>

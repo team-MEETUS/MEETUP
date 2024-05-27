@@ -13,6 +13,7 @@ public class BoardCommentVO {
 	private int boardCommentNo;
 	private int boardNo;
 	private int memberNo;
+	private String memberNickname;
 	private int boardCommentPno;
 	private String boardCommentContent;
 	private int boardCommentStatus;

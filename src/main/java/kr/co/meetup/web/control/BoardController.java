@@ -12,9 +12,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
-import kr.co.meetup.web.action.board.DetailBoardAction;
-import kr.co.meetup.web.action.board.ListBoardAction;
-import kr.co.meetup.web.action.board.WriteBoardAction;
 import kr.co.meetup.web.action.board.*;
 
 @SuppressWarnings("serial")
@@ -48,6 +45,10 @@ public class BoardController extends HttpServlet {
 			action = new updateBoardAction();
 		} else if (cmd.equals("deleteBoard")) {
 			action = new DeleteBoardAction();
+		} else if (cmd.equals("addComment")) {
+			action = new CommentWriteAction();
+		} else if (cmd.equals("updateComment")) {
+			action = new CommentUpdateAction();
 		}
 
 		url = action.execute(req, resp);

@@ -10,10 +10,12 @@
 		SELECT count(*) as cnt FROM board
 		WHERE crewNo=#{crewNo}
 	</select>
+	<!-- 게시판 총 데이터 수 조회 -->	
 	<select id="selectAllBoardCount" resultType="int">
 		SELECT count(*) as cnt FROM board
 		   where boardStatus !=0 
 	</select>
+	<!-- 게시판 총 데이터 수 조회(BoardCategoryNo 조건) -->		
 	<select id="selectAllBoardByBoardCategoryNo" resultType="int">
 		SELECT count(*) as cnt FROM board
 		where boardCategoryNo =#{boardCategoryNo} and boardStatus !=0 
@@ -57,7 +59,7 @@
         LEFT JOIN board_img i ON b.boardNo = i.boardNo
         LEFT JOIN crew cc ON b.crewNo = cc.crewNo
         LEFT JOIN member m ON b.memberNo = m.memberNo
-        where boardStatus !=0 
+        WHERE boardStatus !=0 
         LIMIT #{recordPerPage} OFFSET #{startNo};
     </select>
 	
@@ -74,6 +76,7 @@
 		VALUES(#{crewNo}, #{memberNo}, #{boardCategoryNo}, #{boardTitle}, #{boardContent},#{boardStatus} )
 		
 	</insert>
+
 	
 	<!-- 게시글 수정 -->
 	<update id="updateOneBoard" parameterType="BoardVO">
@@ -97,5 +100,28 @@
 		SET boardHit = boardHit + 1
 		WHERE boardNo = #{boardNo}
 	</update>
+		
+	<!-- 댓글 작성 -->
+	<insert id="addOneComment" parameterType="BoardCommentVO">
+		INSERT INTO board_comment(boardNo, memberNo, boardCommentContent, boardCommentStatus)
+		VALUES(#{boardNo}, #{memberNo}, #{boardCommentContent},#{boardCommentStatus})
+	</insert>
+	
+	<!-- 댓글 목록 조회 -->
+	<select id="selectComment" parameterType="int" resultType="BoardCommentVO">
+		SELECT m.memberNickname, bc.memberNo, bc.boardCommentNo, bc.boardCommentContent, bc.createdAt
+		FROM board_comment bc
+		JOIN member m on bc.memberNo = m.memberNo
+		WHERE bc.boardNo = #{boardNo} and boardCommentStatus = 1
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateOneBoardComment" parameterType="BoardCommentVO">
+	    UPDATE board_comment
+	    SET boardCommentContent = #{boardCommentContent}
+	    WHERE boardCommentNo = #{boardCommentNo}
+	</update>
+	
+	
 	
 </mapper>
