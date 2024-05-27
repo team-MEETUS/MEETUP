@@ -28,6 +28,7 @@ public class updateBoardAction implements Action {
 				vo.setBoardNo(boardNo);
 				vo.setBoardTitle(boardTitle);
 				vo.setBoardContent(boardContent);
+				vo.setBoardStatus(1);
 				dao.updateOneBoard(vo);
 			}
 		} catch (IOException e) {

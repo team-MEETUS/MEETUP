@@ -7,7 +7,6 @@ import kr.co.meetup.web.dao.CrewDAO;
 import kr.co.meetup.web.vo.CrewMemberVO;
 
 public class WriteFormBoardAction implements Action {
-
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) { 
 		String cno = req.getParameter("crewNo");
@@ -31,4 +30,3 @@ public class WriteFormBoardAction implements Action {
 	}
 
 }
-
