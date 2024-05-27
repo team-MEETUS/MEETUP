@@ -7,19 +7,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.dao.MeetingDAO;
+import kr.co.meetup.web.vo.MemberVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/meetingExit.do")
+@WebServlet("/meetingExit")
 public class ExitAction extends HttpServlet {
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
+		
 		String meetingNo = req.getParameter("meetingNo");
-		String memberNo = req.getParameter("memberNo");
+		int memberNo = loginMember.getMemberNo();
 		String crewNo = req.getParameter("crewNo");
 		
 		MeetingDAO dao = new MeetingDAO();
 		
-		dao.deleteMeetingMember(Integer.parseInt(meetingNo), Integer.parseInt(memberNo));
+		dao.deleteMeetingMember(Integer.parseInt(meetingNo), memberNo);
 		
 		resp.sendRedirect("meeting?cmd=detail&crewNo=" + crewNo);
 	}

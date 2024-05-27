@@ -78,13 +78,17 @@
 </head>
 <body>
 	<h2>모임 상세페이지 하단부분</h2>
+	
+	<a href="meeting?cmd=write" class="btn btn-primary">정모등록</a>
+	
 	<div class="container">
-		<br />
 		<div class="list">
 			<c:forEach var="meetingVO" items="${list}">
 				<div class="meetingOne">
-					<div>${meetingVO.meetingDate} D-1</div>
-					<div>${meetingVO.meetingName}</div>
+					<p>${meetingVO.meetingDate} D-1</p>
+					<p>${meetingVO.meetingName}</p>
+					<a href="meetingAttend?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${meetingVO.crewNo}" class="btn btn-primary">모임 참석하기</a>
+					<a href="meetingExit?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${meetingVO.crewNo}" class="btn btn-primary">모임 나가기</a>
 					<br />
 					<a href="meeting?cmd=write"></a>
 					<img src="upload/${meetingVO.meetingSaveImg}" alt="" />
@@ -93,10 +97,7 @@
 					<div>${meetingVO.meetingPrice}</div>
 					<div>참석 ${meetingVO.meetingAttend}/${meetingVO.meetingMax} (${meetingVO.meetingMax-meetingVO.meetingAttend}명남음) </div>
 				</div>
-				<div>
-					<a href="meetingAttend.do?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${meetingVO.crewNo}" class="btn btn-primary">모임 참석하기</a>
-					<a href="meetingExit.do?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${meetingVO.crewNo}" class="btn btn-primary">모임 나가기</a>
-				</div>
+				
 			</c:forEach>
 		</div>
 		<br />

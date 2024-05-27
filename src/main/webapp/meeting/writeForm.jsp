@@ -14,7 +14,6 @@
 		today = new Date();
 		today = today.toISOString().slice(0, 10);
 		meetingDate = document.getElementById("meetingDate");
-		console.log(meetingDate);
 		meetingDate.value = today;
 	}
 </script>
@@ -22,9 +21,9 @@
 <body>
 	<h1>정모 등록</h1>
 	<div class="container">
-		<form action="meetingUpload" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="crewNo" value="${crewNo}" />
-			<input type="hidden" name="memberNo" value="${memberNo}" />
+		<form id="writeForm" action="meetingUpload" method="post" enctype="multipart/form-data">
+												<!-- crewNo 받아오기 -->
+			<input type="hidden" name="crewNo" value="1" />
 			<table class="table table-striped">
 				<tr>
 					<th>정모명</th>
@@ -60,11 +59,74 @@
 				<tr>
 					<td colspan="4">
 						<a class="btn btn-success" type="button" href="meeting?cmd=list">목록으로 돌아가기</a> 
-						<input class="btn btn-primary" type="submit" value="정모 생성하기" /> 
+						<input class="btn btn-primary" type="submit" value="정모 생성하기"/> 
 					</td>
 				</tr>
 			</table>
 		</form>
 	</div>
+	
+	<script>
+		$("#writeForm").submit(function(event) {
+			let meetingName = $("input[name='meetingName']").val();
+		    let date = $("input[name='meetingDate']").val();
+		    let meetingTime1 = $("input[name='meetingTime1']").val();
+		    let meetingTime2 = $("input[name='meetingTime2']").val();
+		    let meetingLoc = $("input[name='meetingLoc']").val();
+		    let meetingPrice = $("input[name='meetingPrice']").val();
+		    let meetingMax = $("input[name='meetingMax']").val();
+		    let meetingImg = $("input[name='meetingImg']").val();
+		    
+		    let meetingDate = new Date(date);
+		    let today = new Date();
+		    let yesterday = new Date(today);
+		    yesterday.setDate(today.getDate() - 1);
+		    let hour = Number(meetingTime1);
+			let minute = Number(meetingTime2);
+			
+			if (!meetingName) {
+				alert("정모명을 입력해주세요.");
+		        event.preventDefault();
+			} else if (meetingDate <= yesterday) {
+				alert("정모날짜는 오늘보다 빠를 수 없습니다.\n날짜를 다시 입력해주세요.");
+		        event.preventDefault();
+			} else if(hour > 23 || hour < 1) {
+				alert("제대로된 시간을 입력해주세요")
+				event.preventDefault();
+			} else if(!minute) {
+				alert("제대로된 분을 입력해주세요")
+				event.preventDefault();
+			} else if(minute > 59 || minute < 0) {
+				alert("제대로된 분을 입력해주세요")
+				event.preventDefault();
+			} else if(isNaN(meetingTime1)) {
+				alert("정모시간은 숫자만 입력 가능합니다");
+				event.preventDefault();
+			} else if(isNaN(meetingTime2)) {
+				alert("정모시간은 숫자만 입력 가능합니다");
+				event.preventDefault();
+			} else if (!meetingLoc) {
+				alert("정모위치를 입력해주세요.");
+		        event.preventDefault();
+			} else if (!meetingPrice) {
+				alert("비용을 입력해주세요.");
+		        event.preventDefault();
+			} else if(isNaN(meetingPrice)) {
+				alert("비용은 숫자만 입력 가능합니다");
+				event.preventDefault();
+			} else if (!meetingMax) {
+				alert("정원을 입력해주세요.");
+		        event.preventDefault();
+			} else if(isNaN(meetingMax)) {
+				alert("정원은 숫자만 입력 가능합니다");
+				event.preventDefault();
+			}
+			
+			if(!meetingImg) {
+				$("input[name='meetingImg']").val("images.jpg");
+			}
+		});
+
+	</script>
 </body>
 </html>
