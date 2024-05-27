@@ -41,11 +41,18 @@ public class BoardDAO {
 		 ss.close();
 		 return cnt;
 	}
-	
-	// 모임 별 게시판 총 개수
-	public int selectAllBoardCnt(int crewNo) {
+	public int selectAllBoardCount(int crewNo) {
 		SqlSession ss = factory.openSession(true);
-		int count = ss.selectOne("kr.co.meetup.web.board.selectAllBoardCnt",crewNo);
+		int count = ss.selectOne("kr.co.meetup.web.board.selectAllBoardCount", crewNo);
+		ss.close();
+		return count;
+	}
+	public int selectAllBoardByBoardCategoryNo(int boardCategoryNo, int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("boardCategoryNo", boardCategoryNo);
+		map.put("crewNo", crewNo);
+		int count = ss.selectOne("kr.co.meetup.web.board.selectAllBoardByBoardCategoryNo", map);
 		ss.close();
 		return count;
 	}
@@ -59,28 +66,33 @@ public class BoardDAO {
 	}
 
 	// 게시판 카테고리별 게시글 조회
-	public List<BoardVO> selectBoardByCategory(int crewNo, int boardCategoryNo,int startNo,int recordPerPage) {
+	public List<BoardVO> selectBoardByCategory(int bc,int startNo,int recordPerPage, int crewNo) {
 		SqlSession ss = factory.openSession(true);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("crewNo", crewNo);
 		map.put("boardCategoryNo", boardCategoryNo);
 		map.put("startNo", startNo);
 		map.put("recordPerPage", recordPerPage);
+		map.put("crewNo", crewNo);
 		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardByCategory", map);
+		System.out.println("crewNo : " + crewNo);
+		System.out.println("list : " + list);
 		ss.close();
 		return list;
 	}
 	
 	//리스트 페이징 처리용
-	public List<BoardVO> selectBoardAll(int crewNo, int startNo,int recordPerPage) {
+	public List<BoardVO> selectBoardAllByCategory(int startNo,int recordPerPage, int crewNo) {
 		SqlSession ss = factory.openSession(true);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("crewNo", crewNo);
 		map.put("startNo", startNo);
 		map.put("recordPerPage", recordPerPage);
-		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardAll",map);
-		System.out.println("<<dao>>");
-		System.out.println(list.toString());
+		map.put("crewNo", crewNo);
+		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardAllByCategory",map);
+		System.out.println("crewNo : " + crewNo);
+		System.out.println("startNo : " + startNo);
+		System.out.println("recordPerPage : " + recordPerPage);
+		System.out.println("list : " + list);
 		ss.close();
 		return list;
 	}

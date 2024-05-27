@@ -5,18 +5,20 @@
 
 <mapper namespace="kr.co.meetup.web.board">
 	
-	<!-- 게시판 총 데이터 수 조회(crewNo&BoardCategoryNo 조건) -->
-	<select id="selectAllBoardCntByCategory" parameterType="map" resultType="int">
-		SELECT count(*) 
-		FROM board
-		where crewNo = #{crewNo} AND boardCategoryNo = #{boardCategoryNo} AND boardStatus != 0
+	<!-- 게시판 총 데이터 수 조회(crewNo 조건) -->
+	<select id="selectAllBoardByCrewNoCnt" resultType="int">
+		SELECT count(*) as cnt FROM board
+		WHERE crewNo=#{crewNo}
 	</select>
-	
-	<!-- 게시판 총 데이터 수 조회(crewNo 조건) -->		
-	<select id="selectAllBoardCnt" resultType="int">
-		SELECT count(*) 
-		FROM board
-		where crewNo = #{crewNo} AND boardStatus != 0
+	<!-- 게시판 총 데이터 수 조회 -->	
+	<select id="selectAllBoardCount" parameterType="int" resultType="int">
+		SELECT count(*) as cnt FROM board
+		   where boardStatus !=0 AND crewNo = #{crewNo} 
+	</select>
+	<!-- 게시판 총 데이터 수 조회(BoardCategoryNo 조건) -->		
+	<select id="selectAllBoardByBoardCategoryNo" parameterType="Hashmap" resultType="int">
+		SELECT count(*) as cnt FROM board
+		where boardCategoryNo =#{boardCategoryNo} and boardStatus !=0  AND crewNo = #{crewNo} 
 	</select>
 	
 	<!-- 게시판 모임별 모든 게시글 조회 -->
@@ -29,7 +31,7 @@
         LEFT JOIN member m ON b.memberNo = m.memberNo
         WHERE b.crewNo = #{crewNo}
 		ORDER BY boardNo DESC
-		LIMIT #{recordPerPage} OFFSET #{startNo};
+		LIMIT #{recordPerPage} OFFSET #{startNo}
 	</select>
 		
 	<!-- 게시판 카테고리 조회 -->	
@@ -47,8 +49,8 @@
         LEFT JOIN board_img i ON b.boardNo = i.boardNo
         LEFT JOIN crew c ON b.crewNo = c.crewNo
         LEFT JOIN member m ON b.memberNo = m.memberNo
-        WHERE b.boardCategoryNo =#{boardCategoryNo} and boardStatus !=0
-        LIMIT #{recordPerPage} OFFSET #{startNo};
+        WHERE b.boardCategoryNo = #{boardCategoryNo} and boardStatus !=0 AND b.crewNo = #{crewNo} 
+        LIMIT #{recordPerPage} OFFSET #{startNo}
     </select>
     <!-- 전체  -->
     <select id="selectBoardAll" parameterType="HashMap" resultType="BoardVO">
@@ -56,8 +58,10 @@
         FROM board b
         LEFT JOIN crew c ON b.crewNo = c.crewNo
         LEFT JOIN board_img i ON b.boardNo = i.boardNo
-        WHERE b.boardStatus !=0 AND b.crewNo = #{crewNo}
-        LIMIT #{recordPerPage} OFFSET #{startNo};
+        LEFT JOIN crew cc ON b.crewNo = cc.crewNo
+        LEFT JOIN member m ON b.memberNo = m.memberNo
+        WHERE boardStatus !=0  AND b.crewNo = #{crewNo} 
+        LIMIT #{recordPerPage} OFFSET #{startNo}
     </select>
 	
 	<!-- 게시글 1건 조회 -->

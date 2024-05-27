@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,7 @@
 	<table class="table table-striped">
 		<tr>
 			<th>카테고리</th>
+			<td>
 		      <c:choose>
 		            <c:when test="${vo.boardCategoryNo == 1}">공지사항</c:when>
 		            <c:when test="${vo.boardCategoryNo == 2}">가입인사</c:when>
@@ -23,10 +25,11 @@
 		            <c:when test="${vo.boardCategoryNo == 5}">투표</c:when>
 		            <c:otherwise>${vo.boardCategoryNo}</c:otherwise>
 		        </c:choose>
+		    </td>
 			<th>조회수</th>
 			<td>${vo.boardHit}</td>
 			<th>작성일시</th>
-			<td>${vo.createdAt}</td>
+			<td><fmt:formatDate value="${vo.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 		</tr>
 		<tr>
 			<th>제목</th>

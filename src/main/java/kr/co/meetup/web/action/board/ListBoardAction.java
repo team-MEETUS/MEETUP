@@ -1,13 +1,18 @@
 package kr.co.meetup.web.action.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.BoardDAO;
+import kr.co.meetup.web.dao.CrewDAO;
+import kr.co.meetup.web.dao.MemberDAO;
 import kr.co.meetup.web.vo.BoardCategoryVO;
 import kr.co.meetup.web.vo.BoardVO;
+import kr.co.meetup.web.vo.CrewMemberVO;
+import kr.co.meetup.web.vo.MemberVO;
 
 public class ListBoardAction implements Action {
 	@Override
@@ -21,24 +26,25 @@ public class ListBoardAction implements Action {
 		String bc = req.getParameter("boardCategoryNo");
 		
 		//cn(crewNo) 값 가져오기
-		String cn =req.getParameter("cn");
+		String cn =req.getParameter("crewNo");
 		int crewNo = 0;
 		
 		if(cn != null) {
 			crewNo =Integer.parseInt(cn);
-		} else {
-			//  임시 crewNo
-			crewNo = 2;
-		}
+		} 
+//		else {
+//			//  임시 crewNo
+//			crewNo = 2;
+//		}
 		
 		// 총 게시물 수
 		int totalCount =0;
 		
 		if (bc != null) {
-			totalCount = dao.selectAllBoardCntByCategory(crewNo, Integer.parseInt(bc));
+			totalCount = dao.selectAllBoardByBoardCategoryNo(Integer.parseInt(bc), crewNo);
 		}else {
 		//bc 값이 없으면 모임별 전체 게시글 출력
-			totalCount = dao.selectAllBoardCnt(crewNo);
+			totalCount = dao.selectAllBoardCount(crewNo);
 		}
 
 		// 한 페이지당 게시글 수 : 10
@@ -97,20 +103,31 @@ public class ListBoardAction implements Action {
 		}
 
 		//bc(boardCategory)값이 있으면 해당 카테고리의 게시글만 가져오기
-		List<BoardVO> boardList = null;
-//		if (bc != null) {
-//			//boardList = dao.selectBoardByCategory(crewNo, Integer.parseInt(bc),startNo,recordPerPage);
-//		}else {
-//		//bc 값이 없으면 모임별 전체 게시글 출력
-//		}
-		System.out.println("listBoardAction!!");
-		System.out.println("crewNo : " + req.getParameter("crewNo"));
-		System.out.println("startNo : " + startNo);
-		System.out.println("recordPerPage : " + recordPerPage);
+		List<BoardVO> boardList = new ArrayList<BoardVO>();
+		List<MemberVO> memberList = new ArrayList<MemberVO>();
+		MemberDAO mdao = new MemberDAO();
+		if (bc != null) {
+			System.out.println("ListBoardAction crewNo : " + crewNo);
+			boardList = dao.selectBoardByCategory(Integer.parseInt(bc),startNo,recordPerPage, crewNo);
+			System.out.println("boardList : " + boardList);
+			for(BoardVO bvo : boardList) {
+				MemberVO mvo = mdao.selectOneMemberByMemberNo(bvo.getMemberNo());
+				memberList.add(mvo);
+			}
+		}else {
+		//bc 값이 없으면 모임별 전체 게시글 출력
+			System.out.println("ListBoardAction crewNo : " + crewNo);
+			boardList = dao.selectBoardAllByCategory(startNo,recordPerPage, crewNo);
+			System.out.println("boardList : " + boardList);
+			for(BoardVO bvo : boardList) {
+				MemberVO mvo = mdao.selectOneMemberByMemberNo(bvo.getMemberNo());
+				memberList.add(mvo);
+			}
+		}
 		
-		// list 가져오기
-		boardList = dao.selectBoardAll(crewNo, startNo, recordPerPage);
-		System.out.println(boardList.toString());
+		// 해당 crew 멤버 정보 가져오기
+		CrewDAO cdao = new CrewDAO();
+		List<CrewMemberVO> crewMemberList = cdao.selectAllCrewMember(crewNo);
 
 		req.setAttribute("BoardCategoryList", BoardCategoryList);
 		req.setAttribute("boardList", boardList);
@@ -120,6 +137,9 @@ public class ListBoardAction implements Action {
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("currentPage", currentPage);
 		req.setAttribute("boardCategoryNo",bc);
+		req.setAttribute("memberList", memberList);
+		req.setAttribute("crewMemberList", crewMemberList);
+		req.setAttribute("boardCrewNo", crewNo);
 		
 
 		return "board/listBoard.jsp";
