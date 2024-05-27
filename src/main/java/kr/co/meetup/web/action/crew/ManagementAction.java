@@ -36,6 +36,7 @@ public class ManagementAction implements Action {
 			vo.setMemberNo(memberNo);
 			vo.setCrewMemberStatus(1);
 			dao.updateCrewMember(vo);
+			dao.updateCrewAttend(crewNo, 1);
 		} 
 		// 요청 거절
 		else if (requestType.equals("reject")) {
