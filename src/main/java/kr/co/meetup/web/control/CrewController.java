@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.action.crew.DetailAction;
+import kr.co.meetup.web.action.crew.LikeAction;
 import kr.co.meetup.web.action.crew.ListAction;
 import kr.co.meetup.web.action.crew.ManagementAction;
 import kr.co.meetup.web.action.crew.ManagementListAction;
@@ -42,6 +43,8 @@ public class CrewController extends HttpServlet {
 			action = new ManagementListAction();
 		} else if (cmd.equals("mng")) {
 			action = new ManagementAction();
+		} else if (cmd.equals("like")) {
+			action = new LikeAction();
 		}
 		
 		url = action.execute(req, resp);

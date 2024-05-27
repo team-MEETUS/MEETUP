@@ -281,9 +281,18 @@
 						<a href="" class="btn btn-main">공유하기</a>
 					</c:otherwise>
 				</c:choose>
-				<box-icon class="like-icon" name='heart' ></box-icon>
+				<c:if test="${isValidCrewLike eq 0}">
+					<c:if test="${empty sessionScope.loginMember}">
+						<a href="member?cmd=login"><box-icon class="like-icon" name='heart' ></box-icon></a>
+					</c:if>
+					<c:if test="${not empty sessionScope.loginMember}">
+						<a href="crew?cmd=like&requestType=add&crewNo=${crewVO.crewNo}"><box-icon class="like-icon" name='heart' ></box-icon></a>
+					</c:if>
+				</c:if>
+				<c:if test="${isValidCrewLike eq 1}">
+					<a href="crew?cmd=like&requestType=delete&crewNo=${crewVO.crewNo}"><box-icon class="like-icon" name='heart' type='solid' ></box-icon></a>
+				</c:if>
 			</div>
-			<!-- <box-icon name='heart' type='solid' ></box-icon> -->
 		</div>
 		<!-- 모임 멤버 -->
 		<div class="right-section">

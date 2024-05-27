@@ -116,5 +116,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM crew
 		WHERE categoryBigNo = #{categoryBigNo}
 	</select>
-
+	
+	<!-- 찜 여부 조회 -->
+	<select id="selectCrewLikeByMemberNo" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM crew_like
+		WHERE crewNo = #{crewNo} AND memberNo = #{memberNo}
+	</select>
+	
+	<!-- 찜 등록 -->
+	<insert id="addCrewLike" parameterType="CrewLikeVO">
+		INSERT INTO crew_like (crewNo, memberNo)
+		VALUES (#{crewNo}, #{memberNo})
+	</insert>
+	
+	<!-- 찜 삭제 -->
+	<delete id="deleteCrewLike" parameterType="CrewLikeVO">
+		DELETE FROM crew_like
+		WHERE crewNo = #{crewNo} AND memberNo = #{memberNo}
+	</delete>
+	
 </mapper>
