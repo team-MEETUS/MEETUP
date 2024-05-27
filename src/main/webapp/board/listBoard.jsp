@@ -35,9 +35,9 @@
 			</script>
 			<tr>
 				<td>
-					<a href="board?cmd=listBoard&crewNo=${boardCrewNo}">전체</a>
+					<a href="board?cmd=listBoard&crewNo=${crewNo}">전체</a>
 					<c:forEach var="BoardCategoryVO" items="${BoardCategoryList}">
-						<a href="board?cmd=listBoard&boardCategoryNo=${BoardCategoryVO.boardCategoryNo}&crewNo=${boardCrewNo}">${BoardCategoryVO.boardCategoryName}</a>
+						<a href="board?cmd=listBoard&boardCategoryNo=${BoardCategoryVO.boardCategoryNo}&crewNo=${crewNo}">${BoardCategoryVO.boardCategoryName}</a>
 					</c:forEach>
 				</td>
 			</tr>
@@ -55,7 +55,7 @@
 						<td>${BoardVO.boardNo}</td>
 						<td>${memberList[status.index].memberNickname}</td>
 						<td>
-							<a href="board?cmd=detailboard&boardNo=${BoardVO.boardNo}&crewNo=${boardCrewNo}" class="boardDetail">${BoardVO.boardTitle}</a>
+							<a href="board?cmd=detailboard&boardNo=${BoardVO.boardNo}&crewNo=${crewNo}" class="boardDetail">${BoardVO.boardTitle}</a>
 						</td>
 						<td>${BoardVO.boardHit}</td>
 						<td><fmt:formatDate value="${BoardVO.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
@@ -63,7 +63,7 @@
 				</c:forEach>
 				<tr>
 					<td colspan="5">
-						<a href="board?cmd=writeBoard" class="btn btn-primary boardDetail">등록</a>
+						<a href="board?cmd=writeBoard&crewNo=${crewNo}&memberNo=${loginMember.memberNo}" class="btn btn-primary boardDetail">등록</a>
 					</td>
 				</tr>
 			</table>
@@ -73,19 +73,19 @@
 				 	<ul class="pagination">
 				 		<c:if test="${isPrev}">
 					    	<li class="page-item">
-					    		<a href="board?cmd=listBoard&cp=${currentPage-1}&crewNo=${boardCrewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link"><</a>
+					    		<a href="board?cmd=listBoard&cp=${currentPage-1}&crewNo=${crewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link"><</a>
 					    	</li>
 					    </c:if>
 					    
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
 							<li class="page-item">
-								<a class="page-link" href="board?cmd=listBoard&cp=${i}&crewNo=${boardCrewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>">[${i}]</a>
+								<a class="page-link" href="board?cmd=listBoard&cp=${i}&crewNo=${crewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>">[${i}]</a>
 							</li>
 						</c:forEach>
 					    
 					    <c:if test="${isNext}">
 					    	<li class="page-item">
-					    		<a href="board?cmd=listBoard&cp=${currentPage+1}&crewNo=${boardCrewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link">></a>
+					    		<a href="board?cmd=listBoard&cp=${currentPage+1}&crewNo=${crewNo}<c:if test="${boardCategoryNo != null}">&boardCategoryNo=${boardCategoryNo}</c:if>" class="page-link">></a>
 							</li>
 					    </c:if>
 				 	</ul>
