@@ -8,8 +8,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.BoardDAO;
+import kr.co.meetup.web.dao.MemberDAO;
 import kr.co.meetup.web.vo.BoardCommentVO;
 import kr.co.meetup.web.vo.BoardVO;
+import kr.co.meetup.web.vo.MemberVO;
 
 public class DetailBoardAction implements Action {
 
@@ -17,23 +19,34 @@ public class DetailBoardAction implements Action {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			req.setCharacterEncoding("UTF-8");
+			resp.setContentType("text/html;charset=UTF-8");
+			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// crewNo 가져오기
+		String cno = req.getParameter("crewNo");
+		int crewNo = 0;
+		if (cno != null) {
+			crewNo = Integer.parseInt(cno);
+		}
+		
 		BoardDAO dao = new BoardDAO();
-		resp.setContentType("text/html;charset=UTF-8");
 		String b = req.getParameter("boardNo");
 		int boardNo = Integer.parseInt(b); // 게시글 조회수 1 증가 new
+		System.out.println(boardNo);
 		if(b==null) {
-			return "redirect:board?cmd=listBoard";
+			return "redirect:board?cmd=listBoard&crewNo=" + crewNo;
 		}
-		//Integer crewNo = (Integer) req.getSession().getAttribute("crew");
-		Integer crewNo=1;
 		BoardVO vo= dao.selectOneBoard(boardNo);
 		
-		if(vo.getCrewNo()!=crewNo) {
-			return "redirect:board?cmd=listBoard&msg=crewN";
+		// board 테이블에서 memberNo가져와서 member 정보 조회
+		MemberDAO mdao = new MemberDAO();
+		MemberVO mvo = mdao.selectOneMemberByMemberNo(vo.getMemberNo());
+		
+		if(vo.getCrewNo()!= crewNo) {
+			return "redirect:board?cmd=listBoard&crewNo=" + crewNo;
 		}
 		List<BoardCommentVO> commentList=dao.selectComment(boardNo);
 		
@@ -42,6 +55,8 @@ public class DetailBoardAction implements Action {
 		vo.setBoardHit(vo.getBoardHit()+1);
 		req.setAttribute("vo", vo);
 		req.setAttribute("commentList", commentList);
+		req.setAttribute("boardMemberVO", mvo);
+		req.setAttribute("crewNo", crewNo);
 		return "board/detailBoard.jsp";
 	}
 }
