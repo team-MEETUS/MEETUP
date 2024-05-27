@@ -116,26 +116,20 @@ public class MeetingDAO {
 	}
 	
 	// 정모 멤버 등록 (참여)
-	public void addMeetingMember (MeetingMemberVO vo) {
+	public void addMeetingMember (int meetingNo, int memberNo) {
 		SqlSession ss = factory.openSession(true);
 		
-		// 정모회원 테이블 추가
-		ss.insert("kr.co.meetup.meeting.addMeetingMember", vo);
-		
-		// 모임참석인원 update
-		ss.update("kr.co.meetup.meeting.plusMeetingAttend", vo);
-		
-		ss.close();
-	}
-	
-	// 정모 모집 마감 (update)
-	public void updateMeeting(int meetingNo) {
-		SqlSession ss = factory.openSession(true);
-		
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("meetingNo", meetingNo);
-		
-		ss.update("kr.co.meetup.meeting.updateMeeting", map);
+		map.put("memberNo", memberNo);
+		// 정모회원 테이블 추가
+		ss.insert("kr.co.meetup.meeting.addMeetingMember", map);
+		ss.commit();
+		// 정모회원 테이블 조회
+		int cnt = ss.selectOne("kr.co.meetup.meeting.selectMeetingMemberCnt",map);
+		map.put("cnt", cnt);
+		// 모임참석인원 update
+		ss.update("kr.co.meetup.meeting.updateMeetingAttend", map);
 		
 		ss.close();
 	}
@@ -149,8 +143,21 @@ public class MeetingDAO {
 		map.put("memberNo", memberNo);
 		
 		ss.delete("kr.co.meetup.meeting.deleteMeetingMember", map);
+		ss.commit();
+		int cnt = ss.selectOne("kr.co.meetup.meeting.selectMeetingMemberCnt",map);
+		map.put("cnt", cnt);
+		ss.update("kr.co.meetup.meeting.updateMeetingAttend", map);
+		ss.close();
+	}
+	
+	// 정모 모집 마감 (update)
+	public void updateMeeting(int meetingNo) {
+		SqlSession ss = factory.openSession(true);
 		
-		ss.update("kr.co.meetup.meeting.minusMeetingAttend", map);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("meetingNo", meetingNo);
+
+		ss.update("kr.co.meetup.meeting.updateMeeting", map);
 		
 		ss.close();
 	}

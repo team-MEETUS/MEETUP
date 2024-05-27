@@ -16,7 +16,7 @@ import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.MeetingDAO;
 import kr.co.meetup.web.vo.MeetingVO;
 
-@WebServlet("/upload.do")
+@WebServlet("/meetingUpload")
 public class UploadAction extends HttpServlet {
 
 	@Override
@@ -32,7 +32,7 @@ public class UploadAction extends HttpServlet {
     	String crewNo = mr.getParameter("crewNo");
 		String memberNo = mr.getParameter("memberNo");
 		String meetingName = mr.getParameter("meetingName");
-		String meetingDay = mr.getParameter("meetingDay");
+		String meetingDay = mr.getParameter("meetingDate");
 		String meetingTime1 = mr.getParameter("meetingTime1");
 		String meetingTime2 = mr.getParameter("meetingTime2");
 		String meetingLoc = mr.getParameter("meetingLoc");
