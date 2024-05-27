@@ -116,6 +116,13 @@
 		WHERE bc.boardNo = #{boardNo} and boardCommentStatus = 1
 	</select>
 	
+	<!-- 댓글 1건 조회 -->
+	<select id="selectOneBoardComment" parameterType="int" resultType="BoardCommentVO">
+		SELECT boardCommentNo, boardNo, memberNo, boardCommentPno, boardCommentContent, boardCommentStatus, createdAt
+		FROM board_comment
+		WHERE boardCommentNo = #{boardCommentNo}
+	</select>	
+	
 	<!-- 댓글 수정 -->
 	<update id="updateOneBoardComment" parameterType="BoardCommentVO">
 	    UPDATE board_comment

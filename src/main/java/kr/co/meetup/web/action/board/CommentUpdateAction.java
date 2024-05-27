@@ -37,23 +37,24 @@ public class CommentUpdateAction implements Action {
 	        boardCommentVO.setBoardCommentContent(boardCommentContent);
 	        boardCommentVO.setBoardCommentStatus(boardCommentStatus);
 
-	        // 댓글 작성자의 회원번호 가져오기
 	        BoardDAO dao = new BoardDAO();
-	        BoardCommentVO writerNo = dao.getOneBoardComment(boardCommentNo);
-	        int commentWriterNo = originalCommentVO.getMemberNo();
+	        // 댓글 작성자의 회원번호 가져오기
+	        BoardCommentVO writerNo = dao.selectOneBoardComment(boardCommentNo);
+	        int commentWriterNo = writerNo.getMemberNo();
 
 	        // 현재 로그인한 사용자의 회원번호와 댓글 작성자의 회원번호 비교
 	        if (mvo.getMemberNo() == commentWriterNo) {
 	            dao.updateOneBoardComment(boardCommentVO);
 	            // 수정 완료 후 게시글 페이지로 리다이렉트
-	            return "redirect:board?cmd=detailboard&boardNo=" + req.getParameter("boardNo");
+	            return "redirect:board?cmd=detailboard&boardsNo=" + req.getParameter("boardNo");
 	        } else {
-	            // 작성자만 수정 가능한 메시지 출력
+	            // 작성자만 수정 가능하다는 메시지 출력
 	            req.setAttribute("errorMessage", "작성자만 댓글을 수정할 수 있습니다.");
-	            return "board/commentUpdateError";
+	            return "redirect:board?cmd=detailboard&boardsNo=" + req.getParameter("boardNo");
 	        }
 	    } catch (UnsupportedEncodingException e) {
 	        e.printStackTrace();
 	        return "error";
 	    }
 	}
+}

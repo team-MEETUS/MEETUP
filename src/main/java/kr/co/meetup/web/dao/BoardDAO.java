@@ -97,7 +97,7 @@ public class BoardDAO {
 		ss.close();
 		return vo;
 	}
-
+	
 	// 게시글 작성
 	public void addOneBoard(BoardVO vo) {
 		SqlSession ss = factory.openSession(true);
@@ -147,6 +147,15 @@ public class BoardDAO {
 		return list;
 	}
 	
+	//댓글 1건 조회
+	public BoardCommentVO selectOneBoardComment(int boardCommentNo) {
+		SqlSession ss = factory.openSession(true);
+		BoardCommentVO vco = ss.selectOne("kr.co.meetup.web.board.selectOneBoardComment", boardCommentNo);
+		ss.close();
+		return vco;
+	}
+
+	
 	// 댓글 수정
 	public void updateOneBoardComment(BoardCommentVO vo) {
 		SqlSession ss = factory.openSession(true);
@@ -164,6 +173,7 @@ public class BoardDAO {
 	    ss.close();
 	}
 
+	
 
 	
 }
