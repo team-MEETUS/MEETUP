@@ -63,6 +63,17 @@ public class CrewDAO {
 		return list;
 	}
 	
+	// 한개 모임회원 조회
+	public CrewMemberVO selectCrewMemberByCrewNoMemberNo(int crewNo, int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		map.put("memberNo", memberNo);
+		CrewMemberVO vo = ss.selectOne("kr.co.meetup.crew.selectCrewMemberByCrewNoMemberNo", map);
+		ss.close();
+		return vo;
+	}
+	
 	// 카테고리 별 전체 모임 조회
 	public List<CrewVO> selectCrewByCategory(int ctg, int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
@@ -119,6 +130,15 @@ public class CrewDAO {
 		SqlSession ss = factory.openSession(true);
 		ss.update("kr.co.meetup.crew.updateCrewMember", vo);
 		ss.close();
+	}
+	
+	// 모임 회원 수 수정 (+1 / -1)
+	public void updateCrewAttend(int crewNo, int no) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		map.put("no", no);
+		ss.update("kr.co.meetup.crew.updateCrewAttend", map);
 	}
 
 	// 전체 모임 수 조회

@@ -46,6 +46,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY cm.crewMemberStatus DESC
 	</select>
 	
+	<!-- 한개 모임회원 조회 -->
+	<select id="selectCrewMemberByCrewNoMemberNo" parameterType="Hashmap" resultType="CrewMemberVO">
+		SELECT crewMemberNo, crewNo, memberNo, crewMemberStatus, createdAt 
+		FROM crew_member 
+		WHERE crewNo = #{crewNo} AND memberNo = #{memberNo}
+	</select>
+	
 	<!-- 모든 대 카테고리 조회 -->
 	<select id="selectAllCategoryBig" resultType="CategoryBigVO">
 		SELECT categoryBigNo, categoryBigName, categoryBigIcon, createdAt
@@ -75,6 +82,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE crew_member
 		SET crewMemberStatus = #{crewMemberStatus}
 		WHERE crewNo = #{crewNo} AND memberNo = #{memberNo}
+	</update>
+	
+	<!-- 모임회원 수 수정 -->
+	<update id="updateCrewAttend" parameterType="map">
+		UPDATE crew
+		SET crewAttend = crewAttend + #{no}
+		WHERE crewNo = #{crewNo}
 	</update>
 	
 	<!-- 전체 모임 수 조회 -->
