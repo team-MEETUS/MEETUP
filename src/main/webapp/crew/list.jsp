@@ -67,7 +67,6 @@
         margin: 10px 0;
         font-size: 14px;
         color: white;
-        fo
     }
     .crew-name {
         font-size: 22px;
@@ -107,26 +106,6 @@
         padding-left: 0;
         list-style: none;
     }
-    /* .page-item {
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-    }
-    .page-link {
-        border: 1px solid #dee2e6;
-        padding: 0.375rem 0.75rem;
-        margin-left: -1px;
-        line-height: 1.25;
-        color: #007bff;
-        text-decoration: none;
-        background-color: #fff;
-    }
-    .page-item.active .page-link {
-        z-index: 3;
-        color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
-    } */
 </style>
 </head>
 <body>

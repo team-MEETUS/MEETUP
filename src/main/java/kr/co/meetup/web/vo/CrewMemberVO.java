@@ -15,4 +15,8 @@ public class CrewMemberVO {
 	private int memberNo;
 	private int crewMemberStatus;
 	private Timestamp createdAt;
+	
+	// 조인으로 가져오는 필드
+	private String memberNickname;
+	private String memberSaveImg;
 }
