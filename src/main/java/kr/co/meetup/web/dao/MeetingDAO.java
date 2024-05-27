@@ -59,6 +59,14 @@ public class MeetingDAO {
 		return count;
 	}
 	
+	// 정모번호별 정모 조회
+	public MeetingVO selectOneMeetingByMeetingNo(int meetingNo) {
+		SqlSession ss = factory.openSession(true);
+		
+		MeetingVO vo = ss.selectOne("kr.co.meetup.meeting.selectOneMeetingByMeetingNo", meetingNo);
+		return vo;
+	}
+	
 	// 모임별 정모 조회
 	public List<MeetingVO> selectAllMeetingByCrewNo(int crewNo, int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
@@ -160,5 +168,17 @@ public class MeetingDAO {
 		ss.update("kr.co.meetup.meeting.updateMeeting", map);
 		
 		ss.close();
+	}
+	
+	public int selectAllMeetingMemberCnt(int meetingNo, int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("meetingNo", meetingNo);
+		map.put("memberNo", memberNo);
+		
+		int count = ss.selectOne("kr.co.meetup.meeting.selectAllMeetingMemberCnt", map);
+
+		return count;
 	}
 }

@@ -127,7 +127,8 @@ h2 {
 		<%
 			}
 		%>
-		<a href="meeting?cmd=write" class="btn btn-primary">모임등록</a>
+		<!-- crewNo 받아오기 여기말고 상세페이지에 다시 만들기 -->
+<!-- 		<a href="meeting?cmd=write&crewNo=1" class="btn btn-primary">모임등록</a> -->
 		</div>
 		
 		<br />		

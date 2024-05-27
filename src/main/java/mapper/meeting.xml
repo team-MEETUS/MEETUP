@@ -30,10 +30,15 @@
 	<select id="selectAllMeetingByDate" parameterType="Hashmap" resultType="MeetingVO">
 	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
 	  FROM meeting
-<!-- 	 WHERE meetingDate BETWEEN '2024-05-21 00:00:00' AND '2024-05-21 23:59:59' -->
 	 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' )
 	 ORDER BY meetingNo
 	 LIMIT #{recordPerPage} OFFSET #{startNo};
+	</select>
+	
+	<select id="selectOneMeetingByMeetingNo" parameterType="int" resultType="MeetingVO">
+	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
+	  FROM meeting
+	 WHERE meetingNo = #{meetingNo};
 	</select>
 	
 	<!-- 정모 모집 등록 -->
@@ -79,6 +84,15 @@
 	<select id="selectMeetingMemberCnt" parameterType="Hashmap" resultType="int">
 		SELECT count(*) as cnt 
 		  FROM meeting_member
+		 WHERE meetingNo = #{meetingNo}
+	</select>
+	
+	<!-- 멤버의 정모참여 여부 확인 -->
+	<select id="selectAllMeetingMemberCnt" parameterType="Hashmap" resultType="int">
+		SELECT count(*) as cnt 
+		  FROM meeting_member
 		 WHERE meetingNo = #{meetingNo} AND memberNo = #{memberNo}
 	</select>
+	
+	
 </mapper>
