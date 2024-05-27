@@ -206,10 +206,6 @@
 </head>
 <body>
 <div class="container">
-	<div class="icon-wrapper">
-    <box-icon name='crown' type='solid' color='#ff0000'></box-icon>
-</div>
-
 	<!-- 메뉴 -->
 	<ul class="crew-menu__items">
 		<li>

@@ -77,6 +77,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE crewNo = #{crewNo} AND memberNo = #{memberNo}
 	</update>
 	
+	<!-- 모임회원 수 수정 -->
+	<update id="updateCrewAttend" parameterType="map">
+		UPDATE crew
+		SET crewAttend = crewAttend + #{no}
+		WHERE crewNo = #{crewNo}
+	</update>
+	
 	<!-- 전체 모임 수 조회 -->
 	<select id="selectCrewCnt" resultType="int">
 		SELECT count(*)

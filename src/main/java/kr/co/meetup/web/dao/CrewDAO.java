@@ -120,6 +120,15 @@ public class CrewDAO {
 		ss.update("kr.co.meetup.crew.updateCrewMember", vo);
 		ss.close();
 	}
+	
+	// 모임 회원 수 수정 (+1 / -1)
+	public void updateCrewAttend(int crewNo, int no) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		map.put("no", no);
+		ss.update("kr.co.meetup.crew.updateCrewAttend", map);
+	}
 
 	// 전체 모임 수 조회
 	public int selectAllCrewCnt() {
