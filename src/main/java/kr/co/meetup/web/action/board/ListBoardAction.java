@@ -103,7 +103,6 @@ public class ListBoardAction implements Action {
 		List<MemberVO> memberList = new ArrayList<MemberVO>();
 		MemberDAO mdao = new MemberDAO();
 		if (bc != null) {
-			System.out.println("ListBoardAction crewNo : " + crewNo);
 			boardList = dao.selectBoardByCategory(Integer.parseInt(bc),startNo,recordPerPage, crewNo);
 			for(BoardVO bvo : boardList) {
 				MemberVO mvo = mdao.selectOneMemberByMemberNo(bvo.getMemberNo());
@@ -132,7 +131,7 @@ public class ListBoardAction implements Action {
 		req.setAttribute("boardCategoryNo",bc);
 		req.setAttribute("memberList", memberList);
 		req.setAttribute("crewMemberList", crewMemberList);
-		req.setAttribute("boardCrewNo", crewNo);
+		req.setAttribute("crewNo", crewNo);
 		
 
 		return "board/listBoard.jsp";

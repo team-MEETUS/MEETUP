@@ -6,11 +6,14 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.BoardDAO;
+import kr.co.meetup.web.dao.CrewDAO;
 import kr.co.meetup.web.dao.MemberDAO;
 import kr.co.meetup.web.vo.BoardCommentVO;
 import kr.co.meetup.web.vo.BoardVO;
+import kr.co.meetup.web.vo.CrewMemberVO;
 import kr.co.meetup.web.vo.MemberVO;
 
 public class DetailBoardAction implements Action {
@@ -30,6 +33,22 @@ public class DetailBoardAction implements Action {
 		int crewNo = 0;
 		if (cno != null) {
 			crewNo = Integer.parseInt(cno);
+		}
+		
+		// url에서 직접 입력한 결과 막는 로직
+		HttpSession session = req.getSession();
+		MemberVO memberVO = (MemberVO) session.getAttribute("loginMember");
+		CrewDAO cdao = new CrewDAO();
+		List<CrewMemberVO> crewMemberList = cdao.selectAllCrewMember(crewNo);
+		boolean check = false;
+		for(CrewMemberVO vo : crewMemberList) {
+			if(memberVO != null && memberVO.getMemberNo() == vo.getMemberNo()) {
+				check = true;
+				break;
+			}
+		}
+		if (check == false) {
+			return "redirect:board?cmd=listBoard&crewNo=" + crewNo;
 		}
 		
 		BoardDAO dao = new BoardDAO();
