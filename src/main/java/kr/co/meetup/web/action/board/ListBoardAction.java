@@ -109,16 +109,13 @@ public class ListBoardAction implements Action {
 		if (bc != null) {
 			System.out.println("ListBoardAction crewNo : " + crewNo);
 			boardList = dao.selectBoardByCategory(Integer.parseInt(bc),startNo,recordPerPage, crewNo);
-			System.out.println("boardList : " + boardList);
 			for(BoardVO bvo : boardList) {
 				MemberVO mvo = mdao.selectOneMemberByMemberNo(bvo.getMemberNo());
 				memberList.add(mvo);
 			}
 		}else {
-		//bc 값이 없으면 모임별 전체 게시글 출력
-			System.out.println("ListBoardAction crewNo : " + crewNo);
-			boardList = dao.selectBoardAllByCategory(startNo,recordPerPage, crewNo);
-			System.out.println("boardList : " + boardList);
+			//bc 값이 없으면 모임별 전체 게시글 출력
+			boardList = dao.selectBoardAll(startNo,recordPerPage, crewNo);
 			for(BoardVO bvo : boardList) {
 				MemberVO mvo = mdao.selectOneMemberByMemberNo(bvo.getMemberNo());
 				memberList.add(mvo);
