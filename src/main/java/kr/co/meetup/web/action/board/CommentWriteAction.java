@@ -4,48 +4,47 @@ import java.io.UnsupportedEncodingException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.BoardDAO;
 import kr.co.meetup.web.vo.BoardCommentVO;
-import kr.co.meetup.web.vo.BoardImgVO;
-import kr.co.meetup.web.vo.BoardVO;
+import kr.co.meetup.web.vo.MemberVO;
 
 public class CommentWriteAction implements Action {
 
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		try {
-			req.setCharacterEncoding("UTF-8");
-			resp.setContentType("text/html;charset=UTF-8");
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            req.setCharacterEncoding("UTF-8");
+            resp.setContentType("text/html;charset=UTF-8");
 
-			// 임시로그인
-			String memberNo = "1";
+            // 현재 로그인한 유저 정보 가져오기
+            HttpSession session = req.getSession();
+            MemberVO mvo = (MemberVO) session.getAttribute("loginMember");
 
-			if (memberNo == null) {
-				return "redirect:/member?cmd=login";
-			}
-			Integer boardNo = Integer.parseInt(req.getParameter("boardNo"));
-			String boardCommentContent = req.getParameter("boardCommentContent");
+            if (mvo == null) {
+                return "redirect:/member?cmd=login";
+            }
 
-			BoardDAO dao = new BoardDAO();
-			BoardCommentVO vo = new BoardCommentVO();
+            Integer boardNo = Integer.parseInt(req.getParameter("boardNo"));
+            String boardCommentContent = req.getParameter("boardCommentContent");
 
-			vo.setBoardCommentContent(boardCommentContent);
-			vo.setBoardCommentStatus(1);
-			vo.setMemberNo(Integer.parseInt(memberNo));
-			vo.setBoardNo(boardNo);
+            BoardDAO dao = new BoardDAO();
+            BoardCommentVO vo = new BoardCommentVO();
 
-			System.out.println(vo);
+            vo.setBoardCommentContent(boardCommentContent);
+            vo.setBoardCommentStatus(1);
+            vo.setMemberNo(mvo.getMemberNo());
+            vo.setBoardNo(boardNo);
 
+            System.out.println(vo);
 
-			dao.addOneComment(vo);
-			
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-		// 작성 완료 후 게시글 페이지로 리다이렉트
-		return "redirect:board?cmd=detailboard&boardNo="+req.getParameter("boardNo");
-	}
+        // 예외 발생 시 기본 리턴값
+        return "redirect:board?cmd=detailboard&boardNo=" + req.getParameter("boardNo");
+    }
 
 }

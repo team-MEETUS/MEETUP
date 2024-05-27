@@ -11,14 +11,14 @@
 		WHERE crewNo=#{crewNo}
 	</select>
 	<!-- 게시판 총 데이터 수 조회 -->	
-	<select id="selectAllBoardCount" resultType="int">
+	<select id="selectAllBoardCount" parameterType="int" resultType="int">
 		SELECT count(*) as cnt FROM board
-		   where boardStatus !=0 
+		   where boardStatus !=0 AND crewNo = #{crewNo} 
 	</select>
 	<!-- 게시판 총 데이터 수 조회(BoardCategoryNo 조건) -->		
-	<select id="selectAllBoardByBoardCategoryNo" resultType="int">
+	<select id="selectAllBoardByBoardCategoryNo" parameterType="Hashmap" resultType="int">
 		SELECT count(*) as cnt FROM board
-		where boardCategoryNo =#{boardCategoryNo} and boardStatus !=0 
+		where boardCategoryNo =#{boardCategoryNo} and boardStatus !=0  AND crewNo = #{crewNo} 
 	</select>
 	
 	<!-- 게시판 모임별 모든 게시글 조회 -->
@@ -31,7 +31,7 @@
         LEFT JOIN member m ON b.memberNo = m.memberNo
         WHERE b.crewNo = #{crewNo}
 		ORDER BY boardNo DESC
-		LIMIT #{recordPerPage} OFFSET #{startNo};
+		LIMIT #{recordPerPage} OFFSET #{startNo}
 	</select>
 		
 	<!-- 게시판 카테고리 조회 -->	
@@ -45,22 +45,23 @@
 	 <select id="selectBoardByCategory" parameterType="HashMap" resultType="BoardVO">
 		SELECT b.boardNo, b.crewNo, b.boardCategoryNo, b.memberNo, b.boardTitle, b.boardContent, b.boardHit, b.boardStatus, b.createdAt, b.updatedAt
         FROM board b
-        LEFT JOIN board_category c ON b.boardCategoryNo = c.boardCategoryNo
+        LEFT JOIN board_category bc ON b.boardCategoryNo = bc.boardCategoryNo
         LEFT JOIN board_img i ON b.boardNo = i.boardNo
-        LEFT JOIN crew cc ON b.crewNo = cc.crewNo
+        LEFT JOIN crew c ON b.crewNo = c.crewNo
         LEFT JOIN member m ON b.memberNo = m.memberNo
-        WHERE b.boardCategoryNo =#{boardCategoryNo} and boardStatus !=0
-        LIMIT #{recordPerPage} OFFSET #{startNo};
+        WHERE b.boardCategoryNo = #{boardCategoryNo} and boardStatus !=0 AND b.crewNo = #{crewNo} 
+        LIMIT #{recordPerPage} OFFSET #{startNo}
     </select>
-    <select id="selectBoardAllByCategory" parameterType="HashMap" resultType="BoardVO">
+    <!-- 전체  -->
+    <select id="selectBoardAll" parameterType="HashMap" resultType="BoardVO">
 		SELECT b.boardNo, b.crewNo, b.boardCategoryNo, b.memberNo, b.boardTitle, b.boardContent, b.boardHit, b.boardStatus, b.createdAt, b.updatedAt
         FROM board b
-        LEFT JOIN board_category c ON b.boardCategoryNo = c.boardCategoryNo
+        LEFT JOIN crew c ON b.crewNo = c.crewNo
         LEFT JOIN board_img i ON b.boardNo = i.boardNo
         LEFT JOIN crew cc ON b.crewNo = cc.crewNo
         LEFT JOIN member m ON b.memberNo = m.memberNo
-        WHERE boardStatus !=0 
-        LIMIT #{recordPerPage} OFFSET #{startNo};
+        WHERE boardStatus !=0  AND b.crewNo = #{crewNo} 
+        LIMIT #{recordPerPage} OFFSET #{startNo}
     </select>
 	
 	<!-- 게시글 1건 조회 -->
@@ -122,6 +123,10 @@
 	    WHERE boardCommentNo = #{boardCommentNo}
 	</update>
 	
-	
-	
+	<!-- 댓글 삭제(update) -->
+	<update id="deleteOneBoardComment" parameterType="int">
+	    UPDATE board_comment
+	    SET boardCommentStatus = 0
+	    WHERE boardCommentNo = #{boardCommentNo}
+	</update>
 </mapper>

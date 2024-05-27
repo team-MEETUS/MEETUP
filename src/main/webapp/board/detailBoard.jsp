@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,7 @@
 	<table class="table table-striped">
 		<tr>
 			<th>카테고리</th>
+			<td>
 		      <c:choose>
 		            <c:when test="${vo.boardCategoryNo == 1}">공지사항</c:when>
 		            <c:when test="${vo.boardCategoryNo == 2}">가입인사</c:when>
@@ -23,10 +25,11 @@
 		            <c:when test="${vo.boardCategoryNo == 5}">투표</c:when>
 		            <c:otherwise>${vo.boardCategoryNo}</c:otherwise>
 		        </c:choose>
+		    </td>
 			<th>조회수</th>
 			<td>${vo.boardHit}</td>
 			<th>작성일시</th>
-			<td>${vo.createdAt}</td>
+			<td><fmt:formatDate value="${vo.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 		</tr>
 		<tr>
 			<th>제목</th>
@@ -40,10 +43,13 @@
 			<td colspan="6">
 				<a href="board" class="btn btn-primary">목록</a>
 				<a href="board?cmd=updateBoard&bno=${vo.boardNo}" class="btn btn-success">수정</a>
-				<a href="board?cmd=deleteBoard&bno=${vo.boardNo}" class="btn btn-danger">삭제</a>
+		<%-- <a href="board?cmd=deleteBoard&bno=${vo.boardNo}" class="btn btn-danger">삭제</a> --%>
+				<button type="button" class="btn btn-danger" onclick="deleteBoard(${vo.boardNo})">삭제</button>
+				
 			</td>
 		</tr>
 	</table>
+	
 
 	<!-- 댓글 작성 폼 -->
 	<div class="mt-4">
@@ -69,7 +75,7 @@
 		      <p class="card-text" id="commentContent-${comment.boardCommentNo}">${comment.boardCommentContent}</p>
 		      
 		      <!-- 수정 폼 -->
-		      <form action="board?cmd=updateComment" method="post"">
+		      <form id= "editForm" action="board?cmd=updateComment" method="post" style="display: none;">
 		        <input type="hidden" name="boardNo" value="${vo.boardNo}">
 		        <input type="hidden" name="boardCommentNo" value="${comment.boardCommentNo}">
 		        <div class="mb-3">
@@ -77,12 +83,40 @@
 		        </div>
 		        <button type="submit" class="btn btn-success">수정 완료</button>
 		      </form>
-		   <!-- 수정 버튼 -->
-			  <button type="button" class="btn btn-primary" onclick="toggleEditForm(${comment.boardCommentNo})">수정</button>
+		      <!-- 수정 버튼 -->
+			  <button type="button" class="btn btn-primary" onclick="showEditForm(this)">수정</button>
+			    <!-- 삭제 버튼 -->
+                <button type="button" class="btn btn-danger" onclick="deleteComment(${comment.boardCommentNo})">삭제</button>
+            </div>
+        </div>
+    </c:forEach>
+</div>
+
+
+
+<script>
+
+	function deleteBoard(button){
+		if (confirm("삭제하시겠습니까?")){
+			window.location.href = 'board?cmd=deleteBoard&bno=${vo.boardNo}';
+		}
+	}
+
+	function showEditForm(button) {
+        var editForm = document.getElementById('editForm');
+        editForm.style.display = 'block';
+        button.style.display = 'none';
+    }
+
+    function deleteComment(boardCommentNo) {
+        if (confirm("삭제하시겠습니까?")) {
+            window.location.href = 'board?cmd=deleteComment&bno=${vo.boardNo}&bcno=' + boardCommentNo;
+        }
+    }
+</script>
 		   
 		    </div>
 		  </div>
-		</c:forEach>
 	</div>
 
 	

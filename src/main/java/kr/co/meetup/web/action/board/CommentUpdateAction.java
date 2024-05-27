@@ -4,39 +4,56 @@ import java.io.UnsupportedEncodingException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.BoardDAO;
 import kr.co.meetup.web.vo.BoardCommentVO;
+import kr.co.meetup.web.vo.MemberVO;
 
 public class CommentUpdateAction implements Action {
-    
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            req.setCharacterEncoding("UTF-8");
-            resp.setContentType("text/html;charset=UTF-8");
 
-            int boardCommentNo = Integer.parseInt(req.getParameter("boardCommentNo"));
-            String boardCommentContent = req.getParameter("boardCommentContent");
-            int boardNo = Integer.parseInt(req.getParameter("boardNo"));
-            int boardCommentStatus = 1; // 댓글 상태를 1로 설정
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+	    try {
+	        req.setCharacterEncoding("UTF-8");
+	        resp.setContentType("text/html;charset=UTF-8");
 
-            System.out.println(req.getParameter("boardCommentNo"));
-            
-            BoardCommentVO boardCommentVO = new BoardCommentVO();
-            boardCommentVO.setBoardNo(boardNo);
-            boardCommentVO.setBoardCommentNo(boardCommentNo);
-            boardCommentVO.setBoardCommentContent(boardCommentContent);
-            boardCommentVO.setBoardCommentStatus(boardCommentStatus);
+	        // 현재 로그인한 유저 정보 가져오기
+	        HttpSession session = req.getSession();
+	        MemberVO mvo = (MemberVO) session.getAttribute("loginMember");
 
-            BoardDAO dao = new BoardDAO();
-            dao.updateOneBoardComment(boardCommentVO);
-            
-            // 수정 완료 후 게시글 페이지로 리다이렉트
-            return "redirect:board?cmd=detailboard&boardNo=" + req.getParameter("boardNo");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return "error";
-        }
-    }
-}
+	        if (mvo == null) {
+	            return "redirect:/member?cmd=login";
+	        }
+
+	        int boardCommentNo = Integer.parseInt(req.getParameter("boardCommentNo"));
+	        String boardCommentContent = req.getParameter("boardCommentContent");
+	        int boardNo = Integer.parseInt(req.getParameter("boardNo"));
+	        int boardCommentStatus = 1; // 댓글 상태를 1(정상)로 설정
+
+	        BoardCommentVO boardCommentVO = new BoardCommentVO();
+	        boardCommentVO.setBoardNo(boardNo);
+	        boardCommentVO.setBoardCommentNo(boardCommentNo);
+	        boardCommentVO.setBoardCommentContent(boardCommentContent);
+	        boardCommentVO.setBoardCommentStatus(boardCommentStatus);
+
+	        // 댓글 작성자의 회원번호 가져오기
+	        BoardDAO dao = new BoardDAO();
+	        BoardCommentVO writerNo = dao.getOneBoardComment(boardCommentNo);
+	        int commentWriterNo = originalCommentVO.getMemberNo();
+
+	        // 현재 로그인한 사용자의 회원번호와 댓글 작성자의 회원번호 비교
+	        if (mvo.getMemberNo() == commentWriterNo) {
+	            dao.updateOneBoardComment(boardCommentVO);
+	            // 수정 완료 후 게시글 페이지로 리다이렉트
+	            return "redirect:board?cmd=detailboard&boardNo=" + req.getParameter("boardNo");
+	        } else {
+	            // 작성자만 수정 가능한 메시지 출력
+	            req.setAttribute("errorMessage", "작성자만 댓글을 수정할 수 있습니다.");
+	            return "board/commentUpdateError";
+	        }
+	    } catch (UnsupportedEncodingException e) {
+	        e.printStackTrace();
+	        return "error";
+	    }
+	}
