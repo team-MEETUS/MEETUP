@@ -113,6 +113,13 @@ public class CrewDAO {
 		ss.insert("kr.co.meetup.crew.addCrewMember", vo);
 		ss.close();
 	}
+	
+	// 모임 회원 수정 (권한)
+	public void updateCrewMember(CrewMemberVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.crew.updateCrewMember", vo);
+		ss.close();
+	}
 
 	// 전체 모임 수 조회
 	public int selectAllCrewCnt() {
