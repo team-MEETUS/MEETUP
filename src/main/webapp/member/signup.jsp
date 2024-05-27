@@ -13,38 +13,56 @@
 		<form id="memberForm" action="member" method="post">
 			<table>
 				<tr>
-					<th>핸드폰번호</th>
+					<th>핸드폰번호(필수)</th>
 					<td>
-						<input type="text" name="memberPhone" />
+						<input type="text" name="memberPhone" oninput="inputNum(this)" />
 						<button id="phoneChk">인증하기</button>
 						<input type="hidden" name="cmd" value="signupOk" />
 					</td>
 				</tr>
 				
 				<tr>
-					<th>인증번호</th>
+					<th>인증번호(필수)</th>
 					<td>
-						<input type="text" name="verifyNumber" />
+						<input type="text" name="verifyNumber" oninput="inputNum(this)" />
 						<button id="phoneChk2">인증확인</button>
 					</td>
 				</tr>
 				
 				<tr>
-					<th>비밀번호</th>
+					<th>비밀번호(필수)</th>
 					<td>
 						<input type="password" name="memberPw" />
 					</td>
 				</tr>
 				
 				<tr>
-					<th>닉네임</th>
+					<th>닉네임(필수)</th>
 					<td>
 						<input type="text" name="memberNickname" />
 					</td>
 				</tr>
 				
 				<tr>
-					<th>시/도</th>
+					<th>생년월일(필수)</th>
+					<td>
+						<input type="text" name="memberBirth1" placeholder="YYYY" oninput="inputNum(this) combineBirthDate();" />
+						<input type="text" name="memberBirth2" placeholder="MM" oninput="inputNum(this) combineBirthDate();" />
+						<input type="text" name="memberBirth3" placeholder="DD" oninput="inputNum(this) combineBirthDate();" />
+						<input type="hidden" name="memberBirth" id="memberBirth" />
+					</td>
+				</tr>
+				
+				<tr>
+					<th>성별(필수)</th>
+					<td>
+						<input type="radio" name="memberGender" value="남자" />남자
+						<input type="radio" name="memberGender" value="여자" />여자
+					</td>
+				</tr>
+				
+				<tr>
+					<th>시/도(필수)</th>
 					<td>
 						<select id="geoCity" name="geoCity">
 							<option value="">시/도</option>
@@ -57,7 +75,7 @@
 				
 				<tr>
 				
-					<th>군/구</th>
+					<th>군/구(필수)</th>
 					<td>
 						<select id="geoDistrict" name="geoDistrict">
 							<option value="">군/구</option>
@@ -155,6 +173,10 @@
 		    var memberNickname = $("input[name='memberNickname']").val();
 		    var geoCity = $("#geoCity").val();
 		    var geoDistrict = $("#geoDistrict").val();
+		    var memberBirth1 = $("input[name='memberBirth1']").val();
+		    var memberBirth2 = $("input[name='memberBirth2']").val();
+		    var memberBirth3 = $("input[name='memberBirth3']").val();
+		    var memberGender = $("input[name='memberGender']:checked").val();
 			
 			if (!isVerified) {
 				alert("인증확인을 먼저 해주세요.");
@@ -162,11 +184,34 @@
 				return;
 			}
 			// 필요한 정보를 모두 입력하였는지 확인용
-			if (!memberPw || !memberNickname || geoCity === "" || geoDistrict === "") {
-		        alert("모든 필드를 입력해주세요.");
+			if (!memberPw || !memberNickname || geoCity === "" || geoDistrict === "" || !memberBirth1 || !memberBirth2 || !memberBirth3 || !memberGender) {
+		        alert("필수 항목을 모두 입력해주세요.");
 		        event.preventDefault();
+		    } else {
+		    	combineBirthDate();
 		    }
 		});
+		
+		function inputNum(element) {
+		    element.value = element.value.replace(/[^0-9]/gi, "");
+		}
+		
+		function combineBirthDate() {
+		    var year = document.getElementsByName("memberBirth1")[0].value;
+		    var month = document.getElementsByName("memberBirth2")[0].value;
+		    var day = document.getElementsByName("memberBirth3")[0].value;
+
+		    // MM과 DD 형식을 맞추기 위해 필요하면 0을 추가합니다.
+		    if (month.length === 1) {
+		        month = '0' + month;
+		    }
+		    if (day.length === 1) {
+		        day = '0' + day;
+		    }
+
+		    var combinedDate = year + "." + month + "." + day;
+		    document.getElementById("memberBirth").value = combinedDate;
+		}
 	</script>
 </body>
 </html>

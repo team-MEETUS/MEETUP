@@ -14,7 +14,7 @@
 				<tr>
 					<th>핸드폰번호</th>
 					<td>
-						<input type="text" name="memberPhone" />
+						<input type="text" name="memberPhone" oninput="inputNum(this)" />
 						<input type="hidden" name="cmd" value="loginOk" />
 					</td>
 				</tr>
@@ -58,6 +58,10 @@
 	        	alert("정지 처리된 회원입니다.");
 	        }
 	    }
+		
+		function inputNum(element) {
+		    element.value = element.value.replace(/[^0-9]/gi, "");
+		}
 	</script>
 </body>
 </html>

@@ -22,7 +22,7 @@
 				</tr>
 				
 				<tr>
-					<th>닉네임</th>
+					<th>닉네임(필수)</th>
 					<td>
 						<input type="text" name="memberNickname" value="${loginMember.memberNickname}" />
 						<input type="hidden" name="memberNo" value="${loginMember.memberNo}" />
@@ -37,7 +37,25 @@
 				</tr>
 				
 				<tr>
-					<th>시/도</th>
+					<th>생년월일(필수)</th>
+					<td>
+				        <input type="text" name="memberBirth1" placeholder="YYYY" oninput="inputNum(this); combineBirthDate();" />
+				        <input type="text" name="memberBirth2" placeholder="MM" oninput="inputNum(this); combineBirthDate();" />
+				        <input type="text" name="memberBirth3" placeholder="DD" oninput="inputNum(this); combineBirthDate();" />
+				        <input type="hidden" name="memberBirth" id="memberBirth" value="${loginMember.memberBirth}" />
+				    </td>
+				</tr>
+				
+				<tr>
+					<th>성별(필수)</th>
+					<td>
+						<input type="radio" name="memberGender" value="남자" ${loginMember.memberGender == '남자' ? 'checked' : ''} />남자
+						<input type="radio" name="memberGender" value="여자" ${loginMember.memberGender == '여자' ? 'checked' : ''} />여자
+					</td>
+				</tr>
+				
+				<tr>
+					<th>시/도(필수)</th>
 					<td>
 						<select name="geoCity" id="geoCity">
 							
@@ -118,12 +136,46 @@
 		
 		$("#memberForm").submit(function(event) {
 			var memberNickname = $("input[name='memberNickname']").val();
+			var memberBirth1 = $("input[name='memberBirth1']").val();
+		    var memberBirth2 = $("input[name='memberBirth2']").val();
+		    var memberBirth3 = $("input[name='memberBirth3']").val();
+		    var memberGender = $("input[name='memberGender']:checked").val();
 			
-			if (!memberNickname) {
-				alert("닉네임은 필수 항목입니다.");
+			if (!memberNickname || !memberBirth1 || !memberBirth2 || !memberBirth3 || !memberGender) {
+				alert("필수 항목을 모두 입력해주세요.");
 				event.preventDefault();
+			} else {
+				combineBirthDate();
 			}
 		});
+		
+		document.addEventListener("DOMContentLoaded", function() {
+		    var birthDate = document.getElementById("memberBirth").value;
+		    if (birthDate) {
+		        var birthParts = birthDate.split('.');
+		        if (birthParts.length === 3) {
+		            document.getElementsByName("memberBirth1")[0].value = birthParts[0];
+		            document.getElementsByName("memberBirth2")[0].value = birthParts[1];
+		            document.getElementsByName("memberBirth3")[0].value = birthParts[2];
+		        }
+		    }
+		});
+
+		function combineBirthDate() {
+		    var year = document.getElementsByName("memberBirth1")[0].value;
+		    var month = document.getElementsByName("memberBirth2")[0].value;
+		    var day = document.getElementsByName("memberBirth3")[0].value;
+
+		    if (month.length === 1) {
+		        month = '0' + month;
+		    }
+		    if (day.length === 1) {
+		        day = '0' + day;
+		    }
+
+		    var combinedDate = year + "." + month + "." + day;
+		    document.getElementById("memberBirth").value = combinedDate;
+		}
 	</script>
 </body>
 </html>
