@@ -24,50 +24,44 @@ public class WriteBoardAction implements Action {
             // 현재 로그인한 유저 정보 가져오기
             HttpSession session = req.getSession();
             MemberVO mvo = (MemberVO) session.getAttribute("loginMember");
+            int loginNo = mvo.getMemberNo();
 
-            if (mvo == null) {
-                return "redirect:/member?cmd=login";
-            }
-
-            // 모임 회원번호 가져오기
-            HttpSession session2 = req.getSession();
-            String cno = req.getParameter("boardCrewNo");
-            int crewNo = 0;
+            //WFBA에서 memberNo 가져오기
+            String mno = req.getParameter("memberNo");
+            int memberNo = 0;
             
-           if(cno != null) {
-        	    crewNo = Integer.parseInt(cno);
-           }
-
-           //게시글 정보 가져오기
-           String boardCategoryNo = (String) req.getParameter("boardCategoryNo");
-           String boardTitle = req.getParameter("boardTitle");
-           String boardContent = req.getParameter("boardContent");
-           
-           BoardDAO dao = new BoardDAO();
-           BoardVO vo = new BoardVO();
-           BoardImgVO iv = new BoardImgVO();
-           
-           //현재 로그인한 사용자의 회원번호와 모임회원번호 비교
-            if(mvo.getMemberNo() == crewNo) {
-            	dao.addOneBoard(vo);
+            // cno(crewNo) 값 가져오기
+    		String cno =req.getParameter("crewNo");
+    		int crewNo = 0;
+    		
+    		if(cno != null && mno != null) {
+    			crewNo =Integer.parseInt(cno);
+    			memberNo = Integer.parseInt(mno);
+    		}
+    		
+    		if(loginNo == memberNo) {
+	           //게시글 정보 가져오기
+	           String boardCategoryNo = (String) req.getParameter("boardCategoryNo");
+	           String boardTitle = req.getParameter("boardTitle");
+	           String boardContent = req.getParameter("boardContent");
            
 	            int categoryNo = Integer.parseInt(boardCategoryNo);
-	            vo.setCrewNo(crewNo); // 모임 번호 설정
-	            vo.setMemberNo(mvo.getMemberNo());
-	            vo.setBoardCategoryNo(Integer.parseInt(boardCategoryNo));
-	            vo.setBoardTitle(boardTitle);
-	            vo.setBoardContent(boardContent);
-	            vo.setBoardStatus(categoryNo == 1 ? 1 : 2);
+	            BoardVO boardVO = new BoardVO();
+	            boardVO.setCrewNo(crewNo); // 모임 번호 설정
+	            boardVO.setMemberNo(mvo.getMemberNo());
+	            boardVO.setBoardCategoryNo(categoryNo);
+	            boardVO.setBoardTitle(boardTitle);
+	            boardVO.setBoardContent(boardContent);
+	            boardVO.setBoardHit(0);
+	            boardVO.setBoardStatus(1);
+	            
+	            BoardDAO boardDAO = new BoardDAO();
+	            boardDAO.addOneBoard(boardVO);
+    		}
 
             // iv.setBoardImgOriginalImg(boardImgOriginalImg);
             // iv.setBoardImgSaveImg(boardImgSaveImg);
             
-            }else {
-            	req.setAttribute("errorMessage", "모임에 가입해보세요.");
-                return "redirect:/crew?cmd=signup"; // 모임 가입 페이지로 리다이렉트
-            }
-            
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
