@@ -51,8 +51,8 @@
 				</form>
 			</div>
 		</section>
-		<jsp:include page="../component/footer.jsp"></jsp:include>
 	</div>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
 	
 	<script>
 		var isVerified = false;

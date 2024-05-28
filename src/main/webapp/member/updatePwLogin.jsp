@@ -4,27 +4,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비밀번호 변경</title>
+<!-- CSS -->
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/member/confirmPw.css" type="text/css" />
+<!-- CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-	<div>
-		<form action="member" method="post">
-			<table>
-				<tr>
-					<th>변경할 비밀번호</th>
-					<td>
-						<input type="password" name="memberPw" id="memberPw" />
-						<input type="hidden" name="cmd" value="updatePwLoginOk" />
-					</td>
-				</tr>
-				
-				<tr>
-					<td colspan="2">
-						<input type="submit" value="변경" />
-					</td>
-				</tr>
-			</table>
-		</form>
+	<div class="container">
+		<jsp:include page="../component/header.jsp"></jsp:include>
+		<section class="confirmPw">
+			<div class="confirmPw__box">
+				<!-- Form -->
+				<form id="memberForm" action="member" method="post">
+					<!-- 데이터입력 항목 -->
+					<div class="confirmPw__form-cnt">
+						<div class="confirmPw__input-box">
+							<label for="memberPw">변경할 비밀번호</label>
+							<div class="confirmPw__input-group">
+								<input type="password" name="memberPw" id="memberPw" />
+								<button class="confirmPw__btn" type="submit">확인</button>
+							</div>
+							<input type="hidden" name="cmd" value="updatePwLoginOk" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
 	</div>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
+	
+	<script>
+        $("#memberForm").submit(function(event) {
+            var memberPw = $("input[name='memberPw']").val();
+            
+            if (!memberPw) {
+                alert("비밀번호를 입력해주세요");
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>

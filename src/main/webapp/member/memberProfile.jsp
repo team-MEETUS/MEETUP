@@ -6,60 +6,41 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필</title>
+<!-- CSS -->
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/member/memberProfile.css" type="text/css" />
+<!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-	<div>
-		<form action="member" method="post">
-			<h2>${otherMember.memberNickname}의 프로필</h2>
-			<table>
-				<tr>
-					<th>프로필사진</th>
-					<td>
-						<c:if test="${not empty otherMember.memberSaveImg}">
-							<img id="profileImg" src="upload/${otherMember.memberSaveImg}" alt="" />
-						</c:if>
-						<c:if test="${empty otherMember.memberSaveImg}">
-							<img id="profileImg" src="upload/first.png" alt="" />
-						</c:if>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>닉네임</th>
-					<td>
-						${otherMember.memberNickname}
-					</td>
-				</tr>
-				
-				<tr>
-					<th>생년월일</th>
-					<td>
-						${otherMember.memberBirth}
-					</td>
-				</tr>
-				
-				<tr>
-					<th>성별</th>
-					<td>
-						${otherMember.memberGender}
-					</td>
-				</tr>
-				
-				<tr>
-					<th>지역</th>
-					<td>
-						${GeoVO.geoCity}&nbsp;${GeoVO.geoDistrict}
-					</td>
-				</tr>
-				
-				<tr>
-					<td colspan="2">
-						<a href="member">메인으로</a>
-					</td>
-				</tr>
-			</table>
-		</form>
+	<div class="container">
+		<jsp:include page="../component/header.jsp"></jsp:include>
+		<section class="subCommon">
+			<!-- subCommon -->
+			<div class="inner">
+				<h2 class="subTitle">${otherMember.memberNickname} 프로필</h2>
+			</div>
+		</section>
+		<section class="subContents">
+			<div class="inner">
+				<div class="memberProfile--wrap">
+					<div class="memberProfile__profile-box">
+						<div class="memberProfile__profile">
+							<span class="memberProfile__profile--img" style="background-image: url('upload/${not empty otherMember.memberSaveImg ? otherMember.memberSaveImg : 'first.png'}');"></span>
+							<div class="memberProfile__profile--details">
+								<strong class="memberProfile__profile--name">${otherMember.memberNickname}</strong>
+								<p class="memberProfile__profile--birth">${otherMember.memberBirth}</p>
+								<p class="memberProfile__profile--gender">${otherMember.memberGender}</p>
+								<p class="memberProfile__profile--geo">${GeoVO.geoCity}&nbsp;${GeoVO.geoDistrict}</p>
+							</div>
+						</div>
+					</div>
+					<hr />
+				</div>
+			</div>
+		</section>
 	</div>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -6,37 +6,41 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 찾기</title>
+<!-- CSS -->
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/member/findPassword.css" type="text/css" />
+<!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-	<div>
-		<form id="memberForm" action="member" method="post">
-			<table>
-				<tr>
-					<th>핸드폰번호</th>
-					<td>
-						<input type="text" name="memberPhone" />
-						<button id="phoneChk">인증하기</button>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>인증번호</th>
-					<td>
-						<input type="text" name="verifyNumber" />
-						<button id="phoneChk2">인증확인</button>
-						
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="hidden" name="cmd" value="updatePwNoLogin" />
-						<input type="submit" value="비밀번호 변경" />
-					</td>
-				</tr>
-			</table>
-		</form>
+	<div class="container">
+		<jsp:include page="../component/header.jsp"></jsp:include>
+		<section class="findPw">
+			<div class="findPw__box">
+				<h2 class="findPw__title">비밀번호 찾기</h2>
+				<form id="memberForm" action="member" method="post">
+					<!-- 데이터입력 항목 -->
+					<div class="findPw__form-cnt">
+						<div class="findPw__input-box">
+							<label for="memberPhone">핸드폰번호</label>
+							<input type="text" name="memberPhone" oninput="inputNum(this)" maxlength="11" />
+							<button id="phoneChk">인증하기</button>
+							<input type="hidden" name="cmd" value="updatePwNoLogin" />
+						</div>
+						<div class="findPw__input-box">
+							<label for="verifyNumber">인증번호</label>
+							<input type="text" name="verifyNumber" oninput="inputNum(this)" maxlength="4" />
+							<button id="phoneChk2">인증확인</button>
+						</div>
+					</div>
+					<!-- 버튼 -->
+					<button type="submit" class="findPw__btn">비밀번호 변경</button>
+				</form>
+			</div>
+		</section>
 	</div>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
 	
 	<script>
 		// 인증번호 비교용 변수
@@ -65,9 +69,13 @@
 				data: {memberPhone: memberPhone},
 				cache: false,
 				success:function(data) {
-					console.log(data);
-					alert("인증번호 발송되었습니다.\n인증번호를 입력해주세요.");
-					code = data[1];
+					if (!data[1]) {
+						alert("가입된 정보가 없습니다.");
+						window.location.href = "member?cmd=signup";
+					} else {
+						alert("인증번호 발송되었습니다.\n인증번호를 입력해주세요.");
+						code = data[1];
+					}
 				}
 			})
 		});
@@ -76,6 +84,7 @@
 			event.preventDefault();
 			var memberPhone = $("input[name='memberPhone']").val();
 			var verifyNumber = $("input[name='verifyNumber']").val();
+			console.log(verifyNumber);
 			
 			if (code == "") {
 				alert("인증하기 후 인증확인을 해주세요.");
@@ -94,8 +103,17 @@
 			if (!isVerified) {
 				alert("인증확인을 먼저 해주세요.");
 				event.preventDefault();
+				return;
 			}
 		});
+		
+		function handleInput(element) {
+			inputNum(element);
+		}
+		
+		function inputNum(element) {
+		    element.value = element.value.replace(/[^0-9]/gi, "");
+		}
 	</script>
 </body>
 </html>
