@@ -30,11 +30,22 @@
         <c:if test="${not empty sessionScope.loginMember}">
         <div class="header-profile">
           <span>${sessionScope.loginMember.memberNickname}</span>
-          <img
-            class="profile-image"
-            src="upload/${sessionScope.loginMember.memberSaveImg}"
-            alt="${sessionScope.loginMember.memberNickname} 프로필"
-          />
+          <c:choose>
+		    <c:when test="${not empty sessionScope.loginMember.memberSaveImg}">
+		        <img
+		            class="profile-image"
+		            src="upload/${sessionScope.loginMember.memberSaveImg}"
+		        	alt="${sessionScope.loginMember.memberNickname} 프로필"
+		    	/>
+		    </c:when>
+		    <c:otherwise>
+		        <img
+		            class="profile-image"
+		            src="upload/first.png"
+		    		alt="${sessionScope.loginMember.memberNickname} 프로필"
+		    	/>
+		  	</c:otherwise>
+		  </c:choose>
           <div class="dropdown-menu">
             <a class="link" href="member?cmd=myMenu">마이페이지</a>
             <a class="link" href="#">내 모임</a>
