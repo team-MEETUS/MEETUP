@@ -22,6 +22,7 @@
 <body>
 <div class="container">
   <jsp:include page="component/header.jsp"></jsp:include>
+  <div class="main">
     <div class="swiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
@@ -36,25 +37,11 @@
       </div>
       <div class="swiper-pagination"></div>
     </div>
+   </div>
 </div>
 <jsp:include page="component/footer.jsp"></jsp:include>
 </body>
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
-	    const profile = document.querySelector(".header-profile");
-	    const dropdownMenu = document.querySelector(".dropdown-menu");
-	    profile.addEventListener("click", function (event) {
-	      event.stopPropagation();
-	      dropdownMenu.style.display =
-	        dropdownMenu.style.display === "block" ? "none" : "block";
-	    });
-	    document.addEventListener("click", function () {
-	      if (dropdownMenu.style.display === "block") {
-	        dropdownMenu.style.display = "none";
-	      }
-	    });
-	  });
-
   const swiper = new Swiper(".swiper", {
     // Optional parameters
     direction: "horizontal",
