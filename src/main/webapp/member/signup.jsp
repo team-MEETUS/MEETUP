@@ -6,91 +6,76 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<!-- CSS -->
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/member/signup.css" type="text/css" />
+<!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-	<div>
-		<form id="memberForm" action="member" method="post">
-			<table>
-				<tr>
-					<th>핸드폰번호(필수)</th>
-					<td>
-						<input type="text" name="memberPhone" oninput="inputNum(this)" />
-						<button id="phoneChk">인증하기</button>
-						<input type="hidden" name="cmd" value="signupOk" />
-					</td>
-				</tr>
-				
-				<tr>
-					<th>인증번호(필수)</th>
-					<td>
-						<input type="text" name="verifyNumber" oninput="inputNum(this)" />
-						<button id="phoneChk2">인증확인</button>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>비밀번호(필수)</th>
-					<td>
-						<input type="password" name="memberPw" />
-					</td>
-				</tr>
-				
-				<tr>
-					<th>닉네임(필수)</th>
-					<td>
-						<input type="text" name="memberNickname" />
-					</td>
-				</tr>
-				
-				<tr>
-					<th>생년월일(필수)</th>
-					<td>
-						<input type="text" name="memberBirth1" placeholder="YYYY" oninput="inputNum(this) combineBirthDate();" />
-						<input type="text" name="memberBirth2" placeholder="MM" oninput="inputNum(this) combineBirthDate();" />
-						<input type="text" name="memberBirth3" placeholder="DD" oninput="inputNum(this) combineBirthDate();" />
-						<input type="hidden" name="memberBirth" id="memberBirth" />
-					</td>
-				</tr>
-				
-				<tr>
-					<th>성별(필수)</th>
-					<td>
-						<input type="radio" name="memberGender" value="남자" />남자
-						<input type="radio" name="memberGender" value="여자" />여자
-					</td>
-				</tr>
-				
-				<tr>
-					<th>시/도(필수)</th>
-					<td>
-						<select id="geoCity" name="geoCity">
-							<option value="">시/도</option>
-							<c:forEach var="geoCity" items="${geoCities}">
-								<option value="${geoCity}">${geoCity}</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-				
-					<th>군/구(필수)</th>
-					<td>
-						<select id="geoDistrict" name="geoDistrict">
-							<option value="">군/구</option>
+	<div class="container">
+		<jsp:include page="../component/header.jsp"></jsp:include>
+		<section class="signup">
+			<div class="signup__box">
+				<h2 class="signup__title">회원가입</h2>
+				<form id="memberForm" action="member" method="post">
+					<!-- 데이터입력 항목 -->
+					<div class="signup__form-cnt">
+						<div class="signup__input-box">
+							<label for="memberPhone">핸드폰번호</label>
+							<input type="text" name="memberPhone" oninput="inputNum(this)" maxlength="11" />
+							<button id="phoneChk">인증하기</button>
+							<input type="hidden" name="cmd" value="signupOk" />
+						</div>
+						<div class="signup__input-box">
+							<label for="verifyNumber">인증번호</label>
+							<input type="text" name="memberPhone" oninput="inputNum(this)" maxlength="4" />
+							<button id="phoneChk2">인증확인</button>
+						</div>
+						<div class="signup__input-box">
+							<label for="memberPw">비밀번호</label>
+							<input type="password" name="memberPw" />
+						</div>
+						<div class="signup__input-box">
+							<label for="memberNickname">닉네임</label>
+							<input type="text" name="memberNickname" />
+						</div>
+						<div class="signup__input-box signup__input-box--birth">
+							<label for="memberBirth">생년월일</label>
+							<div class="birth-inputs">
+								<input type="text" name="memberBirth1" placeholder="YYYY" oninput="handleInput(this);" maxlength="4" />
+								<input type="text" name="memberBirth2" placeholder="MM" oninput="handleInput(this);" maxlength="2" />
+								<input type="text" name="memberBirth3" placeholder="DD" oninput="handleInput(this);" maxlength="2" />
+							</div>
+							<input type="hidden" name="memberBirth" id="memberBirth" />
+						</div>
+						<div class="signup__radio-box">
+							<label for="memberGender">성별</label><br />
+							<input type="radio" name="memberGender" value="남자" />남자
+							<input type="radio" name="memberGender" value="여자" />여자
+						</div>
+						<div class="signup__select-box">
+							<label>관심 지역</label><br />
+							<select id="geoCity" name="geoCity">
+								<option value="">시/도</option>
+								<c:forEach var="geoCity" items="${geoCities}">
+									<option value="${geoCity}">${geoCity}</option>
+								</c:forEach>
+							</select>
 							
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<td colspan="2">
-						<input type="submit" value="회원가입" />
-					</td>
-				</tr>
-			</table>
-		</form>
+							<select id="geoDistrict" name="geoDistrict">
+								<option value="">군/구</option>
+							
+							</select>
+						</div>
+					</div>
+					<!-- 버튼 -->
+					<button type="submit" class="signup__btn">회원가입</button>
+				</form>
+			</div>
+		</section>
+		<jsp:include page="../component/footer.jsp"></jsp:include>
 	</div>
 	
 	<script>
@@ -191,6 +176,11 @@
 		    	combineBirthDate();
 		    }
 		});
+		
+		function handleInput(element) {
+			inputNum(element);
+			combineBirthDate();
+		}
 		
 		function inputNum(element) {
 		    element.value = element.value.replace(/[^0-9]/gi, "");
