@@ -35,14 +35,10 @@ public class BoardController extends HttpServlet {
 			action = new ListBoardAction();
 		} else if (cmd.equals("writeBoard")) {
 			action = new WriteFormBoardAction();
-		} else if (cmd.equals("writeOkBoard")) {
-			action = new WriteBoardAction();
 		} else if (cmd.equals("detailboard")) {
 			action = new DetailBoardAction();
 		} else if (cmd.equals("updateBoard")) {
 			action = new updateFormBoardAction();
-		} else if (cmd.equals("updateOkBoard")) {
-			action = new updateBoardAction();
 		} else if (cmd.equals("deleteBoard")) {
 			action = new DeleteBoardAction();
 		} else if (cmd.equals("addComment")) {

@@ -1,73 +1,88 @@
 package kr.co.meetup.web.action.board;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.BoardDAO;
-import kr.co.meetup.web.dao.CrewDAO;
-import kr.co.meetup.web.vo.BoardImgVO;
+
 import kr.co.meetup.web.vo.BoardVO;
-import kr.co.meetup.web.vo.CrewMemberVO;
+
 import kr.co.meetup.web.vo.MemberVO;
 
-public class WriteBoardAction implements Action {
+@SuppressWarnings("serial")
+@WebServlet("/boardWrite")
+public class WriteBoardAction extends HttpServlet {
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            req.setCharacterEncoding("UTF-8");
-            resp.setContentType("text/html;charset=UTF-8");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-            // 현재 로그인한 유저 정보 가져오기
-            HttpSession session = req.getSession();
-            MemberVO mvo = (MemberVO) session.getAttribute("loginMember");
-            int loginNo = mvo.getMemberNo();
+        // 현재 로그인한 유저 정보 가져오기
+        HttpSession session = req.getSession();
+        MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
 
-            //WFBA에서 memberNo 가져오기
-            String mno = req.getParameter("memberNo");
-            int memberNo = 0;
-            
-            // cno(crewNo) 값 가져오기
-    		String cno =req.getParameter("crewNo");
-    		int crewNo = 0;
-    		
-    		if(cno != null && mno != null) {
-    			crewNo =Integer.parseInt(cno);
-    			memberNo = Integer.parseInt(mno);
-    		}
-    		
-    		if(loginNo == memberNo) {
-	           //게시글 정보 가져오기
-	           String boardCategoryNo = (String) req.getParameter("boardCategoryNo");
-	           String boardTitle = req.getParameter("boardTitle");
-	           String boardContent = req.getParameter("boardContent");
-           
-	            int categoryNo = Integer.parseInt(boardCategoryNo);
-	            BoardVO boardVO = new BoardVO();
-	            boardVO.setCrewNo(crewNo); // 모임 번호 설정
-	            boardVO.setMemberNo(mvo.getMemberNo());
-	            boardVO.setBoardCategoryNo(categoryNo);
-	            boardVO.setBoardTitle(boardTitle);
-	            boardVO.setBoardContent(boardContent);
-	            boardVO.setBoardHit(0);
-	            boardVO.setBoardStatus(1);
-	            
-	            BoardDAO boardDAO = new BoardDAO();
-	            boardDAO.addOneBoard(boardVO);
-    		}
+        // 파일 경로 받아오기
+        String saveDir = req.getServletContext().getRealPath("/upload");
 
-            // iv.setBoardImgOriginalImg(boardImgOriginalImg);
-            // iv.setBoardImgSaveImg(boardImgSaveImg);
-            
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        // 최대 파일 크기 지정
+        int maxFileSize = 1024 * 1024 * 30;
+
+        // MultipartRequest 객체 생성
+        MultipartRequest mr = new MultipartRequest(req, saveDir, maxFileSize, "UTF-8", new DefaultFileRenamePolicy());
+
+        // MultipartRequest 객체로부터 파라미터 값 가져오기
+        String cno = mr.getParameter("crewNo");
+        int memberNo = loginMember.getMemberNo();
+        // 선택된 boardCategoryNo 가져오기
+        String selectedBoardCategoryNo = mr.getParameter("boardCategoryNo");
+        int boardCategoryNo = 0;
+        if (selectedBoardCategoryNo != null && !selectedBoardCategoryNo.isEmpty()) {
+            boardCategoryNo = Integer.parseInt(selectedBoardCategoryNo);
         }
 
-        // 작성 완료 후 게시글 목록 페이지로 리다이렉트
-        return "redirect:board?cmd=listBoard";
-    }
+        String boardTitle = mr.getParameter("boardTitle");
+        String boardContent = mr.getParameter("boardContent");
+        String bh = mr.getParameter("boardHit");
+        String bs = mr.getParameter("boardStatus");
 
+        // String > int 형변환
+        int crewNo = 0;
+        int boardHit = 0;
+        int boardStatus = 0;
+
+        if (cno != null && !cno.equals("")) {
+            crewNo = Integer.parseInt(cno);
+        }
+        if (bh != null && !bh.equals("")) {
+            boardHit = Integer.parseInt(bh);
+        }
+        if (bs != null && !bs.equals("")) {
+            boardStatus = Integer.parseInt(bs);
+        }
+
+        // DAO 객체 생성 및 게시글 작성
+        BoardDAO dao = new BoardDAO();
+        BoardVO vo = new BoardVO();
+
+        vo.setCrewNo(crewNo);
+        vo.setBoardCategoryNo(boardCategoryNo);
+        vo.setMemberNo(memberNo);
+        vo.setBoardTitle(boardTitle);
+        vo.setBoardContent(boardContent);
+        vo.setBoardHit(boardHit);
+        vo.setBoardStatus(1);
+
+        // DB에 게시글 저장
+        dao.addOneBoard(vo);
+
+        // 작성 완료 후 게시글 목록 페이지로 리다이렉트
+        resp.sendRedirect("board?cmd=listBoard&crewNo=" + cno + "&memberNo=" + memberNo);
+    }
 }

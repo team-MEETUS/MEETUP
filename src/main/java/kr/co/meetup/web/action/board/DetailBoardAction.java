@@ -53,7 +53,8 @@ public class DetailBoardAction implements Action {
 		
 		BoardDAO dao = new BoardDAO();
 		String b = req.getParameter("boardNo");
-		int boardNo = Integer.parseInt(b); // 게시글 조회수 1 증가 new
+		
+		int boardNo = Integer.parseInt(b); 
 		System.out.println(boardNo);
 		if(b==null) {
 			return "redirect:board?cmd=listBoard&crewNo=" + crewNo;
@@ -69,6 +70,7 @@ public class DetailBoardAction implements Action {
 		}
 		List<BoardCommentVO> commentList=dao.selectComment(boardNo);
 		
+		req.setAttribute("boardNo", boardNo);
 		dao.raiseHitBoard(boardNo); 
 		dao.selectOneBoard(boardNo); 
 		vo.setBoardHit(vo.getBoardHit()+1);
