@@ -23,7 +23,7 @@
 	<div class="container">
 		<form id="writeForm" action="meetingUpload" method="post" enctype="multipart/form-data">
 												<!-- crewNo 받아오기 -->
-			<input type="hidden" name="crewNo" value="1" />
+			<input type="hidden" name="crewNo" value="<%= request.getAttribute("crewNo") %>" />
 			<table class="table table-striped">
 				<tr>
 					<th>정모명</th>
@@ -93,7 +93,7 @@
 			} else if(hour > 23 || hour < 1) {
 				alert("제대로된 시간을 입력해주세요")
 				event.preventDefault();
-			} else if(!minute) {
+			} else if(!minute && minute != 0) {
 				alert("제대로된 분을 입력해주세요")
 				event.preventDefault();
 			} else if(minute > 59 || minute < 0) {

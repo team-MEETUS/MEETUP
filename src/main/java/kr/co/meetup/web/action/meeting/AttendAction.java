@@ -31,22 +31,27 @@ public class AttendAction extends HttpServlet {
 		MeetingVO vo = dao.selectOneMeetingByMeetingNo(Integer.parseInt(meetingNo));
 		// null값 체크
 		if(meetingNo != null && memberNo + "" != null) {
-			// 이미 정모에 가입했는지 확인
-			int cnt = dao.selectAllMeetingMemberCnt(Integer.parseInt(meetingNo), memberNo);
-			if(cnt == 0) {
-				if(cnt <= vo.getMeetingMax()) {
+			// 해당 유저가 이미 정모에 가입했는지 확인
+			int cnt1 = dao.selectAllMeetingMemberCnt(Integer.parseInt(meetingNo), memberNo);
+			// 정모에 가입한 유저 수 확인
+			int cnt2 = dao.selectAllMeetingMemberByMeetingNoCnt(Integer.parseInt(meetingNo));
+			if(cnt1 == 0) {
+				System.out.println("vo.getMeetingMax() : " +vo.getMeetingMax());
+				if(cnt2 < vo.getMeetingMax()) {
 					dao.addMeetingMember(Integer.parseInt(meetingNo), memberNo);
 				} else {
 					System.out.println("해당 정모의 정원이 가득 찼습니다.");
+					req.setAttribute("errorMsg", "해당 정모의 정원이 가득 찼습니다.");
 				}
 			} else {
 				System.out.println("이미 해당 정모에 가입한 회원입니다!");
+				req.setAttribute("errorMsg", "이미 해당 정모에 가입한 회원입니다!");
 			}
 		} else {
 			System.out.println("meeingNo와 memberNo를 확인해주세요!");
 		}
 		
-		resp.sendRedirect("meeting?cmd=detail&crewNo=" + crewNo);
+		resp.sendRedirect("crew?cmd=detail&crewNo=" + crewNo);
 	}
 	
 	@Override

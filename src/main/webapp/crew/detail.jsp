@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,6 +150,7 @@
 		color: black;
 	}
 	.meeting-container {
+		width: 100%;
 		margin-top: 50px;
 	}
 	.meeting-logo {
@@ -202,6 +204,28 @@
 	    cursor: pointer;
 	    transition: box-shadow 0.2s;
 	} */
+	
+	/* 정모 박스 */
+	.meetingOne {
+	  width: 50%;
+	  border: 1px solid #ccc;
+	  border-radius: 8px;
+	  padding: 20px;
+	  text-align: left;
+	  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	  display: inline-block;
+	  margin: 10px;
+	}
+	
+	.meetingOne>img {
+		width: 100px;
+		height: 100px;
+	}
+	
+	.meeting-info {
+		display: flex;
+		font-size: 15px;
+	}
 </style>
 </head>
 <body>
@@ -311,10 +335,83 @@
 		</div>
 	</div>
 	<hr />
+	
 	<!-- 정모 -->
 	<div class="meeting-container">
 		<p class="meeting-logo">정모</p>
+		<c:if test="${role eq 'crewMember' || role eq 'adminMember'}">
+			<a href="meeting?cmd=write&crewNo=${crewVO.crewNo}">정모 등록하기</a>
+		</c:if>
+		
+		<div>
+		
+		<c:forEach var="meetingVO" items="${meetingList}">
+				<c:set var="today" value="<%=new java.util.Date() %>"/>
+				<fmt:formatDate var="nowDay" value="${today}" pattern="yyyy-MM-dd hh:mm:ss" />
+				<fmt:parseDate value="${nowDay}" var="pdToday" pattern="yyyy-MM-dd"/>
+				<fmt:parseNumber value="${pdToday.time / (1000*60*60*24)}" integerOnly="true" var="numToday"></fmt:parseNumber>
+				
+				<c:set var="meetingDate" value="${meetingVO.meetingDate}"/>
+				<fmt:parseDate value="${meetingDate}" var="pdMeetingDate" pattern="yyyy-MM-dd"/>
+				<fmt:parseNumber value="${pdMeetingDate.time / (1000*60*60*24)}" integerOnly="true" var="numMeetingDate"></fmt:parseNumber>
+				
+				<div class="meetingOne">
+					<div style="display: inline-block">
+						<span><fmt:formatDate value="${meetingDate}" pattern="MM/dd (E)"/></span> 
+						<span style=color:red>D-${numMeetingDate - numToday}</span>
+						<p>${meetingVO.meetingName}</p>
+						<c:if test="${role eq 'crewMember' || role eq 'adminMember'}">
+						<c:choose>
+							<c:when test="${not empty meetingMemberList}">
+								<h2>${meetingMemberList[status.index].meetingNo}</h2>
+								<h2>${meetingVO.meetingNo}</h2>
+									<c:choose>
+										<c:when test="${meetingMemberList[status.index].meetingNo eq meetingVO.meetingNo}" >
+											<span><a href="meetingExit?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">정모 나가기</a></span>
+						        		</c:when>
+						        		<c:otherwise>
+						        			<span><a href="meetingAttend?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">정모 참석하기</a></span>
+						        		</c:otherwise>      	
+				        			</c:choose>
+			        		</c:when>
+			        		<c:otherwise>
+			        			<span><a href="meetingAttend?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">정모 참석하기</a></span>
+			        		</c:otherwise>
+		        		</c:choose>
+						</c:if>
+					</div>
+
+					<br />
+					<div class="meeting-info">
+						<img style="width: 100px; height:100px;" src="upload/${meetingVO.meetingSaveImg}" alt="" />
+						<div>
+							<div>일시 <fmt:formatDate value="${meetingDate}" pattern="MM/dd (E) aa hh:mm "/></div>
+							<div>위치 ${meetingVO.meetingLoc}</div>
+							<div>비용 ${meetingVO.meetingPrice}원</div>
+							<div>참석 ${meetingVO.meetingAttend}/${meetingVO.meetingMax} (${meetingVO.meetingMax-meetingVO.meetingAttend}명남음) </div>
+						</div>
+					</div>
+				</div>
+				
+				<div >
+					<span>
+						<c:if test="${meetingMemberList[status.index].meetingNo eq meetingVO.meetingNo}" >
+							<a href="" style="text-decoration: none;"><div>
+								<c:if test="${empty meetingMemberList[status.index].memberSaveImg}">
+									<box-icon type='solid' name='user-circle'></box-icon>
+								</c:if>
+								<c:if test="${not empty meetingMemberList[status.index].memberSaveImg}">
+									<img class="crew-member-img" src="upload/${meetingMemberList[status.index].memberSaveImg}" />
+								</c:if>
+							</div></a>
+						</c:if>
+					</span>
+				</div>
+		</c:forEach>
+		</div>
 	</div>
+	
+	
 	<!--모달 팝업-->
 	<%-- <div class="modal">
 	    <div class="modal_popup">
@@ -399,8 +496,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
-</body>
-</html>
-
 </body>
 </html>

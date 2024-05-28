@@ -2,6 +2,7 @@ package kr.co.meetup.web.dao;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,17 +69,11 @@ public class MeetingDAO {
 	}
 	
 	// 모임별 정모 조회
-	public List<MeetingVO> selectAllMeetingByCrewNo(int crewNo, int startNo, int recordPerPage) {
+	public List<MeetingVO> selectAllMeetingByCrewNo(int crewNo) {
 		SqlSession ss = factory.openSession(true);
 		
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("crewNo", crewNo);
-		map.put("startNo", startNo);
-		map.put("recordPerPage", recordPerPage);
-		System.out.println(map);
-		
-		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingByCrewNo", map);
-		System.out.println(list);
+		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingByCrewNo", crewNo);
+		System.out.println("모임별 정모 조회 : " + list);
 		ss.close();
 		
 		return list;
@@ -170,6 +165,7 @@ public class MeetingDAO {
 		ss.close();
 	}
 	
+	// 유저가 정모에 이미 가입해 있는지 확인
 	public int selectAllMeetingMemberCnt(int meetingNo, int memberNo) {
 		SqlSession ss = factory.openSession(true);
 		
@@ -180,5 +176,22 @@ public class MeetingDAO {
 		int count = ss.selectOne("kr.co.meetup.meeting.selectAllMeetingMemberCnt", map);
 
 		return count;
+	}
+	
+	// 정모에 가입해 있는 유저 확인
+	public int selectAllMeetingMemberByMeetingNoCnt(int meetingNo) {
+		SqlSession ss = factory.openSession(true);
+		
+		int count = ss.selectOne("kr.co.meetup.meeting.selectAllMeetingMemberByMeetingNoCnt", meetingNo);
+
+		return count;
+	}
+
+	public List<MeetingMemberVO> selectAllMeetingMemberByCrewNo(int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		
+		List<MeetingMemberVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingMemberByCrewNo", crewNo);
+		
+		return list;
 	}
 }
