@@ -11,7 +11,7 @@
 <body>
 	<header>
         <nav>
-          <h1 class="header-logo"><a href="member">MEETUP</a></h1>
+          <h1 class="header-logo"><a class="logo-link" href="member">MEETUP</a></h1>
           <div class="header-link">
             <a href="crew?cmd=list">모임</a>
             <a href="meeting?cmd=list">정모</a>
