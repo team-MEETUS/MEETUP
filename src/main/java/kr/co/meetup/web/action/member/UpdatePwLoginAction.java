@@ -27,6 +27,8 @@ public class UpdatePwLoginAction implements Action {
 		MemberDAO dao = new MemberDAO();
 		dao.updateMemberPw(vo);
 		
+		session.invalidate();
+		
 		return "member?cmd=login";
 	}
 
