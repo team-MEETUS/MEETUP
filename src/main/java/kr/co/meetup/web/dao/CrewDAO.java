@@ -119,6 +119,20 @@ public class CrewDAO {
 		return vo.getCrewNo();
 	}
 	
+	// 모임 수정 
+	public void updateCrew(CrewVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.crew.updateCrew", vo);
+		ss.close();
+	}
+	
+	// 모임 삭제 
+	public void deleteCrew(int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.crew.deleteCrew", crewNo);
+		ss.close();
+	}
+	
 	// 모임 회원 등록
 	public void addCrewMember(CrewMemberVO vo) {
 		SqlSession ss = factory.openSession(true);

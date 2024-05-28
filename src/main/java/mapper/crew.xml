@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        LEFT JOIN geo g ON c.geoCode = g.geoCode
 	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
 	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	    WHERE c.crewStatus = 1
 	    ORDER BY c.createdAt DESC
 	    LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
@@ -22,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        LEFT JOIN geo g ON c.geoCode = g.geoCode
 	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
 	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
-	    WHERE c.categoryBigNo = #{ctg}
+	    WHERE c.categoryBigNo = #{ctg} AND c.crewStatus = 1
 	    ORDER BY c.createdAt DESC
 	    LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
@@ -70,6 +71,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    INSERT INTO crew (geoCode, categoryBigNo, <if test="categorySmallNo != null">categorySmallNo,</if> memberNo, crewName, crewContent, crewIntro, crewMax, crewOriginalImg, crewSaveImg, crewOriginalBanner, crewSaveBanner)
 	    VALUES(#{geoCode}, #{categoryBigNo}, <if test="categorySmallNo != null">#{categorySmallNo},</if> #{memberNo}, #{crewName}, #{crewContent}, #{crewIntro}, #{crewMax}, #{crewOriginalImg}, #{crewSaveImg}, #{crewOriginalBanner}, #{crewSaveBanner})
 	</insert>
+	
+	<!-- 한개 모임 수정 -->
+	<update id="updateCrew" parameterType="CrewVO">
+		UPDATE crew
+		SET geoCode = #{geoCode}, categoryBigNo = #{categoryBigNo}, categorySmallNo = #{categorySmallNo}, crewName = #{crewName}, crewIntro = #{crewIntro}, crewContent = #{crewContent}, 
+			crewMax = #{crewMax}<if test="crewOriginalImg != null">, crewOriginalImg = #{crewOriginalImg}</if><if test="crewSaveImg != null">, crewSaveImg = #{crewSaveImg}</if><if test="crewOriginalBanner != null">, crewOriginalBanner = #{crewOriginalBanner}</if><if test="crewSaveBanner != null">, crewSaveBanner = #{crewSaveBanner}</if>
+		WHERE crewNo = #{crewNo}
+	</update>
+	
+	<!-- 한개 모임 삭제 -->
+	<update id="deleteCrew" parameterType="int">
+		UPDATE crew
+		SET crewStatus = 0
+		WHERE crewNo = #{crewNo}
+	</update>
 	
 	<!-- 한개 모임회원 등록 -->
 	<insert id="addCrewMember" parameterType="CrewMemberVO">

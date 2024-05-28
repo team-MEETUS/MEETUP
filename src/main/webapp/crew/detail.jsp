@@ -248,8 +248,8 @@
 	        		<a href="crew?cmd=mng&requestType=leave&crewNo=${crewVO.crewNo}&memberNo=${sessionScope.loginMember.memberNo}">모임퇴장</a>
 			</c:when>
 			<c:otherwise>
-				<a href="#">수정하기</a>
-	        		<a href="#">삭제하기</a>
+				<a href="crew?cmd=update&crewNo=${crewVO.crewNo}">수정하기</a>
+	        		<a href="crew?cmd=delete&crewNo=${crewVO.crewNo}">삭제하기</a>
 			</c:otherwise>
 			</c:choose>
 	    </div>
