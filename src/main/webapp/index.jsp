@@ -33,12 +33,11 @@
         <div class="swiper-slide">
           <img src="https://placehold.co/400x400" />
         </div>
-        ...
       </div>
       <div class="swiper-pagination"></div>
     </div>
-	<jsp:include page="component/footer.jsp"></jsp:include>
 </div>
+<jsp:include page="component/footer.jsp"></jsp:include>
 </body>
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
