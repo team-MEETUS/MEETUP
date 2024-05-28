@@ -6,12 +6,12 @@
 <mapper namespace="kr.co.meetup.member">
 	<!-- 회원가입 성공 시 추가 -->
 	<insert id="addMember" parameterType="MemberVO">
-		INSERT INTO member (geoCode, memberPhone, memberPw, memberNickname, memberStatus, createdAt, updatedAt) 
-		VALUES (#{geoCode}, #{memberPhone}, #{memberPw}, #{memberNickname}, DEFAULT, DEFAULT, DEFAULT)
+		INSERT INTO member (geoCode, memberPhone, memberPw, memberNickname, memberBirth, memberGender, memberStatus, createdAt, updatedAt) 
+		VALUES (#{geoCode}, #{memberPhone}, #{memberPw}, #{memberNickname}, #{memberBirth}, #{memberGender}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	<!-- 핸드폰 번호로 회원의 정보 조회 -->
 	<select id="selectOneMemberByPhone" parameterType="Hashmap" resultType="MemberVO">
-		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberIntro, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt
+		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberIntro, memberBirth, memberGender, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt
 		FROM member
 		WHERE memberPhone = #{memberPhone} AND memberPw = #{memberPw}
 	</select>
@@ -24,7 +24,7 @@
 	<!-- 내 정보 수정 -->
 	<update id="updateOneMemberByMemberNo" parameterType="MemberVO">
 		UPDATE member 
-		SET memberNickname = #{memberNickname}, geoCode = #{geoCode}, memberIntro = #{memberIntro}, memberOriginalImg = #{memberOriginalImg}, memberSaveImg = #{memberSaveImg}, updatedAt = DEFAULT 
+		SET memberNickname = #{memberNickname}, geoCode = #{geoCode}, memberIntro = #{memberIntro}, memberBirth = #{memberBirth}, memberGender = #{memberGender}, memberOriginalImg = #{memberOriginalImg}, memberSaveImg = #{memberSaveImg}, updatedAt = DEFAULT 
 		WHERE memberNo = #{memberNo}
 	</update>
 	<!-- 회원의 비밀번호 변경 -->
@@ -41,7 +41,7 @@
 	</update>
 	<!-- 회원 번호로 정보 조회 -->
 	<select id="selectOneMemberByMemberNo" parameterType="int" resultType="MemberVO">
-		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberIntro, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt 
+		SELECT memberNo, geoCode, memberPhone, memberPw, memberNickname, memberIntro, memberBirth, memberGender, memberStatus, memberOriginalImg, memberSaveImg, memberDeadDate, createdAt, updatedAt 
 		FROM member 
 		WHERE memberNo = #{memberNo}
 	</select>

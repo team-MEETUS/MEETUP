@@ -1,0 +1,194 @@
+@charset "UTF-8";
+.container {
+	display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.myPage {
+	flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 3rem 0;
+}
+
+.myPage__box {
+	width: 440px;
+    padding: 6rem 1.2rem;
+    background: #fff;
+    box-shadow: var(--box-shadow__A);
+    border-radius: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.myPage__title {
+	font-size: 2rem;
+    color: var(--orange-5);
+    margin-bottom: 1.2rem;
+    margin-top: -2rem;
+}
+
+.myPage__form-cnt {
+	width: 100%;
+    padding: 2.4rem 0;
+}
+
+.myPage__input-box {
+	padding-top: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.myPage__input-box:first-child {
+    padding-top: 0;
+}
+
+.myPage__input-box > label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--orange-5);
+    margin-bottom: 0.3rem;
+}
+
+.myPage__input-box > input[type=text] {
+    width: 93%;
+    margin-top: 0.6rem;
+    height: 40px;
+    padding: 0 0.8rem;
+    border: 1px solid #d1d1d1;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    color: #292A5D;
+}
+
+.myPage__radio-box {
+    padding-top: 0.7rem;
+    margin-bottom: 0.7rem;
+}
+
+.myPage__radio-box > label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--orange-5);
+    margin-bottom: 0.3rem;
+}
+
+.myPage__radio-box > input[type=radio] {
+	margin-top: 0.6rem;
+    margin-left: 0.2rem;
+    margin-right: 0.4rem;
+}
+
+.myPage__radio-box > input[type=radio]:checked {
+    accent-color: var(--orange-5);
+}
+
+.myPage__select-box {
+    padding-top: 0.7rem;
+    margin-bottom: 0.7rem;
+}
+
+.myPage__select-box > label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--orange-5);
+    margin-bottom: 0.4rem;
+}
+
+.myPage__select-box > select {
+    width: 49%;
+    margin-top: 0.4rem;
+    height: 45px;
+    padding: 0 1rem;
+    border: 1px solid #d1d1d1;
+    border-radius: 1rem;
+    font-size: 1rem;
+    color: #292A5D;
+}
+
+.myPage__btn {
+    width: 100%;
+    height: 45px;
+    border-radius: 1rem;
+    background: var(--orange-5);
+    font-size: 1.2rem;
+    color: #fff;
+    transition: .3s;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+}
+
+.myPage__btn:hover {
+    background: var(--orange-2);
+}
+
+.myPage__input-box--birth .birth-inputs {
+	margin-top: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.myPage__input-box--birth .birth-inputs input[type=text] {
+    width: calc((100% - 1rem) / 3);
+    border: 1px solid #d1d1d1;
+    border-radius: 1rem;
+    padding: 0 0.7rem;
+    height: 45px;
+    font-size: 0.8rem;
+    color: #292A5D;
+    text-align: center;
+}
+
+.myPage__profile-box {
+	padding: 3rem 4rem 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4rem;
+}
+
+.myPage__profile {
+	display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center;
+    position: relative;
+}
+
+.myPage__profile--img-container {
+	position: relative;
+    display: inline-block;
+}
+
+.myPage__profile--img {
+	display: block;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    margin-top: -2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.remove-img {
+    position: absolute;
+    right: -10px; /* 위치 조정 */
+    bottom: 30px; /* 위치 조정 */
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정색 배경 */
+    color: white; /* 흰색 텍스트 */
+    border-radius: 50%; /* 둥근 모서리 */
+    width: 15px; /* 크기 조정 */
+    height: 15px; /* 크기 조정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px; /* 텍스트 크기 조정 */
+}

@@ -31,17 +31,29 @@ public class UpdateAction extends HttpServlet {
 			String geoCity = mr.getParameter("geoCity");
 			String geoDistrict = mr.getParameter("geoDistrict");
 			String memberIntro = mr.getParameter("memberIntro");
+			String memberBirth = mr.getParameter("memberBirth");
+			String memberGender = mr.getParameter("memberGender");
 			
-			String memberOriginalImg = mr.getOriginalFileName("memberImg");
-			String memberSaveImg = mr.getFilesystemName("memberImg");
+			String removeImg = mr.getParameter("removeImg");
+			String memberOriginalImg = null;
+			String memberSaveImg = null;
 			
 			MemberDAO mdao = new MemberDAO();
 			MemberVO existingMember = mdao.selectOneMemberByMemberNo(memberNo);
 			
-			if(memberOriginalImg == null) {
-				memberOriginalImg = existingMember.getMemberOriginalImg();
-				memberSaveImg = existingMember.getMemberSaveImg();
-			}
+			if("true".equals(removeImg)) {
+				memberOriginalImg = null;
+	            memberSaveImg = null;
+			} else {
+	            // 이미지를 제거하지 않는 경우, 기존 로직을 유지
+	            memberOriginalImg = mr.getOriginalFileName("memberImg");
+	            memberSaveImg = mr.getFilesystemName("memberImg");
+	            
+	            if(memberOriginalImg == null && memberSaveImg == null) {
+					memberOriginalImg = existingMember.getMemberOriginalImg();
+					memberSaveImg = existingMember.getMemberSaveImg();
+				}
+	        }
 			
 			GeoDAO gdao = new GeoDAO();
 			int geoCode = gdao.selectOneGeoByCity(geoCity, geoDistrict);
@@ -52,12 +64,16 @@ public class UpdateAction extends HttpServlet {
 			vo.setMemberNickname(memberNickname);
 			vo.setGeoCode(geoCode);
 			vo.setMemberIntro(memberIntro);
+			vo.setMemberBirth(memberBirth);
+			vo.setMemberGender(memberGender);
 			vo.setMemberOriginalImg(memberOriginalImg);
 			vo.setMemberSaveImg(memberSaveImg);
 			
 			mdao.updateOneMemberByMemberNo(vo);
 			
-			resp.sendRedirect("index.jsp");
+			req.getSession().setAttribute("loginMember", vo);
+			
+			resp.sendRedirect("member");
 		}
 		
 

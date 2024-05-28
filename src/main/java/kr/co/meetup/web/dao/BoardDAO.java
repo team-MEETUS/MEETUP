@@ -69,30 +69,23 @@ public class BoardDAO {
 	public List<BoardVO> selectBoardByCategory(int bc,int startNo,int recordPerPage, int crewNo) {
 		SqlSession ss = factory.openSession(true);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("crewNo", crewNo);
-		map.put("boardCategoryNo", boardCategoryNo);
+		map.put("boardCategoryNo", bc);
 		map.put("startNo", startNo);
 		map.put("recordPerPage", recordPerPage);
 		map.put("crewNo", crewNo);
 		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardByCategory", map);
-		System.out.println("crewNo : " + crewNo);
-		System.out.println("list : " + list);
 		ss.close();
 		return list;
 	}
 	
 	//리스트 페이징 처리용
-	public List<BoardVO> selectBoardAllByCategory(int startNo,int recordPerPage, int crewNo) {
+	public List<BoardVO> selectBoardAll(int startNo,int recordPerPage, int crewNo) {
 		SqlSession ss = factory.openSession(true);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("startNo", startNo);
 		map.put("recordPerPage", recordPerPage);
 		map.put("crewNo", crewNo);
-		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardAllByCategory",map);
-		System.out.println("crewNo : " + crewNo);
-		System.out.println("startNo : " + startNo);
-		System.out.println("recordPerPage : " + recordPerPage);
-		System.out.println("list : " + list);
+		List<BoardVO> list = ss.selectList("kr.co.meetup.web.board.selectBoardAll",map);
 		ss.close();
 		return list;
 	}
@@ -101,10 +94,11 @@ public class BoardDAO {
 	public BoardVO selectOneBoard(int boardNo) {
 		SqlSession ss = factory.openSession(true);
 		BoardVO vo = ss.selectOne("kr.co.meetup.web.board.selectOneBoard", boardNo);
+		System.out.println("vo : " + vo);
 		ss.close();
 		return vo;
 	}
-
+	
 	// 게시글 작성
 	public void addOneBoard(BoardVO vo) {
 		SqlSession ss = factory.openSession(true);
@@ -154,6 +148,15 @@ public class BoardDAO {
 		return list;
 	}
 	
+	//댓글 1건 조회
+	public BoardCommentVO selectOneBoardComment(int boardCommentNo) {
+		SqlSession ss = factory.openSession(true);
+		BoardCommentVO vco = ss.selectOne("kr.co.meetup.web.board.selectOneBoardComment", boardCommentNo);
+		ss.close();
+		return vco;
+	}
+
+	
 	// 댓글 수정
 	public void updateOneBoardComment(BoardCommentVO vo) {
 		SqlSession ss = factory.openSession(true);
@@ -171,6 +174,7 @@ public class BoardDAO {
 	    ss.close();
 	}
 
+	
 
 	
 }

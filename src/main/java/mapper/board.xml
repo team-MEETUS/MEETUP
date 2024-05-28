@@ -73,8 +73,8 @@
 	
 	<!-- 게시글 작성 -->
 	<insert id="addOneBoard" parameterType="BoardVO">
-		INSERT INTO board(crewNo, memberNo, boardCategoryNo, boardTitle, boardContent ,boardStatus)
-		VALUES(#{crewNo}, #{memberNo}, #{boardCategoryNo}, #{boardTitle}, #{boardContent},#{boardStatus} )
+		INSERT INTO board(crewNo, memberNo, boardCategoryNo, boardTitle, boardContent, boardHit, boardStatus )
+		VALUES(#{crewNo}, #{memberNo}, #{boardCategoryNo}, #{boardTitle}, #{boardContent}, #{boardHit}, #{boardStatus} )
 		
 	</insert>
 
@@ -115,6 +115,13 @@
 		JOIN member m on bc.memberNo = m.memberNo
 		WHERE bc.boardNo = #{boardNo} and boardCommentStatus = 1
 	</select>
+	
+	<!-- 댓글 1건 조회 -->
+	<select id="selectOneBoardComment" parameterType="int" resultType="BoardCommentVO">
+		SELECT boardCommentNo, boardNo, memberNo, boardCommentPno, boardCommentContent, boardCommentStatus, createdAt
+		FROM board_comment
+		WHERE boardCommentNo = #{boardCommentNo}
+	</select>	
 	
 	<!-- 댓글 수정 -->
 	<update id="updateOneBoardComment" parameterType="BoardCommentVO">

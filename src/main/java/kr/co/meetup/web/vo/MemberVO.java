@@ -16,6 +16,8 @@ public class MemberVO {
 	private String memberPw;
 	private String memberNickname;
 	private String memberIntro;
+	private String memberBirth;
+	private String memberGender;
 	private int memberStatus;
 	private String memberOriginalImg;
 	private String memberSaveImg;

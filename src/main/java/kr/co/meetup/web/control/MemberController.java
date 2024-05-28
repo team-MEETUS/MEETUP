@@ -24,6 +24,7 @@ import kr.co.meetup.web.action.member.LoginFormAction;
 import kr.co.meetup.web.action.member.LogoutAction;
 import kr.co.meetup.web.action.member.MainAction;
 import kr.co.meetup.web.action.member.MemberPhoneCheckAction;
+import kr.co.meetup.web.action.member.MemberProfileAction;
 import kr.co.meetup.web.action.member.MyMenuAction;
 import kr.co.meetup.web.action.member.SignUpAction;
 import kr.co.meetup.web.action.member.SignUpFormAction;
@@ -160,6 +161,10 @@ public class MemberController extends HttpServlet {
 		// 로그인 상태 비밀번호 변경 성공 action
 		else if (cmd.equals("updatePwLoginOk" )) {
 			action = new UpdatePwLoginAction();
+		}
+		// 다른 회원 프로필 action
+		else if (cmd.equals("memberProfile")) {
+			action = new MemberProfileAction();
 		}
 		
 		url = action.execute(req, resp);

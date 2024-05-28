@@ -1,0 +1,34 @@
+/* index.css */
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --blue-1: #e6f0ff; /* Lightest Blue */
+  --blue-2: #b3d1ff;
+  --blue-3: #80b2ff;
+  --blue-4: #4d93ff;
+  --blue-5: #1a74ff; /* Base Blue */
+  --blue-6: #005cff;
+  --blue-7: #0047cc;
+  --blue-8: #003399; /* Darkest Blue */
+
+  /* Orange Shades */
+  --orange-1: #fff4e6; /* Lightest Orange */
+  --orange-2: #ffe0b3;
+  --orange-3: #ffcc80;
+  --orange-4: #ffb84d;
+  --orange-5: #ffa31a; /* Base Orange */
+  --orange-6: #e68900;
+  --orange-7: #b36a00;
+  --orange-8: #804b00; /* Darkest Orange */
+
+  font-family: "Pretendard-Regular";
+  width: 1024px;
+  margin: 0 auto;
+  
+}

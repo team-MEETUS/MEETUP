@@ -8,8 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>MEETUP</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="./css/reset.css"  type="text/css" />
+<link rel="stylesheet" href="./css/index.css"  type="text/css" />
+<!-- CDN -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 <style>
 	.container {
@@ -230,10 +234,7 @@
 </head>
 <body>
 <div class="container">
-	<div class="icon-wrapper">
-    <box-icon name='crown' type='solid' color='#ff0000'></box-icon>
-</div>
-
+	<jsp:include page="../component/header.jsp"></jsp:include>	
 	<!-- 메뉴 -->
 	<ul class="crew-menu__items">
 		<li>
@@ -252,7 +253,7 @@
 	
 	<!-- 배너 -->
 	<div class="crew-banner-container">
-		<img class="crew-banner" src="upload/${crewVO.crewSaveBanner}" alt="${crewVO.crewName}" />
+		<img class="crew-banner" src="./upload/${crewVO.crewSaveBanner}" alt="${crewVO.crewName}" />
 	</div>
 	<!-- 지역 & 카테고리 & 아이콘 -->
 	<div class="crew-info">
@@ -268,11 +269,11 @@
 			</c:when>
 	        <c:when test="${role eq 'crewMember' || role eq 'adminMember'}">
 				<a href="#">신고하기</a>
-	        		<a href="#">모임퇴장</a>
+	        		<a href="crew?cmd=mng&requestType=leave&crewNo=${crewVO.crewNo}&memberNo=${sessionScope.loginMember.memberNo}">모임퇴장</a>
 			</c:when>
 			<c:otherwise>
-				<a href="#">수정하기</a>
-	        		<a href="#">삭제하기</a>
+				<a href="crew?cmd=update&crewNo=${crewVO.crewNo}">수정하기</a>
+	        		<a href="crew?cmd=delete&crewNo=${crewVO.crewNo}">삭제하기</a>
 			</c:otherwise>
 			</c:choose>
 	    </div>
@@ -304,9 +305,18 @@
 						<a href="" class="btn btn-main">공유하기</a>
 					</c:otherwise>
 				</c:choose>
-				<box-icon class="like-icon" name='heart' ></box-icon>
+				<c:if test="${isValidCrewLike eq 0}">
+					<c:if test="${empty sessionScope.loginMember}">
+						<a href="member?cmd=login"><box-icon class="like-icon" name='heart' ></box-icon></a>
+					</c:if>
+					<c:if test="${not empty sessionScope.loginMember}">
+						<a href="crew?cmd=like&requestType=add&crewNo=${crewVO.crewNo}"><box-icon class="like-icon" name='heart' ></box-icon></a>
+					</c:if>
+				</c:if>
+				<c:if test="${isValidCrewLike eq 1}">
+					<a href="crew?cmd=like&requestType=delete&crewNo=${crewVO.crewNo}"><box-icon class="like-icon" name='heart' type='solid' ></box-icon></a>
+				</c:if>
 			</div>
-			<!-- <box-icon name='heart' type='solid' ></box-icon> -->
 		</div>
 		<!-- 모임 멤버 -->
 		<div class="right-section">
@@ -320,8 +330,8 @@
 				</c:if>
 			</div>
 			<c:forEach var="crewMemberVO" items="${crewMemberList}">
-			<c:if test="${crewMemberVO.crewMemberStatus != 4}">
-				<a href="" style="text-decoration: none;"><div class="crew-member-item">
+			<c:if test="${crewMemberVO.crewMemberStatus != 0 && crewMemberVO.crewMemberStatus != 4 && crewMemberVO.crewMemberStatus != 5}">
+				<a href="member?cmd=memberProfile&memberNo=${crewMemberVO.memberNo}" style="text-decoration: none;"><div class="crew-member-item">
 					<c:if test="${empty crewMemberVO.memberSaveImg}">
 						<box-icon type='solid' name='user-circle'></box-icon>
 					</c:if>
@@ -436,6 +446,7 @@
 	        <button type="button" class="close_btn">닫기</button>
 	    </div>
 	</div> --%>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
