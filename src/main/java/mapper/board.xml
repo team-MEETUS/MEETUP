@@ -73,8 +73,8 @@
 	
 	<!-- 게시글 작성 -->
 	<insert id="addOneBoard" parameterType="BoardVO">
-		INSERT INTO board(crewNo, memberNo, boardCategoryNo, boardTitle, boardContent ,boardStatus)
-		VALUES(#{crewNo}, #{memberNo}, #{boardCategoryNo}, #{boardTitle}, #{boardContent},#{boardStatus} )
+		INSERT INTO board(crewNo, memberNo, boardCategoryNo, boardTitle, boardContent, boardHit, boardStatus )
+		VALUES(#{crewNo}, #{memberNo}, #{boardCategoryNo}, #{boardTitle}, #{boardContent}, #{boardHit}, #{boardStatus} )
 		
 	</insert>
 

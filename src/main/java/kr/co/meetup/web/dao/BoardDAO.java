@@ -94,6 +94,7 @@ public class BoardDAO {
 	public BoardVO selectOneBoard(int boardNo) {
 		SqlSession ss = factory.openSession(true);
 		BoardVO vo = ss.selectOne("kr.co.meetup.web.board.selectOneBoard", boardNo);
+		System.out.println("vo : " + vo);
 		ss.close();
 		return vo;
 	}

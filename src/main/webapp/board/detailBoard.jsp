@@ -14,6 +14,7 @@
 	<div class="container">
 	<h2>상세보기</h2>
 	<table class="table table-striped">
+	
 		<tr>
 			<th>카테고리</th>
 			<td>
@@ -47,11 +48,11 @@
 			<td colspan="6">
 				<a href="board?cmd=listBoard&crewNo=${crewNo}" class="btn btn-primary">목록</a>
 				<c:if test="${loginMember.memberNo == vo.memberNo}">
-					<a href="board?cmd=updateBoard&bno=${vo.boardNo}" class="btn btn-success">수정</a>
+					<a href="board?cmd=updateBoard&bno=${vo.boardNo}&crewNo=${crewNo}" class="btn btn-success">수정</a>
 				</c:if>
-		<%-- <a href="board?cmd=deleteBoard&bno=${vo.boardNo}" class="btn btn-danger">삭제</a> --%>
+		
 				<c:if test="${loginMember.memberNo == vo.memberNo}">
-					<button type="button" class="btn btn-danger" onclick="deleteBoard(${vo.boardNo})">삭제</button>
+					<a href="#" onclick="deleteBoard(${vo.boardNo})" class="btn btn-danger">삭제</a>
 				</c:if>
 			</td>
 		</tr>
@@ -102,11 +103,10 @@
 
 
 <script>
-
-	function deleteBoard(button){
-		if (confirm("삭제하시겠습니까?")){
-			window.location.href = 'board?cmd=deleteBoard&bno=${vo.boardNo}';
-		}
+function deleteBoard(boardNo) {
+	  if (confirm("삭제하시겠습니까?")) {
+	    window.location.href = 'board?cmd=deleteBoard&bno=' + boardNo;
+	  }
 	}
 
 	function showEditForm(button) {
@@ -115,11 +115,11 @@
         button.style.display = 'none';
     }
 
-    function deleteComment(boardCommentNo) {
-        if (confirm("삭제하시겠습니까?")) {
-            window.location.href = 'board?cmd=deleteComment&bno=${vo.boardNo}&bcno=' + boardCommentNo;
-        }
-    }
+	function deleteComment(boardCommentNo) {
+		  if (confirm("삭제하시겠습니까?")) {
+		    window.location.href = 'board?cmd=deleteComment&bno=${vo.boardNo}&bcno=' + boardCommentNo;
+		  }
+		}
 </script>
 		   
 		    </div>

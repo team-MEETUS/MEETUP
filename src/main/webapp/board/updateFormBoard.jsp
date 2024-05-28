@@ -1,53 +1,140 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>updateFormBoard</title>
+<title>updateFormBoard.jsp</title>
+  <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script type="text/javascript" src="../js/summernote-ko-KR.js"></script> -->
-<!-- <script>
-	$(function() {
-		$(".summernote").summernote({
-			height:150,
+
+<script>    
+   $(document).ready(function() {            
+        $('.summernote').summernote({
+            height: 150,
 			lang:"ko-KR"
-		});
-	})
-</script> -->
+        });
+    });
+   </script>
+  
+<style>
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th {
+	display: block;
+	text-align: left;
+}
+
+td {
+	display: block;
+	width: 100%;
+}
+
+td .btn {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.button-container {
+	width: 100%;
+	text-align: right;
+}
+
+.button-container .btn {
+	width: 100%;
+}
+
+.input-container {
+	width: 100%;
+}
+
+.input-container input {
+	width: 100%;
+}
+</style>
 </head>
 <body>
+	<h1>게시글 수정</h1>
+
 	 <div class="container">
-	 	<form action="board?cmd=updateOkBoard" method="get">
+	 	<form action="boardUpdate" method="post" enctype="multipart/form-data">
+	 		<input type="text" name="crewNo" value="${crewNo}" />
+	 		<input type="hidden" name="boardNo" value="${boardNo}" />	 		
+			<input type="hidden" name="memberNo" value="${memberNo}" />		
 	 		<table class="table table-striped">
 	 			<tr>
-	 				<th>작성자</th>
-	 				<th>
-	 					<input type="hidden" name="cmd" value="updateOkBoard" />
-	 					<input type="hidden" name="boardNo" value="${vo.boardNo}" />
-	 				</th>
-	 			</tr>
+	 				<th>카테고리</th>
+						<td>
+							<c:if test="${crewMemberVO.crewMemberStatus == 2 || crewMemberVO.crewMemberStatus == 3}">
+						    <input class="btn btn-success category-btn" type="button" name="boardCategoryNo" value="공지사항" data-category-no="1" onclick="selectCategory(1)">
+								</c:if>
+								<input class="btn btn-success category-btn" type="button" name="boardCategoryNo1" value="가입인사" data-category-no="2" onclick="selectCategory(2)">
+								<input class="btn btn-success category-btn" type="button" name="boardCategoryNo2" value="정모후기" data-category-no="3" onclick="selectCategory(3)">
+								<input class="btn btn-success category-btn" type="button" name="boardCategoryNo3" value="자유" data-category-no="4" onclick="selectCategory(4)">
+								<input class="btn btn-success category-btn" type="button" name="boardCategoryNo4" value="투표" data-category-no="5" onclick="selectCategory(5)">
+								<input type="hidden" name="boardCategoryNo" id="selectedCategoryNo" value="" />
+
+						</td>
+				
+					<th>제목</th>
+						<td class="input-container"><input type="text" name="boardTitle" /></td>
+					</tr>
+
+				<tr>
+					<th>내용</th>
+						<td><textarea class="summernote" name="boardContent" id="" cols="30" rows="10"></textarea></td>
+				</tr>
+				
+				
 	 			<tr>
-	 				<th>제목</th>
-	 				<th><input type="text" name="boardTitle" value="${vo.boardTitle}" /></th>
-	 			</tr>
-	 			<tr>
-	 				<th>내용</th>
-	 				<td><textarea class="summernote" name="boardContent" id="" cols="30" rows="10" >${vo.boardContent}</textarea></td>
-	 			</tr>
-	 			<tr>
-	 				<td colspan="2">
-	 					<a href="board" class="btn btn-success">목록</a>
-	 					<input class="btn btn-primary" type="submit" value="수정" />
-	 					<input class="btn btn-danger" type="reset" value="초기화" />
-	 				</td>
-	 			</tr>
-	 		</table>
-	 	</form>
-	 </div>
+			<td colspan="6">
+				<a href="board?cmd=listBoard&crewNo=${crewNo}" class="btn btn-primary">목록</a>
+				<c:if test="${loginMember.memberNo == vo.memberNo}">
+					<button type="submit">수정</button>
+				</c:if>
+
+				<c:if test="${loginMember.memberNo == vo.memberNo}">
+					<button type="button" class="btn btn-danger" onclick="deleteBoard(${vo.boardNo})">삭제</button>
+				</c:if>
+			</td>
+		</tr>
+	</table>
+		</form>
+	</div>
 </body>
+ <script>  
+   function boardUpdate(crewNo) {
+	   location.href = "board?cmd=boardUpdate&bno=${vo.boardNo}&crewNo=${vo.crewNo}";
+	 }
+</script>
+<script>
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const selectedCategoryNoInput = document.getElementById('selectedCategoryNo');
+
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const categoryNo = btn.dataset.categoryNo;
+            selectedCategoryNoInput.value = categoryNo;
+        });
+    });
+</script>
+<script>
+
+	function deleteBoard(button){
+		if (confirm("삭제하시겠습니까?")){
+			window.location.href = 'board?cmd=deleteBoard&bno=${vo.boardNo}';
+		}
+	}
+
+</script>
 </html>
