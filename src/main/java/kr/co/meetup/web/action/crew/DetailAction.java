@@ -1,5 +1,9 @@
 package kr.co.meetup.web.action.crew;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,9 +11,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.CrewDAO;
+import kr.co.meetup.web.dao.MeetingDAO;
 import kr.co.meetup.web.vo.CrewLikeVO;
 import kr.co.meetup.web.vo.CrewMemberVO;
 import kr.co.meetup.web.vo.CrewVO;
+import kr.co.meetup.web.vo.MeetingMemberVO;
+import kr.co.meetup.web.vo.MeetingVO;
 import kr.co.meetup.web.vo.MemberVO;
 
 public class DetailAction implements Action {
@@ -46,7 +53,7 @@ public class DetailAction implements Action {
 				if (vo.getMemberNo() == mvo.getMemberNo()) {
 					if (vo.getCrewMemberStatus() == 1) role = "crewMember";			// 일반회원
 					else if (vo.getCrewMemberStatus() == 2) role = "adminMember";	// 운영진
-					else if (vo.getCrewMemberStatus() == 3) role = "leader";			// 모임장
+					else if (vo.getCrewMemberStatus() == 3) role = "leader";		// 모임장
 					else if (vo.getCrewMemberStatus() == 4) role = "pendingMember";	// 승인대기
 					else if (vo.getCrewMemberStatus() == 5) role = "rejectedMember";// 승인거절
 					else role = "kick";	// 강퇴
@@ -68,6 +75,21 @@ public class DetailAction implements Action {
 		req.setAttribute("formattedContent", formattedContent);
 		req.setAttribute("role", role);
 		req.setAttribute("isValidCrewLike", isValidCrewLike);
+		
+		// 정모 DAO
+		MeetingDAO mdao = new MeetingDAO();
+		List<MeetingVO> meetingList = mdao.selectAllMeetingByCrewNo(Integer.parseInt(crewNo));
+		
+		List<MeetingMemberVO> meetingMemberList = mdao.selectAllMeetingMemberByCrewNo(Integer.parseInt(crewNo));
+
+		System.out.println("meetingMemberList : " + meetingMemberList);	
+		if (meetingMemberList.toString() == null) {
+			
+		}
+		// meeting
+		req.setAttribute("meetingList", meetingList);
+		req.setAttribute("meetingMemberList", meetingMemberList);
+		req.setAttribute("MemberVO", mvo);
 		
 		return "crew/detail.jsp";
 	}

@@ -11,4 +11,6 @@ public class MeetingMemberVO {
 	private int mmNo;
 	private int meetingNo;
 	private int memberNo;
+	
+	private String memberSaveImg;
 }

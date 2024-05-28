@@ -18,12 +18,11 @@
 	</select>
 
 	<!-- 모임별 정모 조회 -->
-	<select id="selectAllMeetingByCrewNo" parameterType="Hashmap" resultType="MeetingVO">
+	<select id="selectAllMeetingByCrewNo" parameterType="int" resultType="MeetingVO">
 	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
 	  FROM meeting
-	 WHERE crewNo = #{crewNo}
-	 ORDER BY meetingNo
-	 LIMIT #{recordPerPage} OFFSET #{startNo};
+	 WHERE crewNo = #{crewNo} AND meetingDate > NOW()
+	 ORDER BY meetingDate
 	</select>
 	
 	<!-- 날짜별 정모 조회 -->
@@ -35,6 +34,7 @@
 	 LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
 	
+	<!-- meetingNo로 정모 한개 조회 -->
 	<select id="selectOneMeetingByMeetingNo" parameterType="int" resultType="MeetingVO">
 	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
 	  FROM meeting
@@ -80,7 +80,16 @@
 		WHERE meetingNo = #{meetingNo}
 	</update>
 	
-	<!-- 정모참석인원 조회 -->
+	<!-- 전체 모임회원 조회 -->
+	<select id="selectAllMeetingMember" parameterType="int" resultType="MeetingMemberVO">
+		SELECT cm.crewMemberNo, cm.crewNo, m.memberNo, cm.crewMemberStatus, cm.createdAt, m.memberNickname, m.memberSaveImg
+		FROM crew_member cm
+			LEFT JOIN member m ON cm.memberNo = m.memberNo 
+		WHERE crewNo = #{crewNo} 
+		ORDER BY cm.crewMemberStatus DESC
+	</select>
+	
+	<!-- 정모참석인원 조회 (cnt) -->
 	<select id="selectMeetingMemberCnt" parameterType="Hashmap" resultType="int">
 		SELECT count(*) as cnt 
 		  FROM meeting_member
@@ -94,5 +103,21 @@
 		 WHERE meetingNo = #{meetingNo} AND memberNo = #{memberNo}
 	</select>
 	
+	<!-- crewNo, meetingNo로 정모참여인원 조회 (meetingMember, member, meeting JOIN)-->
+	<select id="selectAllMeetingMemberByCrewNo" parameterType="int" resultType="MeetingMemberVO">
+		SELECT mm.meetingMemberNo, mm.meetingNo, m.memberNo, m.memberSaveImg
+		  FROM meeting_member mm
+		  LEFT JOIN member m ON mm.memberNo = m.memberNo
+		  LEFT JOIN meeting mt ON mt.meetingNo = mm.meetingNo 
+		 WHERE mt.crewNo = #{crewNo}
+		 ORDER BY mm.meetingMemberNo DESC;
+	</select>
+	
+	<!-- 정모에 가입해 있는 유저 확인 -->
+	<select id="selectAllMeetingMemberByMeetingNoCnt" parameterType="int" resultType="int">
+		SELECT count(*) as cnt 
+		  FROM meeting_member
+		 WHERE meetingNo = #{meetingNo};
+	</select>
 	
 </mapper>

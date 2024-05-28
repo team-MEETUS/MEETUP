@@ -85,10 +85,10 @@ public class UploadAction extends HttpServlet {
 			vo.setMeetingSaveImg(meetingSaveImg);
 			
 			dao.addMeeting(vo);
-			
-			resp.sendRedirect("meeting?cmd=detail&crewNo=" + crewNo);
+			resp.sendRedirect("crew?cmd=detail&crewNo=" + crewNo);
 		} else {
 			System.err.println("로그인 후 진행해주세요!!!!");
+			req.setAttribute("errormsg", "로그인 후 진행해주세요!!!!");
 		}
 	}
 }

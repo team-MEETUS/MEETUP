@@ -26,7 +26,7 @@ public class ExitAction extends HttpServlet {
 		
 		dao.deleteMeetingMember(Integer.parseInt(meetingNo), memberNo);
 		
-		resp.sendRedirect("meeting?cmd=detail&crewNo=" + crewNo);
+		resp.sendRedirect("crew?cmd=detail&crewNo=" + crewNo);
 	}
 	
 	@Override

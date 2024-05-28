@@ -127,19 +127,17 @@ h2 {
 		<%
 			}
 		%>
-		<!-- crewNo 받아오기 여기말고 상세페이지에 다시 만들기 -->
-<!-- 		<a href="meeting?cmd=write&crewNo=1" class="btn btn-primary">모임등록</a> -->
 		</div>
 		
 		<br />		
-		<c:forEach var="meetingVO" items="${list}">
+		<c:forEach var="MeetingVO" items="${list}">
 			<div class="meetingOne">
-				<div>${meetingVO.meetingSaveImg}</div>
-				<a href="meeting?cmd=detail&crewNo=${meetingVO.crewNo}">${meetingVO.meetingName}</a>
-				<img src="upload/${meetingVO.meetingSaveImg}" alt="" />
+				<div>${MeetingVO.meetingSaveImg}</div>
+				<a href="crew?cmd=detail&crewNo=${MeetingVO.crewNo}">${MeetingVO.meetingName}</a>
+				<img src="upload/${MeetingVO.meetingSaveImg}" alt="" />
 				
-				<div>${meetingVO.meetingDate}</div>
-				<div>${meetingVO.meetingAttend}/${meetingVO.meetingMax} </div>
+				<div>${MeetingVO.meetingDate}</div>
+				<div>${MeetingVO.meetingAttend}/${MeetingVO.meetingMax} </div>
 			</div>
 		</c:forEach>
 
