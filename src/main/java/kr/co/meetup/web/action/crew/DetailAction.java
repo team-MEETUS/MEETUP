@@ -1,9 +1,5 @@
 package kr.co.meetup.web.action.crew;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -78,9 +74,9 @@ public class DetailAction implements Action {
 		
 		// 정모 DAO
 		MeetingDAO mdao = new MeetingDAO();
-		List<MeetingVO> meetingList = mdao.selectAllMeetingByCrewNo(Integer.parseInt(crewNo));
+		List<MeetingVO> meetingList = mdao.selectAllMeetingByCrewNo(crewNo);
 		
-		List<MeetingMemberVO> meetingMemberList = mdao.selectAllMeetingMemberByCrewNo(Integer.parseInt(crewNo));
+		List<MeetingMemberVO> meetingMemberList = mdao.selectAllMeetingMemberByCrewNo(crewNo);
 
 		System.out.println("meetingMemberList : " + meetingMemberList);	
 		if (meetingMemberList.toString() == null) {
