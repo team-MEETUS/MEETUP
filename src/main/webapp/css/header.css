@@ -4,8 +4,6 @@ header {
   align-items: center;
   font-weight: bold;
   padding: 20px;
-  height: 100px; /* 고정된 높이 설정 */
-  box-sizing: border-box; /* padding을 포함한 전체 높이 계산 */
 
   nav {
     display: flex;
@@ -13,10 +11,12 @@ header {
     align-items: center;
     gap: 30px;
 
-    .header-logo a {
-      font-size: 30px;
-      color: var(--orange-5);
-      font-style: italic;
+    .header-logo {
+	   .logo-link {
+	   	     font-size: 30px;
+	      color: var(--orange-5);
+	      font-style: italic;
+	   }
     }
 
     .header-link {
@@ -47,7 +47,6 @@ header {
   .header-profile {
     position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 10px;
 
@@ -77,9 +76,5 @@ header {
         background-color: #f1f1f1;
       }
     }
-  }
-
-  .header-profile:hover .dropdown-menu {
-    display: block;
   }
 }

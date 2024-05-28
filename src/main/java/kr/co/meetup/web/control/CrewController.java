@@ -2,9 +2,6 @@ package kr.co.meetup.web.control;
 
 import java.io.IOException;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,11 +9,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
+import kr.co.meetup.web.action.crew.DeleteAction;
 import kr.co.meetup.web.action.crew.DetailAction;
+import kr.co.meetup.web.action.crew.LikeAction;
 import kr.co.meetup.web.action.crew.ListAction;
 import kr.co.meetup.web.action.crew.ManagementAction;
 import kr.co.meetup.web.action.crew.ManagementListAction;
 import kr.co.meetup.web.action.crew.SignUpAction;
+import kr.co.meetup.web.action.crew.UpdateFormAction;
 import kr.co.meetup.web.action.crew.WriteFormAction;
 
 @SuppressWarnings("serial")
@@ -45,6 +45,12 @@ public class CrewController extends HttpServlet {
 			action = new ManagementListAction();
 		} else if (cmd.equals("mng")) {
 			action = new ManagementAction();
+		} else if (cmd.equals("like")) {
+			action = new LikeAction();
+		} else if (cmd.equals("update")) {
+			action = new UpdateFormAction();
+		} else if (cmd.equals("delete")) {
+			action = new DeleteAction();
 		}
 		
 		url = action.execute(req, resp);

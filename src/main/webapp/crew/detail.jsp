@@ -245,11 +245,11 @@
 			</c:when>
 	        <c:when test="${role eq 'crewMember' || role eq 'adminMember'}">
 				<a href="#">신고하기</a>
-	        		<a href="#">모임퇴장</a>
+	        		<a href="crew?cmd=mng&requestType=leave&crewNo=${crewVO.crewNo}&memberNo=${sessionScope.loginMember.memberNo}">모임퇴장</a>
 			</c:when>
 			<c:otherwise>
-				<a href="#">수정하기</a>
-	        		<a href="#">삭제하기</a>
+				<a href="crew?cmd=update&crewNo=${crewVO.crewNo}">수정하기</a>
+	        		<a href="crew?cmd=delete&crewNo=${crewVO.crewNo}">삭제하기</a>
 			</c:otherwise>
 			</c:choose>
 	    </div>
@@ -281,9 +281,18 @@
 						<a href="" class="btn btn-main">공유하기</a>
 					</c:otherwise>
 				</c:choose>
-				<box-icon class="like-icon" name='heart' ></box-icon>
+				<c:if test="${isValidCrewLike eq 0}">
+					<c:if test="${empty sessionScope.loginMember}">
+						<a href="member?cmd=login"><box-icon class="like-icon" name='heart' ></box-icon></a>
+					</c:if>
+					<c:if test="${not empty sessionScope.loginMember}">
+						<a href="crew?cmd=like&requestType=add&crewNo=${crewVO.crewNo}"><box-icon class="like-icon" name='heart' ></box-icon></a>
+					</c:if>
+				</c:if>
+				<c:if test="${isValidCrewLike eq 1}">
+					<a href="crew?cmd=like&requestType=delete&crewNo=${crewVO.crewNo}"><box-icon class="like-icon" name='heart' type='solid' ></box-icon></a>
+				</c:if>
 			</div>
-			<!-- <box-icon name='heart' type='solid' ></box-icon> -->
 		</div>
 		<!-- 모임 멤버 -->
 		<div class="right-section">

@@ -7,12 +7,10 @@
 <meta charset="UTF-8">
 <title>MEETUP</title>
 <!-- CSS -->
-<link rel="stylesheet" href="../css/reset.css"  type="text/css" />
-<link rel="stylesheet" href="../css/index.css"  type="text/css" />
+<link rel="stylesheet" href="./css/reset.css"  type="text/css" />
+<link rel="stylesheet" href="./css/index.css"  type="text/css" />
 <!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
 	window.onload = function() {
 		let btn = document.getElementById("btn");
@@ -111,9 +109,11 @@
 		<p>설명</p>
 		<textarea name="crewContent" id="crewContent" cols="30" rows="10" class="form-control" style="resize: none;"></textarea> 최대 2000자 
 		<p>대표 이미지</p>
-		<input type="file" name="crewImg" id="" />
+		<input type="file" name="crewImg" id="crewImg" />
+		<img id="formImg" src="" alt="" style="display:none;"/>
 		<p>배너 이미지</p>
-		<input type="file" name="crewBanner" id="" />
+		<input type="file" name="crewBanner" id="crewBanner" />
+		<img id="formBanner" src="" alt="" style="display:none;"/>
 		
 		<input type="submit" value="등록" id="btn" class="btn btn-primary" /> 
 	</form>
@@ -158,6 +158,33 @@ $(document).ready(function() {
 			}
 		});
 	});
+    
+	// 이미지 미리보기
+    $('#crewImg').change(function() {
+        var file = this.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#formImg').attr('src', e.target.result).show();
+            }
+            reader.readAsDataURL(file);
+        } else {
+            $('#formImg').hide();
+        }
+    });
+    
+    $('#crewBanner').change(function() {
+        var file = this.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#formBanner').attr('src', e.target.result).show();
+            }
+            reader.readAsDataURL(file);
+        } else {
+            $('#formBanner').hide();
+        }
+    });
 });
 </script>
 </body>

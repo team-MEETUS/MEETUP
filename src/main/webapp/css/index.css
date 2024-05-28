@@ -7,7 +7,7 @@
   font-style: normal;
 }
 
-.container {
+:root {
   --blue-1: #e6f0ff; /* Lightest Blue */
   --blue-2: #b3d1ff;
   --blue-3: #80b2ff;

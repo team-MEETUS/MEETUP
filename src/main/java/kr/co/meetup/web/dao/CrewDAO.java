@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.co.meetup.web.vo.CategoryBigVO;
 import kr.co.meetup.web.vo.CategorySmallVO;
+import kr.co.meetup.web.vo.CrewLikeVO;
 import kr.co.meetup.web.vo.CrewMemberVO;
 import kr.co.meetup.web.vo.CrewVO;
 import kr.co.meetup.web.vo.GeoVO;
@@ -118,6 +119,20 @@ public class CrewDAO {
 		return vo.getCrewNo();
 	}
 	
+	// 모임 수정 
+	public void updateCrew(CrewVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.crew.updateCrew", vo);
+		ss.close();
+	}
+	
+	// 모임 삭제 
+	public void deleteCrew(int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.crew.deleteCrew", crewNo);
+		ss.close();
+	}
+	
 	// 모임 회원 등록
 	public void addCrewMember(CrewMemberVO vo) {
 		SqlSession ss = factory.openSession(true);
@@ -129,6 +144,23 @@ public class CrewDAO {
 	public void updateCrewMember(CrewMemberVO vo) {
 		SqlSession ss = factory.openSession(true);
 		ss.update("kr.co.meetup.crew.updateCrewMember", vo);
+		ss.close();
+	}
+	
+	// 모임장 수정
+	public void updateCrewMemberLeader(int crewNo) {
+		SqlSession ss = factory.openSession(true);
+		ss.update("kr.co.meetup.crew.updateCrewMemberLeader", crewNo);
+		ss.close();
+	}
+	
+	// 모임 퇴장
+	public void deleteCrewMember(int crewNo, int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		map.put("memberNo", memberNo);
+		ss.delete("kr.co.meetup.crew.deleteCrewMember", map);
 		ss.close();
 	}
 	
@@ -155,6 +187,30 @@ public class CrewDAO {
 		int cnt = ss.selectOne("kr.co.meetup.crew.selectCrewByCategoryCnt", categoryBigNo);
 		ss.close();
 		return cnt;
+	}
+	
+	// 찜 여부 조회
+	public int selectCrewLikeCntByMemberNo(int crewNo, int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		map.put("memberNo", memberNo);
+		int cnt = ss.selectOne("kr.co.meetup.crew.selectCrewLikeByMemberNo", map);
+		return cnt;
+	}
+	
+	// 찜 등록
+	public void addCrewLike(CrewLikeVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.insert("kr.co.meetup.crew.addCrewLike", vo);
+		ss.close();
+	}
+	
+	// 찜 삭제
+	public void deleteCrewLike(CrewLikeVO vo) {
+		SqlSession ss = factory.openSession(true);
+		ss.delete("kr.co.meetup.crew.deleteCrewLike", vo);
+		ss.close();
 	}
 	
 	

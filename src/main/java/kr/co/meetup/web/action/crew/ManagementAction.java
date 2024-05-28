@@ -29,23 +29,55 @@ public class ManagementAction implements Action {
 		CrewDAO dao = new CrewDAO();
 		CrewMemberVO vo = new CrewMemberVO();
 		
-		// 요청 승인
+		// 가입 승인
 		if (requestType.equals("approval")) {
-			System.out.println("요청 승인!!");
 			vo.setCrewNo(crewNo);
 			vo.setMemberNo(memberNo);
 			vo.setCrewMemberStatus(1);
 			dao.updateCrewMember(vo);
-			// 모임 인원수 1 증가
-			dao.updateCrewAttend(crewNo, 1);
-		} 
-		// 요청 거절
+			dao.updateCrewAttend(crewNo, 1); // 모임 인원수 1 증가
+		} // 가입 거절
 		else if (requestType.equals("reject")) {
-			System.out.println("요청 거절!!");
 			vo.setCrewNo(crewNo);
 			vo.setMemberNo(memberNo);
 			vo.setCrewMemberStatus(5);
 			dao.updateCrewMember(vo);
+		} // 운영진 임명 
+		else if (requestType.equals("appoint")) {
+			vo.setCrewNo(crewNo);
+			vo.setMemberNo(memberNo);
+			vo.setCrewMemberStatus(2);
+			dao.updateCrewMember(vo);
+		} // 운영진 해제
+		else if (requestType.equals("demote")) {
+			vo.setCrewNo(crewNo);
+			vo.setMemberNo(memberNo);
+			vo.setCrewMemberStatus(1);
+			dao.updateCrewMember(vo);
+		} // 모임장 양도
+		else if (requestType.equals("transfer")) {
+			dao.updateCrewMemberLeader(crewNo);	// 기존 모임장 -> 운영진
+			vo.setCrewNo(crewNo);
+			vo.setMemberNo(memberNo);
+			vo.setCrewMemberStatus(3);
+			dao.updateCrewMember(vo);
+		} // 강퇴 
+		else if (requestType.equals("kick")) {
+			vo.setCrewNo(crewNo);
+			vo.setMemberNo(memberNo);
+			vo.setCrewMemberStatus(0);
+			dao.updateCrewMember(vo);
+			dao.updateCrewAttend(crewNo, -1); // 모임 인원수 1 감소
+		} // 퇴장 
+		else if (requestType.equals("leave")) {
+			// crew_member 삭제
+			dao.deleteCrewMember(crewNo, memberNo);
+			// meeting_member 삭제
+			
+			// board 삭제처리 (status -> 2)
+			
+			dao.updateCrewAttend(crewNo, -1); // 모임 인원수 1 감소
+			return "crew?cmd=detail&crewNo=" + crewNo;
 		}
 		
 		return "crew?cmd=mnglist&crewNo=" + crewNo;
