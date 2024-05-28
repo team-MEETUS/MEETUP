@@ -1,0 +1,77 @@
+@charset "UTF-8";
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.confirmPw {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 3rem 0;
+}
+.confirmPw__box {
+    width: 440px;
+    padding: 6rem 1.2rem;
+    background: #fff;
+    box-shadow: var(--box-shadow__A);
+    border-radius: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.confirmPw__form-cnt {
+    width: 100%;
+    padding: 2.4rem 0;
+}
+.confirmPw__input-box {
+    padding-top: 0.6rem;
+    margin-bottom: 0.6rem;
+    width: 100%;
+}
+.confirmPw__input-box:first-child {
+    padding-top: 0;
+}
+.confirmPw__input-box > label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--orange-5);
+    margin-bottom: 0.3rem;
+}
+.confirmPw__input-group {
+    display: flex;
+    align-items: center;
+}
+.confirmPw__input-group > input[type=password] {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+    height: 40px;
+    margin-top: 0.6rem;
+    padding: 0 0.8rem;
+    border: 1px solid #d1d1d1;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    color: #292A5D;
+    min-width: 250px;
+}
+.confirmPw__input-group > input:focus, .confirmPw__input-group > button:focus {
+    outline-color: var(--orange-5);
+}
+.confirmPw__input-group > button {
+    height: 40px;
+    margin-top: 0.6rem;
+    padding: 0.3rem 0.9rem;
+    border: none;
+    border-radius: 1rem;
+    background: var(--orange-5);
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #fff;
+    transition: .3s;
+    cursor: pointer;
+}
+.confirmPw__input-group > button:hover {
+    background: var(--orange-2);
+}

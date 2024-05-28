@@ -30,7 +30,7 @@
 						</div>
 						<div class="signup__input-box">
 							<label for="verifyNumber">인증번호</label>
-							<input type="text" name="memberPhone" oninput="inputNum(this)" maxlength="4" />
+							<input type="text" name="verifyNumber" oninput="inputNum(this)" maxlength="4" />
 							<button id="phoneChk2">인증확인</button>
 						</div>
 						<div class="signup__input-box">
@@ -75,8 +75,8 @@
 				</form>
 			</div>
 		</section>
-		<jsp:include page="../component/footer.jsp"></jsp:include>
 	</div>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
 	
 	<script>
 		// 인증번호 비교용 변수

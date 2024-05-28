@@ -1,0 +1,55 @@
+@charset "UTF-8";
+.subTitle {
+	font-size: 2rem;
+	margin-left: 4rem;
+	font-weight: bold;
+}
+
+.memberProfile--wrap {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.memberProfile__profile-box {
+	padding: 3rem 4rem 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4rem;
+}
+
+.memberProfile__profile {
+	display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.memberProfile__profile--img {
+	display: block;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.memberProfile__profile--details {
+	display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-left: 60px;
+}
+
+.memberProfile__profile--name {
+	font-size: 2rem;
+    color: var(--orange-5);
+    font-weight: bold;
+}
+
+.memberProfile__profile--birth,
+.memberProfile__profile--gender,
+.memberProfile__profile--geo {
+	font-size: 1.2rem;
+    color: #2F2F2F;
+}
