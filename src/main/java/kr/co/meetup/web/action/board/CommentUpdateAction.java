@@ -17,13 +17,10 @@ public class CommentUpdateAction implements Action {
 		int boardNo = 0;
 		int crewNo = 0;
 		int memberNo = 0;
-		
+
 		try {
 			req.setCharacterEncoding("UTF-8");
-		
-		resp.setContentType("text/html;charset=UTF-8");
-		
-		
+			resp.setContentType("text/html;charset=UTF-8");
 
 			// 현재 로그인한 유저 정보 가져오기
 			HttpSession session = req.getSession();
@@ -51,22 +48,20 @@ public class CommentUpdateAction implements Action {
 				crewNo = Integer.parseInt(cno);
 			}
 
+			String boardCommentContent = req.getParameter("boardCommentContent");
 
-				String boardCommentContent = req.getParameter("boardCommentContent");
+			BoardCommentVO boardCommentVO = new BoardCommentVO();
+			boardCommentVO.setBoardNo(boardNo);
+			boardCommentVO.setBoardCommentNo(boardCommentNo);
+			boardCommentVO.setBoardCommentContent(boardCommentContent);
+			boardCommentVO.setBoardCommentStatus(1);
 
-				BoardCommentVO boardCommentVO = new BoardCommentVO();
-				boardCommentVO.setBoardNo(boardNo);
-				boardCommentVO.setBoardCommentNo(boardCommentNo);
-				boardCommentVO.setBoardCommentContent(boardCommentContent);
-				boardCommentVO.setBoardCommentStatus(1);
+			dao.updateOneBoardComment(boardCommentVO);
 
-				dao.updateOneBoardComment(boardCommentVO);
-				
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "redirect:board?cmd=detailboard&boardNo=" + boardNo + "&crewNo=" + crewNo + "&memberNo=" + memberNo;
-}
 	}
-	
+}

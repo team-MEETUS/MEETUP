@@ -19,25 +19,25 @@ public class DeleteBoardAction implements Action {
 		int loginNo = mvo.getMemberNo();
 
 		// boardNo 가져오기
-		String b = req.getParameter("bno");
 		int boardNo = 0;
+		String b = req.getParameter("boardNo");
 		if (b != null) {
 			boardNo = Integer.parseInt(b);
 			BoardDAO dao = new BoardDAO();
 			dao.deleteOneBoard(boardNo);
 		}
 		
-		String cno = req.getParameter("crewNo");
 		int crewNo = 0;
-
+		String cno = req.getParameter("crewNo");
 		if (cno != null) {
 			crewNo = Integer.parseInt(cno);
 		}
 		
 		req.setAttribute("crewNo", crewNo);
 		req.setAttribute("boardNo", boardNo);
+		req.setAttribute("memberNo", loginNo);
 
-		return "board?cmd=listBoard&boardNo=" + boardNo;
+		return "board?cmd=listBoard&boardNo="+boardNo;
 	}
 
 }

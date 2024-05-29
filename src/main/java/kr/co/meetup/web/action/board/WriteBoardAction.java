@@ -51,6 +51,10 @@ public class WriteBoardAction extends HttpServlet {
         String boardContent = mr.getParameter("boardContent");
         String bh = mr.getParameter("boardHit");
         String bs = mr.getParameter("boardStatus");
+        
+//		//이미지의 원본파일명, 저장파일명
+		String boardImgOriginalImg = mr.getOriginalFileName("originalImg");
+		String boardImgSaveImg = mr.getFilesystemName("saveImg");	
 
         // String > int 형변환
         int crewNo = 0;

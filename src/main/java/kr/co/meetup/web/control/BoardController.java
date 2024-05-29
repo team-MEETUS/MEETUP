@@ -29,7 +29,6 @@ public class BoardController extends HttpServlet {
 
 		cmd = req.getParameter("cmd");
 
-		System.out.println("cmd : " + cmd);
 
 		if (cmd == null || cmd.equals("listBoard")) {
 			action = new ListBoardAction();
@@ -55,7 +54,7 @@ public class BoardController extends HttpServlet {
 			resp.sendRedirect(url.replace("redirect:", ""));
 			return;
 		}
-		System.out.println("Url : : + " + url);
+		
 		RequestDispatcher rd = req.getRequestDispatcher(url);
 		rd.forward(req, resp);
 	}
