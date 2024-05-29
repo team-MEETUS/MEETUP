@@ -76,13 +76,15 @@
 	<!-- 메뉴 -->
 	<ul class="crew-menu__items">
 		<li>
-			<a href="">모임회원</a>
+			<button id="showCrewMember">모임회원</button>
 		</li>
 		<li>
-			<a href="">가입신청</a>
+			<button id="showCrewSignUp">가입신청</button>
 		</li>
 	</ul>
 	
+	<!-- 모임회원 -->
+	<div class="crew-container" id="CrewMember" >
 	<c:forEach var="crewMemberVO" items="${crewMemberList}">
 		<!-- 회원멤버만 -->
 		<c:if test="${crewMemberVO.crewMemberStatus != 0 && crewMemberVO.crewMemberStatus != 4 && crewMemberVO.crewMemberStatus != 5}">
@@ -118,11 +120,10 @@
 			</c:if>
 		</c:if>
 	</c:forEach>
-	
-	
-	<hr />
+	</div>
 	
 	<!-- 가입신청 -->
+	<div class="crew-container" id="CrewSignUp" style="display:none;">
 	<c:forEach var="crewMemberVO" items="${crewMemberList}">
 	<c:if test="${crewMemberVO.crewMemberStatus == 4}">
 		<a href="" style="text-decoration: none;"><div class="crew-member-item">
@@ -134,10 +135,12 @@
 			</c:if>
 			<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
 		</div></a>
-		<a href="crew?cmd=mng&requestType=approval&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" >가입승인</a>
-		<a href="crew?cmd=mng&requestType=reject&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" >가입거절</a>
+		<a href="crew?cmd=mng&requestType=approval&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님의 가입을 승인하시겠습니까?" >가입승인</a>
+		<a href="crew?cmd=mng&requestType=reject&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님의 가입을 거절하시겠습니까?" >가입거절</a>
 	</c:if>
 	</c:forEach>
+	</div>
+	
     <jsp:include page="../component/footer.jsp"></jsp:include>
 </div>
 <script>
@@ -168,6 +171,19 @@ $(document).ready(function () {
 	        }
         });
     });
+    
+ 	// "모임회원" 버튼 클릭 이벤트
+    $("#showCrewMember").click(function () {
+        $("#CrewMember").show(); 
+        $("#CrewSignUp").hide(); 
+    });
+
+    // "가입신청" 버튼 클릭 이벤트
+    $("#showCrewSignUp").click(function () {
+        $("#CrewSignUp").show(); 
+        $("#CrewMember").hide();
+    });
+    
 });
 </script>
 </body>

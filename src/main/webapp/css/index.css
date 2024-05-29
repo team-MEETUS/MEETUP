@@ -26,6 +26,15 @@
   --orange-6: #e68900;
   --orange-7: #b36a00;
   --orange-8: #804b00; /* Darkest Orange */
+  
+  --gray-100: #bbbbbb;
+  --gray-200: #aaaaaa;
+  --gray-300: #999999;
+  --gray-400: #888888;
+  --gray-500: #777777;
+  --gray-600: #666666;
+  --gray-700: #555555;
+  --gray-800: #444444;
 
   font-family: "Pretendard-Regular";
  }

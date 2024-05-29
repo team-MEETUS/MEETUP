@@ -139,7 +139,23 @@
 		display: flex;
 		align-items: center;
 		margin: 10px;
-		width: 100%;
+		position: relative;
+	}
+	.member-badge-leader {
+	    position: absolute; /* 추가: 절대 위치 설정 */
+	    bottom: 0; /* 추가: 하단에 위치 */
+	    right: 170px; /* 추가: 우측에 위치 */
+	    padding: 5px; /* 추가: 뱃지 내부 여백 */
+	    background-color: lightpink;
+	    border-radius: 50px;
+	}
+	.member-badge-admin {
+	    position: absolute; /* 추가: 절대 위치 설정 */
+	    bottom: 0; /* 추가: 하단에 위치 */
+	    right: 170px; /* 추가: 우측에 위치 */
+	    padding: 5px; /* 추가: 뱃지 내부 여백 */
+	    background-color: var(--blue-3);
+	    border-radius: 50px;
 	}
 	.crew-member-item a {
 	    text-decoration: none;
@@ -390,6 +406,13 @@
 						<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
 					</c:if>
 					<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
+					<!-- 뱃지 -->
+					<c:if test="${crewMemberVO.crewMemberStatus eq 3}">
+					<box-icon type='solid' name='star' color='white' class="member-badge-leader" ></box-icon>
+					</c:if>
+					<c:if test="${crewMemberVO.crewMemberStatus eq 2}">
+					<box-icon type='solid' name='shield-alt-2' color='white' class="member-badge-admin" ></box-icon>
+					</c:if>
 				</div></a>
 			</c:if>
 			</c:forEach>
@@ -513,12 +536,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 팝업
     infoIcon.addEventListener('click', function(event) {
-        var iconRect = infoIcon.getBoundingClientRect();
-        var popupRect = popup.getBoundingClientRect();
-        
-        // 팝업 위치 설정 (아이콘 옆에 뜨도록)
-        popup.style.left = iconRect.right + 'px';
-        popup.style.top = iconRect.top + 'px';
+         var popupRect = popup.getBoundingClientRect();
+         var iconLeft = infoIcon.offsetLeft;
+         var iconTop = infoIcon.offsetTop;
+         var iconWidth = infoIcon.offsetWidth;
+         // 팝업 위치 설정 (아이콘 옆에 뜨도록)
+         popup.style.left = (iconLeft + iconWidth) + 'px';
+         popup.style.top = iconTop + 'px';
         
         // 팝업 표시/숨김 토글
         if (popup.style.display === "none" || popup.style.display === "") {

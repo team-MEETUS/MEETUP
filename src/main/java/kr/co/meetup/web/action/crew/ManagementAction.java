@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.CrewDAO;
+import kr.co.meetup.web.dao.MeetingDAO;
 import kr.co.meetup.web.vo.CrewMemberVO;
 
 public class ManagementAction implements Action {
@@ -27,6 +28,7 @@ public class ManagementAction implements Action {
 		
 		// DAO , VO 객체 생성
 		CrewDAO dao = new CrewDAO();
+		MeetingDAO mdao = new MeetingDAO();
 		CrewMemberVO vo = new CrewMemberVO();
 		
 		// 가입 승인
@@ -67,15 +69,14 @@ public class ManagementAction implements Action {
 			vo.setMemberNo(memberNo);
 			vo.setCrewMemberStatus(0);
 			dao.updateCrewMember(vo);
+			mdao.deleteMeetingMemberByCrewNoMemberNo(crewNo, memberNo);
 			dao.updateCrewAttend(crewNo, -1); // 모임 인원수 1 감소
 		} // 퇴장 
 		else if (requestType.equals("leave")) {
 			// crew_member 삭제
 			dao.deleteCrewMember(crewNo, memberNo);
 			// meeting_member 삭제
-			
-			// board 삭제처리 (status -> 2)
-			
+			mdao.deleteMeetingMemberByCrewNoMemberNo(crewNo, memberNo);
 			dao.updateCrewAttend(crewNo, -1); // 모임 인원수 1 감소
 			return "crew?cmd=detail&crewNo=" + crewNo;
 		}

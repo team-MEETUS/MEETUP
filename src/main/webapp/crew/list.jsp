@@ -25,7 +25,7 @@
 	        <li>
 	            <a href="crew?cmd=list">
 	            	<box-icon class="ctg-crew__icons" name="grid-alt"></box-icon>
-	            	전체상품
+	            	전체모임
 	            </a>
 	        </li>
 	        <c:forEach var="categoryBigVO" items="${categoryBigList}">
