@@ -119,6 +119,12 @@
 			} else if(isNaN(meetingMax)) {
 				alert("정원은 숫자만 입력 가능합니다");
 				event.preventDefault();
+			} else if(!meetingTime1) {
+				alert("시간을 입력해주세요");
+				event.preventDefault();
+			} else if(!meetingTime2) {
+				alert("분을 입력해주세요");
+				event.preventDefault();
 			}
 			
 			if(!meetingImg) {

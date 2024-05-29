@@ -124,7 +124,7 @@ public class MeetingDAO {
 	
 	// 정모 멤버 등록 (참여)
 	public void addMeetingMember (int meetingNo, int memberNo) {
-		SqlSession ss = factory.openSession(true);
+		SqlSession ss = factory.openSession(false);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("meetingNo", meetingNo);
@@ -138,12 +138,13 @@ public class MeetingDAO {
 		// 모임참석인원 update
 		ss.update("kr.co.meetup.meeting.updateMeetingAttend", map);
 		
+		ss.commit();
 		ss.close();
 	}
 	
 	// 정모 멤버 삭제 (나가기)
 	public void deleteMeetingMember (int meetingNo, int memberNo) {
-		SqlSession ss = factory.openSession(true);
+		SqlSession ss = factory.openSession(false);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("meetingNo", meetingNo);
@@ -154,6 +155,8 @@ public class MeetingDAO {
 		int cnt = ss.selectOne("kr.co.meetup.meeting.selectMeetingMemberCnt",map);
 		map.put("cnt", cnt);
 		ss.update("kr.co.meetup.meeting.updateMeetingAttend", map);
+		
+		ss.commit();
 		ss.close();
 	}
 	
@@ -202,14 +205,17 @@ public class MeetingDAO {
 	
 	// 모임에서 탈퇴하면 모임멤버 테이블에서도 컬럼 삭제
 	public void deleteMeetingMemberByCrewNoMemberNo (int crewNo, int memberNo) {
-		SqlSession ss = factory.openSession(true);
+		SqlSession ss = factory.openSession(false);
 		
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("crewNo", crewNo);
 		map.put("memberNo", memberNo);
 		
-		ss.selectList("kr.co.meetup.meeting.deleteMeetingMemberByCrewNoMemberNo", map);
+		ss.update("kr.co.meetup.meeting.updateMeetingMemberByCrewNoMemberNo", map);
 		
+		ss.delete("kr.co.meetup.meeting.deleteMeetingMemberByCrewNoMemberNo", map);
+		
+		ss.commit();
 		ss.close();
 	}
 }

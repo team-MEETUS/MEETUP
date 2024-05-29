@@ -111,9 +111,8 @@
 		 WHERE meetingNo = #{meetingNo};
 	</select>
 	
-	<!-- 모임에서 탈퇴하면 모임멤버 테이블에서도 컬럼 삭제 -->
-	<delete id="deleteMeetingMemberByCrewNoMemberNo" parameterType="Hashmap">
-	   
+	<!-- 모임에서 탈퇴하면 나가지는 모임참여인원 -1 -->
+	<update id="updateMeetingMemberByCrewNoMemberNo" parameterType="Hashmap">
 		UPDATE meeting
 		   SET meetingAttend = meetingAttend - 1
 		 WHERE meetingNo 
@@ -122,8 +121,12 @@
 					        FROM meeting_member mm 
 					       INNER JOIN meeting m   
 					          ON m.meetingNo = mm.meetingNo 
-					       WHERE m.crewNo = 16
-					         AND mm.memberNo = 14 ) t );
+					       WHERE m.crewNo = #{crewNo}
+					         AND mm.memberNo = #{memberNo} ) t );
+    </update>
+	
+	<!-- 모임에서 탈퇴하면 모임멤버 테이블에서도 컬럼 삭제 -->
+	<delete id="deleteMeetingMemberByCrewNoMemberNo" parameterType="Hashmap">
 		DELETE 
 		  FROM meeting_member 
 		 WHERE meetingMemberNo 
@@ -132,8 +135,7 @@
 					        FROM meeting_member mm 
 					       INNER JOIN meeting m   
 				   	          ON m.meetingNo = mm.meetingNo 
-					       WHERE m.crewNo = 16
-					         AND mm.memberNo = 14 ) t );
-
+					       WHERE m.crewNo = #{crewNo}
+					         AND mm.memberNo = #{memberNo} ) t );
 	</delete>
 </mapper>
