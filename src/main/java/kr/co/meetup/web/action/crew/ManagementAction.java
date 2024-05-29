@@ -78,7 +78,7 @@ public class ManagementAction implements Action {
 			// meeting_member 삭제
 			mdao.deleteMeetingMemberByCrewNoMemberNo(crewNo, memberNo);
 			dao.updateCrewAttend(crewNo, -1); // 모임 인원수 1 감소
-			return "crew?cmd=detail&crewNo=" + crewNo;
+			return "crew?cmd=list";
 		}
 		
 		return "crew?cmd=mnglist&crewNo=" + crewNo;
