@@ -32,28 +32,43 @@
 			<th>작성일시</th>
 			<td><fmt:formatDate value="${vo.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 		</tr>
+		
 		<tr>
 			<th>제목</th>
 			<td colspan="5">${vo.boardTitle}</td>
 		</tr>
+		
 		<tr>
 			<th>작성자</th>
 			<td colspan="5">${boardMemberVO.memberNickname}</td>
 		</tr>
+		
 		<tr>
 			<th>내용</th>
 			<td colspan="5">${vo.boardContent}</td>
 		</tr>
+		
+	
+		
 		<tr>
 			<td colspan="6">
 				<a href="board?cmd=listBoard&crewNo=${crewNo}" class="btn btn-primary">목록</a>
+				
 				<c:if test="${loginMember.memberNo == vo.memberNo}">
+					<!-- 게시글 수정 -->
 					<a href="board?cmd=updateBoard&bno=${vo.boardNo}&crewNo=${crewNo}" class="btn btn-success">수정</a>
 				</c:if>
 		
 				<c:if test="${loginMember.memberNo == vo.memberNo}">
-					<a href="#" onclick="deleteBoard(${vo.boardNo})" class="btn btn-danger">삭제</a>
+					<!-- 게시글 삭제 -->
+					<form action="board?cmd=deleteBoard" method="post">
+						<input type="hidden" name="boardNo" value="${boardNo}" />
+						<button class="deleteBoard" class="btn btn-danger" onclick="deleteBoard">삭제</button>
+					</form>
+					
 				</c:if>
+				
+				
 			</td>
 		</tr>
 	</table>
@@ -64,6 +79,7 @@
 		<h3>댓글 쓰기</h3>
 		<form action="board?cmd=addComment" method="post">
 			<input type="hidden" name="boardNo" value="${vo.boardNo}">
+			<input type="hidden" name="loginMemberNo" id="loginMemberNo" value="${loginMember.memberNo}" />
 			<div class="mb-3">
 				<label for="commentContent" class="form-label">내용</label>
 				<textarea class="form-control" id="commentContent" name="boardCommentContent" rows="3" required></textarea>
@@ -73,60 +89,81 @@
 	</div>
 
 	<!-- 댓글 목록 -->
-	<div class="mt-4">
-		<h3>댓글 목록</h3>
-		<c:forEach var="comment" items="${commentList}">
-		  <div class="card mb-3">
-		    <div class="card-body">
-		      <h5 class="card-title">${comment.memberNickname}</h5>
-		      <h6 class="card-subtitle mb-2 text-muted">${comment.createdAt}</h6>
-		      <p class="card-text" id="commentContent-${comment.boardCommentNo}">${comment.boardCommentContent}</p>
-		      
-		      <!-- 수정 폼 -->
-		      <form id= "editForm" action="board?cmd=updateComment" method="post" style="display: none;">
-		        <input type="hidden" name="boardNo" value="${vo.boardNo}">
-		        <input type="hidden" name="boardCommentNo" value="${comment.boardCommentNo}">
-		        <div class="mb-3">
-		          <textarea class="form-control" name="boardCommentContent" rows="3" required>${comment.boardCommentContent}</textarea>
-		        </div>
-		        <button type="submit" class="btn btn-success">수정 완료</button>
-		      </form>
-		      <!-- 수정 버튼 -->
-			  <button type="button" class="btn btn-primary" onclick="showEditForm(this)">수정</button>
-			    <!-- 삭제 버튼 -->
-                <button type="button" class="btn btn-danger" onclick="deleteComment(${comment.boardCommentNo})">삭제</button>
+<div class="mt-4">
+    <h3>댓글 목록</h3>
+    <c:forEach var="comment" items="${commentList}" varStatus="status">
+        <div class="card mb-3">
+            <div class="card-body">
+                <!-- 댓글 작성자의 닉네임 표시 -->
+                <h5 class="card-title">${commentAuthorMap[comment.boardCommentNo].memberNickname}</h5>
+                <!-- 댓글 작성일 표시 -->
+                <h6 class="card-subtitle mb-2 text-muted">${comment.createdAt}</h6>
+                <!-- 댓글 내용 표시 -->
+                <p class="card-text" id="commentContent-${comment.boardCommentNo}">${comment.boardCommentContent}</p>
+                
+                <!-- 수정 폼 -->
+                <form id="editForm" action="board?cmd=updateComment" method="post" style="display: none;">
+                    <input type="hidden" name="boardNo" value="${vo.boardNo}">
+                    <input type="hidden" name="boardCommentNo" value="${comment.boardCommentNo}">
+                    <div class="mb-3">
+                        <textarea class="form-control" name="boardCommentContent" rows="3" required>${comment.boardCommentContent}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">수정 완료</button>
+                </form>
+
+                
+                <!-- 수정 버튼 -->
+				<c:if test="${writerList[status.index].memberNo == loginMember.memberNo}">
+		            <button type="button" class="btn btn-primary" onclick="editform">수정</button>
+		            
+                <!-- 삭제 버튼 -->
+                	<form action="deleteComment" class="deleteComment"></form>
+                	<button type="submit" class="btn btn-danger">삭제</button>
+				</c:if>
+                
             </div>
         </div>
     </c:forEach>
 </div>
 
-
-
 <script>
-function deleteBoard(boardNo) {
-	  if (confirm("삭제하시겠습니까?")) {
-	    window.location.href = 'board?cmd=deleteBoard&bno=' + boardNo;
-	  }
-	}
 
-	function showEditForm(button) {
-        var editForm = document.getElementById('editForm');
-        editForm.style.display = 'block';
-        button.style.display = 'none';
-    }
+			$(document).ready(function() {
+			    // 게시글 삭제 버튼 클릭 시
+			    $('.deleteBoard').submit(function(e) {
+			        e.preventDefault();
+			        var confirmResult = confirm("정말 삭제하시겠습니까?");
+			        if (confirmResult) {
+			            this.submit();
+			        }
+			        
+			    });
+			});
 
-	function deleteComment(boardCommentNo) {
-		  if (confirm("삭제하시겠습니까?")) {
-		    window.location.href = 'board?cmd=deleteComment&bno=${vo.boardNo}&bcno=' + boardCommentNo;
-		  }
-		}
-</script>
-		   
-		    </div>
-		  </div>
-	</div>
-
-	
-	</div>
+			$(document).ready(function() {
+			// 댓글 삭제 버튼 클릭 시
+    		$('.deleteComment').submit(function(e) {
+       			e.preventDefault();
+        		var confirmResult = confirm("정말 삭제하시겠습니까?");
+        		if (confirmResult) {
+           		this.submit();
+        		}
+    	        
+    	    });
+    	});
+	  
+			$(document).ready(function() {
+	        // 댓글 수정 버튼 클릭 시
+	        $('.editform').onclick(function(e) {
+	            e.preventDefault();
+	            var editForm = $(this).closest('.editForm');
+	            editForm.show();
+	            $(this).hide();
+	        }
+	        
+		    });
+		});
+	</script>
+		
 </body>
 </html>

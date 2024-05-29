@@ -78,7 +78,7 @@ public class WriteBoardAction extends HttpServlet {
         vo.setBoardContent(boardContent);
         vo.setBoardHit(boardHit);
         vo.setBoardStatus(1);
-
+        System.out.println("vo : " + vo);
         // DB에 게시글 저장
         dao.addOneBoard(vo);
 

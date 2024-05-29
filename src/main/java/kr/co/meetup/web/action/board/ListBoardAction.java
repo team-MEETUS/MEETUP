@@ -27,8 +27,8 @@ public class ListBoardAction implements Action {
 		
 		//cn(crewNo) 값 가져오기
 		String cn =req.getParameter("crewNo");
-		int crewNo = 0;
 		
+		int crewNo = 0;
 		if(cn != null) {
 			crewNo =Integer.parseInt(cn);
 		} 
@@ -42,7 +42,7 @@ public class ListBoardAction implements Action {
 		//bc 값이 없으면 모임별 전체 게시글 출력
 			totalCount = dao.selectAllBoardCount(crewNo);
 		}
-
+		
 		// 한 페이지당 게시글 수 : 10
 		int recordPerPage = 10;
 		// 총 페이지 수
@@ -116,7 +116,7 @@ public class ListBoardAction implements Action {
 				memberList.add(mvo);
 			}
 		}
-		
+
 		// 해당 crew 멤버 정보 가져오기
 		CrewDAO cdao = new CrewDAO();
 		List<CrewMemberVO> crewMemberList = cdao.selectAllCrewMember(crewNo);
@@ -132,7 +132,6 @@ public class ListBoardAction implements Action {
 		req.setAttribute("memberList", memberList);
 		req.setAttribute("crewMemberList", crewMemberList);
 		req.setAttribute("crewNo", crewNo);
-		
 
 		return "board/listBoard.jsp";
 	}
