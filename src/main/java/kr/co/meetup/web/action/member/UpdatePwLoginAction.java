@@ -12,6 +12,7 @@ public class UpdatePwLoginAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		String url = "";
 		// 암호화 키
 		String key = "1234567890123456";
 		AES128 aes = new AES128(key);
@@ -22,12 +23,16 @@ public class UpdatePwLoginAction implements Action {
 		
 		HttpSession session = req.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("loginMember");
-		vo.setMemberPw(memberPw);
 		
-		MemberDAO dao = new MemberDAO();
-		dao.updateMemberPw(vo);
+		if(vo != null) {		
+			vo.setMemberPw(memberPw);
+			
+			MemberDAO dao = new MemberDAO();
+			dao.updateMemberPw(vo);
+			
+			session.invalidate();
+		}
 		
-		session.invalidate();
 		
 		return "member?cmd=login";
 	}

@@ -8,6 +8,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
 <link rel="stylesheet" href="./css/member/confirmPw.css" type="text/css" />
 <!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -15,6 +16,7 @@
 <body>
 	<div class="container">
 		<jsp:include page="../component/header.jsp"></jsp:include>
+		<script src="component/header.js"></script>
 		<section class="confirmPw">
 			<div class="confirmPw__box">
 				<!-- Form -->

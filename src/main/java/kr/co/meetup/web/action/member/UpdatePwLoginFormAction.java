@@ -2,14 +2,26 @@ package kr.co.meetup.web.action.member;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
+import kr.co.meetup.web.vo.MemberVO;
 
 public class UpdatePwLoginFormAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		String url = "";
 		
-		return "member/updatePwLogin.jsp";
+		HttpSession session = req.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("loginMember");
+		
+		if (vo != null) {
+			url = "member/updatePwLogin.jsp";
+		} else {
+			url = "member?cmd=login";
+		}
+		
+		return url;
 	}
 
 }

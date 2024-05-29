@@ -10,6 +10,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
 <link rel="stylesheet" href="./css/member/myPage.css" type="text/css" />
 <!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -17,6 +18,7 @@
 <body>
 	<div class="container">
 		<jsp:include page="../component/header.jsp"></jsp:include>
+		<script src="component/header.js"></script>
 		<section class="myPage">
 			<div class="myPage__box">
 				<h2 class="myPage__title">내 정보 수정</h2>
@@ -38,7 +40,7 @@
 						</div>
 						<div class="myPage__input-box">
 							<label for="memberIntro">한줄소개</label>
-							<input type="text" name="memberIntro" value="${loginMember.memberIntro}" />
+							<input type="text" name="memberIntro" value="${loginMember.memberIntro}" maxlength="20" />
 						</div>
 						<div class="myPage__input-box myPage__input-box--birth">
 							<label for="memberBirth">생년월일</label>
@@ -132,10 +134,22 @@
 		    var memberBirth3 = $("input[name='memberBirth3']").val();
 		    var memberGender = $("input[name='memberGender']:checked").val();
 			
-			if (!memberNickname || !memberBirth1 || !memberBirth2 || !memberBirth3 || !memberGender) {
-				alert("필수 항목을 모두 입력해주세요.");
+			if (!memberNickname) {
+				alert("닉네임은 필수 항목입니다.");
 				event.preventDefault();
-			} else {
+			} else if (!memberBirth1) {
+		    	alert("생년월일은 필수 항목입니다.");
+		        event.preventDefault();
+		    } else if (!memberBirth2) {
+		    	alert("생년월일은 필수 항목입니다.");
+		        event.preventDefault();
+		    } else if (!memberBirth3) {
+		    	alert("생년월일은 필수 항목입니다.");
+		        event.preventDefault();
+		    } else if (!memberGender) {
+		    	alert("성별을 선택해주세요.");
+		        event.preventDefault();
+		    } else {
 				combineBirthDate();
 			}
 		});

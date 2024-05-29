@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
 	    WHERE c.crewStatus = 1
 	    ORDER BY c.createdAt DESC
-	    LIMIT #{recordPerPage} OFFSET #{startNo};
+	    LIMIT #{recordPerPage} OFFSET #{startNo}
 	</select>
 	
 	<!-- 카테고리 별 모든 모임 조회 -->
@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
 	    WHERE c.categoryBigNo = #{ctg} AND c.crewStatus = 1
 	    ORDER BY c.createdAt DESC
-	    LIMIT #{recordPerPage} OFFSET #{startNo};
+	    LIMIT #{recordPerPage} OFFSET #{startNo}
 	</select>
 	
 	<!-- 지역 별 모든 모임 조회 -->
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
 	    WHERE c.geoCode = #{geoCode} AND c.crewStatus = 1
 	    ORDER BY c.createdAt DESC
-	    LIMIT #{recordPerPage} OFFSET #{startNo};
+	    LIMIT #{recordPerPage} OFFSET #{startNo}
 	</select>
 	
 	<!-- 지역&카테고리 별 모든 모임 조회 -->
@@ -49,7 +49,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
 	    WHERE c.geoCode = #{geoCode} AND c.categoryBigNo = #{ctg} AND c.crewStatus = 1
 	    ORDER BY c.createdAt DESC
-	    LIMIT #{recordPerPage} OFFSET #{startNo};
+	    LIMIT #{recordPerPage} OFFSET #{startNo}
+	</select>
+	
+	<!-- 사용자 별 전체 모임 조회 -->
+	<select id="selectAllCrewByMember" parameterType="int" resultType="CrewVO">
+	    SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	        LEFT JOIN crew_member cm ON c.crewNo = cm.crewNo
+	    WHERE c.crewStatus = 1 AND cm.memberNo = #{memberNo}
+	    ORDER BY c.createdAt DESC
+	</select>
+	
+	<!-- 사용자 별 찜한 모임 조회 -->
+	<select id="selectAllCrewLikeByMember" parameterType="int" resultType="CrewVO">
+	    SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	        LEFT JOIN crew_like cl ON c.crewNo = cl.crewNo
+	    WHERE c.crewStatus = 1 AND cl.memberNo = #{memberNo}
+	    ORDER BY c.createdAt DESC
 	</select>
 	
 	<!-- 한개 모임 조회 -->

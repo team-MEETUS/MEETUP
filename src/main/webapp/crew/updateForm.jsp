@@ -7,10 +7,14 @@
 <meta charset="UTF-8">
 <title>MEETUP</title>
 <!-- CSS -->
-<link rel="stylesheet" href="./css/reset.css"  type="text/css" />
-<link rel="stylesheet" href="./css/index.css"  type="text/css" />
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
 <!-- CDN -->
+<script src="component/header.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 <script>
 	window.onload = function() {
 		let btn = document.getElementById("btn");

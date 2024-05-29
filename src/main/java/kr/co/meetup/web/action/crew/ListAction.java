@@ -47,7 +47,7 @@ public class ListAction implements Action {
 		}
 		
 		// 한 페이지 당 모임 수
-		int recordPerPage = 4;
+		int recordPerPage = 8;
 		
 		// 총 페이지 수 
 		int totalPage = (totalCount % recordPerPage == 0) ? totalCount / recordPerPage : totalCount / recordPerPage + 1;

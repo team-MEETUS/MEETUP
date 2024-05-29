@@ -1,13 +1,13 @@
 @charset "UTF-8";
+.inner {
+	position : relative;
+	max-width: 1024px;
+	margin : 0 auto;
+}
 .subTitle {
 	font-size: 2rem;
-	margin-left: 4rem;
 	font-weight: bold;
-}
-
-.memberProfile--wrap {
-	width: 80%;
-	margin: 0 auto;
+	padding: 0 20px;
 }
 
 .memberProfile__profile-box {
@@ -51,5 +51,10 @@
 .memberProfile__profile--gender,
 .memberProfile__profile--geo {
 	font-size: 1.2rem;
+    color: #2F2F2F;
+}
+
+.memberProfile__profile--intro {
+	font-size: 1.4rem;
     color: #2F2F2F;
 }
