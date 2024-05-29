@@ -191,11 +191,25 @@ public class MeetingDAO {
 		return count;
 	}
 
+	// crewNo로 정모참여인원 조회 (meetingMember, member, meeting JOIN)
 	public List<MeetingMemberVO> selectAllMeetingMemberByCrewNo(int crewNo) {
 		SqlSession ss = factory.openSession(true);
 		
 		List<MeetingMemberVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingMemberByCrewNo", crewNo);
 		
 		return list;
+	}
+	
+	// 모임에서 탈퇴하면 모임멤버 테이블에서도 컬럼 삭제
+	public void deleteMeetingMemberByCrewNoMemberNo (int crewNo, int memberNo) {
+		SqlSession ss = factory.openSession(true);
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("crewNo", crewNo);
+		map.put("memberNo", memberNo);
+		
+		ss.selectList("kr.co.meetup.meeting.deleteMeetingMemberByCrewNoMemberNo", map);
+		
+		ss.close();
 	}
 }
