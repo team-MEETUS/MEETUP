@@ -75,7 +75,6 @@
 	<insert id="addOneBoard" parameterType="BoardVO">
 		INSERT INTO board(crewNo, memberNo, boardCategoryNo, boardTitle, boardContent, boardHit, boardStatus )
 		VALUES(#{crewNo}, #{memberNo}, #{boardCategoryNo}, #{boardTitle}, #{boardContent}, #{boardHit}, #{boardStatus} )
-		
 	</insert>
 
 	
@@ -104,8 +103,14 @@
 		
 	<!-- 댓글 작성 -->
 	<insert id="addOneComment" parameterType="BoardCommentVO">
-		INSERT INTO board_comment(boardNo, memberNo, boardCommentContent, boardCommentStatus)
-		VALUES(#{boardNo}, #{memberNo}, #{boardCommentContent},#{boardCommentStatus})
+		INSERT INTO board_comment(boardCommentNo, boardNo, memberNo, boardCommentPno, boardCommentContent, boardCommentStatus, createdAt)
+		VALUES(DEFAULT, #{boardNo}, #{memberNo}, DEFAULT, #{boardCommentContent}, DEFAULT, DEFAULT)
+	</insert>
+	
+	<!-- 대댓글 작성 -->
+	<insert id="addOneReplyComment" parameterType="int">
+    	INSERT INTO board_comment(boardNo, memberNo, boardCommentPno, boardCommentContent, boardCommentStatus)
+    	VALUES(#{boardNo}, #{memberNo}, #{boardCommentNo}, #{boardCommentContent}, #{boardCommentStatus})
 	</insert>
 	
 	<!-- 댓글 목록 조회 -->

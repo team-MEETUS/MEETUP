@@ -45,7 +45,7 @@
 			<table class="table table-striped">
 				<tr>
 					<th>게시글 번호</th>
-					<th>회원 번호</th>
+					<th>작성자</th>
 					<th>제목</th>
 					<th>조회수</th>
 					<th>작성일</th>
@@ -55,7 +55,7 @@
 						<td>${BoardVO.boardNo}</td>
 						<td>${memberList[status.index].memberNickname}</td>
 						<td>
-							<a href="board?cmd=detailboard&boardNo=${BoardVO.boardNo}&crewNo=${crewNo}" class="boardDetail">${BoardVO.boardTitle}</a>
+							<a href="board?cmd=detailboard&boardNo=${BoardVO.boardNo}&crewNo=${crewNo}&memberNo=${memberList[status.index].memberNo}" class="boardDetail">${BoardVO.boardTitle}</a>
 						</td>
 						<td>${BoardVO.boardHit}</td>
 						<td><fmt:formatDate value="${BoardVO.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>

@@ -32,13 +32,9 @@ public class DeleteBoardCommentAction implements Action {
 		// 현재 로그인한 사용자의 회원번호와 댓글 작성자의 회원번호 비교
 		if (mvo.getMemberNo() == commentWriterNo) {
 			dao.deleteOneBoardComment(boardCommentNo);
-			// 삭제 완료 후 게시글 페이지로 리다이렉트
-			return "redirect:board?cmd=detailboard&boardsNo=" + boardNo;
 
-		} else {
-			// 작성자만 삭제 가능하다는 메시지 출력
-			req.setAttribute("errorMessage", "작성자만 댓글을 삭제할 수 있습니다.");
-			return "redirect:board?cmd=detailboard&boardsNo=" + boardNo;
 		}
+		// 삭제 완료 후 게시글 페이지로 리다이렉트
+		return "redirect:board?cmd=detailboard&boardNo=" + boardNo;
 	}
 }

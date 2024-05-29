@@ -135,9 +135,22 @@ public class BoardDAO {
 	
 	//댓글 작성
 	public void addOneComment(BoardCommentVO vo) {
-		SqlSession ss = factory.openSession(true);
-		ss.insert("kr.co.meetup.web.board.addOneComment", vo);
-		ss.close();
+	    SqlSession ss = factory.openSession(true);
+	    if (vo.getBoardCommentPno() == 0) {
+	        ss.insert("kr.co.meetup.web.board.addOneComment", vo);
+	        System.out.println("xml:" + vo);
+	    } else {
+	        ss.insert("kr.co.meetup.web.board.addOneReplyComment", vo);
+	    }
+	    ss.close();
+	}
+	
+	//대댓글 추가
+	public List<BoardCommentVO> addOneReplyComment(int boardCommentNo) {
+	    SqlSession ss = factory.openSession();
+	    List<BoardCommentVO> replyComments = ss.selectList("kr.co.meetup.web.board.addOneReplyComment", boardCommentNo);
+	    ss.close();
+	    return replyComments;
 	}
 	
 	//댓글 목록 조회
