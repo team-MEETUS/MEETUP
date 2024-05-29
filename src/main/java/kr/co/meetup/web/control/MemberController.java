@@ -22,7 +22,7 @@ import kr.co.meetup.web.action.member.FindPasswordFormAction;
 import kr.co.meetup.web.action.member.LoginAction;
 import kr.co.meetup.web.action.member.LoginFormAction;
 import kr.co.meetup.web.action.member.LogoutAction;
-import kr.co.meetup.web.action.member.MainAction;
+import kr.co.meetup.web.action.MainAction;
 import kr.co.meetup.web.action.member.MemberPhoneCheckAction;
 import kr.co.meetup.web.action.member.MemberProfileAction;
 import kr.co.meetup.web.action.member.MyMenuAction;
