@@ -24,10 +24,14 @@ public class ConfirmPwAction implements Action {
 		HttpSession session = req.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("loginMember");
 		
-		if (confirmPw.equals(vo.getMemberPw())) {
-			url = "member?cmd=updatePwLogin";
+		if (vo == null) {
+			url = "member?cmd=login";
 		} else {
-			url = "member?cmd=confirmPw";
+			if (confirmPw.equals(vo.getMemberPw())) {
+				url = "member?cmd=updatePwLogin";
+			} else {
+				url = "member?cmd=confirmPw";
+			}
 		}
 		
 		return url;

@@ -14,6 +14,7 @@ public class UpdateFormAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		String url = "";
 		HttpSession session = req.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("loginMember");
 		if(mvo != null) {
@@ -23,8 +24,12 @@ public class UpdateFormAction implements Action {
 			
 			req.setAttribute("GeoVO", gvo);
 			req.setAttribute("geoCities", geoCities);
+			
+			url = "member/myPage.jsp";
+		} else {
+			url = "member?cmd=login";
 		}
-		return "member/myPage.jsp";
+		return url;
 	}
 
 }
