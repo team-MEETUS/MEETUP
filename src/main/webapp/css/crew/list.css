@@ -1,0 +1,131 @@
+/* 카테고리 */
+.ctg-crew__items {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  gap: 140px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+.ctg-crew__items li {
+  text-align: center;
+}
+.ctg-crew__items li a {
+  text-decoration: none;
+  color: black;
+  display: block;
+  white-space: nowrap;
+}
+.ctg-crew__icons {
+  display: block;
+  margin: 5px auto;
+  text-align: center;
+}
+/* 등록 버튼 */
+.d-flex {
+  margin: 20px 0;
+}
+/* 모임 */
+.card-crew {
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+  transition: box-shadow 0.3s ease; /* 부드러운 전환 효과 추가 */
+  line-height: 20px;
+}
+.card-crew:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 호버 시 더 진한 그림자 */
+}
+.crew-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  margin-right: 20px;
+  object-fit: cover;
+}
+.crew-details {
+  flex-direction: column;
+  gap: 10px;
+}
+.crew-category {
+  border-radius: 10px;
+  background-color: var(--orange-4);
+  padding: 0 10px;
+  display: inline-block;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+.crew-name {
+  margin-top: 10px;
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.crew-intro,
+.crew-geo {
+  margin-bottom: 5px;
+}
+.crew-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* margin-top: 30px; */
+
+  .crew-item {
+    flex: 0 0 calc(50% - 10px); /* 50% 너비에 간격을 위한 여유를 줌 */
+    box-sizing: border-box;
+  }
+
+  .crew-item a {
+    text-decoration: none;
+    color: black;
+    display: block;
+  }
+}
+
+/* 등록 버튼 */
+.meeting-button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.meeting-button none {
+	margin-bottom: 10px;	
+}
+
+.btn-main {
+  border-radius: 10px;
+  background-color: var(--orange-4);
+  padding: 10px 15px;
+  display: inline-block;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.btn-main:hover {
+  background-color: var(--orange-5);
+}
+
+/* 페이지 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding-left: 0;
+  list-style: none;
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  .page-link {
+    padding: 10px;
+  }
+}
