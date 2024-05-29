@@ -4,17 +4,23 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.dao.CrewDAO;
 import kr.co.meetup.web.vo.CategoryBigVO;
 import kr.co.meetup.web.vo.CrewVO;
+import kr.co.meetup.web.vo.MemberVO;
 
 public class ListAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		
-CrewDAO dao = new CrewDAO();
+		// 현재 로그인한 유저 가져오기
+		HttpSession session = req.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("loginMember");
+		
+		CrewDAO dao = new CrewDAO();
 		
 		// 전체 카테고리 리스트 가져오기
 		List<CategoryBigVO> categoryBigList = dao.selectAllCategoryBig();
@@ -22,11 +28,21 @@ CrewDAO dao = new CrewDAO();
 		// 카테고리 값 가져오기
 		String ctg = req.getParameter("ctg");
 		
-		// 카테고리 값이 있으면 해당 카테고리의 모임리스트 & 수 가져오기
-		int totalCount;
+		// 형변환 
+		int categoryBigNo = 0;
 		if (ctg != null) {
-			totalCount = dao.selectAllCrewByCategoryCnt(Integer.parseInt(ctg));
-		} else {
+			categoryBigNo = Integer.parseInt(ctg);
+		}
+		
+		// 유저 로그인 유무 & 카테고리 값에 따른 모임 수 조회
+		int totalCount;
+		if (mvo != null && ctg != null) { 			// 회원 O && 카테고리 O
+			totalCount = dao.selectAllCrewCntByGeoCategory(mvo.getGeoCode(), categoryBigNo);
+		} else if (mvo != null && ctg == null) {		// 회원 O && 카테고리 X
+			totalCount = dao.selectAllCrewCntByGeo(mvo.getGeoCode());
+		} else if (mvo == null && ctg != null) {		// 회원 X && 카테고리 O
+			totalCount = dao.selectAllCrewCntByCategory(categoryBigNo);
+		} else {										// 회원 X && 카테고리 X
 			totalCount = dao.selectAllCrewCnt();
 		}
 		
@@ -71,11 +87,21 @@ CrewDAO dao = new CrewDAO();
 		
 		// 모임 리스트 가져오기
 		List<CrewVO> crewList;
-		if (ctg != null) {			
-			crewList = dao.selectCrewByCategory(Integer.parseInt(ctg), startNo, recordPerPage);	// 카테고리 별
-		} else {						
-			crewList = dao.selectAll(startNo, recordPerPage);									// 전체
+		if (mvo != null && ctg != null) { 			// 회원 O && 카테고리 O
+			crewList = dao.selectAllCrewByGeoCategory(mvo.getGeoCode(), categoryBigNo, startNo, recordPerPage);
+		} else if (mvo != null && ctg == null) {		// 회원 O && 카테고리 X
+			crewList = dao.selectAllCrewByGeo(mvo.getGeoCode(), startNo, recordPerPage);
+		} else if (mvo == null && ctg != null) {		// 회원 X && 카테고리 O
+			crewList = dao.selectAllCrewByCategory(categoryBigNo, startNo, recordPerPage);
+		} else {										// 회원 X && 카테고리 X
+			crewList = dao.selectAllCrew(startNo, recordPerPage);
 		}
+		
+		
+		
+		
+		
+		
 		
 		// attribute 에 추가
 		req.setAttribute("crewList", crewList);

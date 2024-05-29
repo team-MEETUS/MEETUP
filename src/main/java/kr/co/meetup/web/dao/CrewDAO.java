@@ -38,12 +38,49 @@ public class CrewDAO {
 	}
 	
 	// 전체 모임 조회
-	public List<CrewVO> selectAll(int startNo, int recordPerPage) {
+	public List<CrewVO> selectAllCrew(int startNo, int recordPerPage) {
 		SqlSession ss = factory.openSession(true);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("startNo", startNo);
 		map.put("recordPerPage", recordPerPage);
 		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrew", map);
+		ss.close();
+		return list;
+	}
+	
+	// 카테고리 별 전체 모임 조회
+	public List<CrewVO> selectAllCrewByCategory(int ctg, int startNo, int recordPerPage) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("ctg", ctg);
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
+		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrewByCategory", map);
+		ss.close();
+		return list;
+	}
+	
+	// 지역 별 전체 모임 조회
+	public List<CrewVO> selectAllCrewByGeo(int geoCode, int startNo, int recordPerPage) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("geoCode", geoCode);
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
+		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrewByGeo", map);
+		ss.close();
+		return list;
+	}
+	
+	// 지역&카테고리 별 전체 모임 조회
+	public List<CrewVO> selectAllCrewByGeoCategory(int geoCode, int ctg, int startNo, int recordPerPage) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("geoCode", geoCode);
+		map.put("ctg", ctg);
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
+		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrewByGeoCategory", map);
 		ss.close();
 		return list;
 	}
@@ -73,42 +110,6 @@ public class CrewDAO {
 		CrewMemberVO vo = ss.selectOne("kr.co.meetup.crew.selectCrewMemberByCrewNoMemberNo", map);
 		ss.close();
 		return vo;
-	}
-	
-	// 카테고리 별 전체 모임 조회
-	public List<CrewVO> selectCrewByCategory(int ctg, int startNo, int recordPerPage) {
-		SqlSession ss = factory.openSession(true);
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("ctg", ctg);
-		map.put("startNo", startNo);
-		map.put("recordPerPage", recordPerPage);
-		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectCrewByCategory", map);
-		ss.close();
-		return list;
-	}
-	
-	// 전체 대 카테고리 조회
-	public List<CategoryBigVO> selectAllCategoryBig() {
-		SqlSession ss = factory.openSession(true);
-		List<CategoryBigVO> list = ss.selectList("kr.co.meetup.crew.selectAllCategoryBig");
-		ss.close();
-		return list;
-	}
-	
-	// 전체 소 카테고리 조회
-	public List<CategorySmallVO> selectAllCategorySmall() {
-		SqlSession ss = factory.openSession(true);
-		List<CategorySmallVO> list = ss.selectList("kr.co.meetup.crew.selectAllCategorySmall");
-		ss.close();
-		return list;
-	}
-	
-	// 전체 지역 조회
-	public List<GeoVO> selectAllGeo() {
-		SqlSession ss = factory.openSession(true);
-		List<GeoVO> list = ss.selectList("kr.co.meetup.crew.selectAllGeo");
-		ss.close();
-		return list;
 	}
 	
 	// 모임 등록 
@@ -182,9 +183,28 @@ public class CrewDAO {
 	}
 	
 	// 카테고리 별 전체 모임 수 조회
-	public int selectAllCrewByCategoryCnt(int categoryBigNo) {
+	public int selectAllCrewCntByCategory(int categoryBigNo) {
 		SqlSession ss = factory.openSession(true);
-		int cnt = ss.selectOne("kr.co.meetup.crew.selectCrewByCategoryCnt", categoryBigNo);
+		int cnt = ss.selectOne("kr.co.meetup.crew.selectAllCrewCntByCategory", categoryBigNo);
+		ss.close();
+		return cnt;
+	}
+	
+	// 지역 별 전체 모임 수 조회
+	public int selectAllCrewCntByGeo(int geoCode) {
+		SqlSession ss = factory.openSession(true);
+		int cnt = ss.selectOne("kr.co.meetup.crew.selectAllCrewCntByGeo", geoCode);
+		ss.close();
+		return cnt;
+	}
+	
+	// 지역 & 카테고리 별 전체 모임 수 조회
+	public int selectAllCrewCntByGeoCategory(int geoCode, int categoryBigNo) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("geoCode", geoCode);
+		map.put("categoryBigNo", categoryBigNo);
+		int cnt = ss.selectOne("kr.co.meetup.crew.selectAllCrewCntByGeoCategory", map);
 		ss.close();
 		return cnt;
 	}
@@ -213,5 +233,28 @@ public class CrewDAO {
 		ss.close();
 	}
 	
+	// 전체 대 카테고리 조회
+	public List<CategoryBigVO> selectAllCategoryBig() {
+		SqlSession ss = factory.openSession(true);
+		List<CategoryBigVO> list = ss.selectList("kr.co.meetup.crew.selectAllCategoryBig");
+		ss.close();
+		return list;
+	}
+	
+	// 전체 소 카테고리 조회
+	public List<CategorySmallVO> selectAllCategorySmall() {
+		SqlSession ss = factory.openSession(true);
+		List<CategorySmallVO> list = ss.selectList("kr.co.meetup.crew.selectAllCategorySmall");
+		ss.close();
+		return list;
+	}
+	
+	// 전체 지역 조회
+	public List<GeoVO> selectAllGeo() {
+		SqlSession ss = factory.openSession(true);
+		List<GeoVO> list = ss.selectList("kr.co.meetup.crew.selectAllGeo");
+		ss.close();
+		return list;
+	}
 	
 }
