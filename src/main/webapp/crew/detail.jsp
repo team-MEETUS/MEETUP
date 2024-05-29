@@ -377,11 +377,11 @@
 						<a href="member?cmd=login" class="crew-alert" data-message="로그인 후 이용 가능합니다." ><box-icon class="like-icon" name='heart' ></box-icon></a>
 					</c:if>
 					<c:if test="${not empty sessionScope.loginMember}">
-						<a href="crew?cmd=like&requestType=add&crewNo=${crewVO.crewNo}" ><box-icon class="like-icon" name='heart' ></box-icon></a>
+						<a href="crew?cmd=like&requestType=add&crewNo=${crewVO.crewNo}" ><box-icon color='var(--orange-3)' class="like-icon" name='heart' ></box-icon></a>
 					</c:if>
 				</c:if>
 				<c:if test="${isValidCrewLike eq 1}">
-					<a href="crew?cmd=like&requestType=delete&crewNo=${crewVO.crewNo}" ><box-icon class="like-icon" name='heart' type='solid' ></box-icon></a>
+					<a href="crew?cmd=like&requestType=delete&crewNo=${crewVO.crewNo}" ><box-icon color='var(--orange-3)' class="like-icon" name='heart' type='solid' ></box-icon></a>
 				</c:if>
 			</div>
 		</div>
