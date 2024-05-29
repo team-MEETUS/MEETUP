@@ -98,10 +98,14 @@ public class MeetingDAO {
 	}
 	
 	// 정모 모집 등록
-	public void addMeeting(MeetingVO vo) {
+	public void addMeeting(MeetingVO vo, int memberNo) {
 		SqlSession ss = factory.openSession(true);
 		
 		ss.insert("kr.co.meetup.meeting.addMeeting", vo);
+		System.out.println("meetingNo : " + vo.getMeetingNo());
+		int generatedMeetingNo = vo.getMeetingNo();
+		
+		addMeetingMember(generatedMeetingNo, memberNo);
 		
 		ss.close();
 	}

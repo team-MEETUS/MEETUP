@@ -23,7 +23,7 @@
 	<div class="container">
 		<form id="writeForm" action="meetingUpload" method="post" enctype="multipart/form-data">
 												<!-- crewNo 받아오기 -->
-			<input type="hidden" name="crewNo" value="<%= request.getAttribute("crewNo") %>" />
+			<input type="hidden" name="crewNo" value="${crewNo}" />
 			<table class="table table-striped">
 				<tr>
 					<th>정모명</th>
@@ -51,7 +51,6 @@
 					<th>정원</th>
 					<td colspan="2"><input type="text" name="meetingMax" /></td>
 				</tr>
-				<!-- 이미지 받아오기 -->
 				<tr>
 					<th>정모 메인 이미지</th>
 					<td colspan="2"><input type="file" name="meetingImg"/></td>
