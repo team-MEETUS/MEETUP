@@ -19,12 +19,12 @@
 	<div class="container">
 		<jsp:include page="../component/header.jsp"></jsp:include>
 		<script src="component/header.js"></script>
-		<section class="subCommon">
+		<%-- <section class="subCommon">
 			<!-- subCommon -->
 			<div class="inner">
 				<h2 class="subTitle">${otherMember.memberNickname} 프로필</h2>
 			</div>
-		</section>
+		</section> --%>
 		<section class="subContents">
 			<div class="inner">
 				<div class="memberProfile--wrap">
@@ -40,6 +40,9 @@
 						</div>
 					</div>
 					<hr />
+				</div>
+				<div class="crew-title">
+					<h3 class="crew-title-contents">참여한 모임</h3>
 				</div>
 				<!-- 참여한 모임 -->
 				<div class="crew-container" id="participatedCrews"">
