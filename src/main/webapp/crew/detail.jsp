@@ -209,26 +209,105 @@
 	    transition: box-shadow 0.2s;
 	} */
 	
-	/* 정모 박스 */
+	/* 정모 */
+	.meetingOne-container {
+		width: 500px;
+		display: inline-block;
+	}
+	.meeting-header {
+		font-size: 20px;
+		font-weight: bold;
+		margin-bottom: -30px;
+	}
+	
+	.meeting-header>div {
+		margin-bottom: 10px;
+	}
+	
 	.meetingOne {
-	  width: 50%;
+	  width: 380px;
 	  border: 1px solid #ccc;
-	  border-radius: 8px;
-	  padding: 20px;
+	  border-radius: 20px;
+	  padding: 20px 40px;
 	  text-align: left;
 	  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	  display: inline-block;
 	  margin: 10px;
+	  background-color: rgb(230, 230, 230);
+	  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+	  transition: box-shadow 0.3s ease; /* 부드러운 전환 효과 추가 */
+	  line-height: 20px;
 	}
 	
-	.meetingOne>img {
-		width: 100px;
-		height: 100px;
+	.meetingOne:hover {
+	    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 호버 시 더 진한 그림자 */
+	}
+	
+	.meeting-info>img {
+		width: 160px;
+		height: 120px;
 	}
 	
 	.meeting-info {
 		display: flex;
-		font-size: 15px;
+		font-size: 17px;
+	}
+	
+	.meeting-info>div>div {
+		margin: 7px 7px;
+	}
+	
+	.meeting-icon {
+		margin-left: 10px;
+		position: relative; /* 상대 위치 설정 */
+    	display: inline-block; /* 내부 요소들을 인라인 블록으로 설정 */
+	}
+	
+	.meeting-icon>span>a {
+		width: 30px;
+		height: 30px;
+	}
+	
+	.list-icon {
+		position: absolute; /* 절대 위치 설정으로 다른 요소 위에 올라가게 함 */
+	    top: 0; /* 상단에서 0px의 위치에 배치 */
+	    left: 355px; /* 왼쪽에서 0px의 위치에 배치 */
+	    z-index: 1; /* 다른 요소보다 위에 오게 설정 */
+	}
+	
+	.meeting-icon-img {
+	    position: relative; /* 상대 위치 설정 */
+    	z-index: 0; /* 기본적으로 이 요소가 더 아래에 위치하도록 설정 */
+	}
+	
+	.meeting-icon>span>a:nth-child(7)>span>img {
+		opacity: 0.5; /* 투명도 설정 (0 완전 투명, 1 완전 불투명) */
+	}
+	.meeting-icon>span>a:nth-child(7)>span>box-icon {
+		opacity: 0.5; /* 투명도 설정 (0 완전 투명, 1 완전 불투명) */
+	}
+	.meeting-insert-btn{
+        border-radius: 15px;
+        background-color: #FB9B00;
+        padding: 10px;
+        display: inline-block;
+        margin: 15px 0;
+        color: white;
+        position: relative;
+        left: 930px;
+        bottom: 45px;
+	}
+	.meeting-attendExit-btn {
+		width: 50px;
+		text-align: center;
+        border-radius: 15px;
+        background-color: #FB9B00;
+        padding: 10px;
+        display: inline-block;
+        color: white;
+        position: relative;
+        left: 309px;
+        bottom: 20px;
 	}
 </style>
 </head>
@@ -348,22 +427,26 @@
 	
 	<!-- 정모 -->
 	<div class="meeting-container">
-		<p class="meeting-logo">정모</p>
+		<p class="meeting-logo">정기모임</p>
+		<p>
 		<c:if test="${role eq 'leader' || role eq 'adminMember'}">
-			<a href="meeting?cmd=write&crewNo=${crewVO.crewNo}">정모 등록하기</a>
+			<a class="meeting-insert-btn" href="meeting?cmd=write&crewNo=${crewVO.crewNo}">정모 등록하기</a>
 		</c:if>
+		</p>
 		
-		<div>
-		
-		<c:forEach var="meetingVO" items="${meetingList}" varStatus="status">
+		<c:forEach var="meetingVO" items="${meetingList}">
+		<div class="meetingOne-container">
+			<!-- 오늘 날짜 생성 및 데이터 가공 -->
 			<c:set var="today" value="<%=new java.util.Date() %>"/>
 			<fmt:formatDate var="nowDay" value="${today}" pattern="yyyy-MM-dd hh:mm:ss" />
 			<fmt:parseDate value="${nowDay}" var="pdToday" pattern="yyyy-MM-dd"/>
 			<fmt:parseNumber value="${pdToday.time / (1000*60*60*24)}" integerOnly="true" var="numToday"></fmt:parseNumber>
 			
+			<!-- meetingDate 데이터 가공 -->
 			<c:set var="meetingDate" value="${meetingVO.meetingDate}"/>
 			<fmt:parseDate value="${meetingDate}" var="pdMeetingDate" pattern="yyyy-MM-dd"/>
 			<fmt:parseNumber value="${pdMeetingDate.time / (1000*60*60*24)}" integerOnly="true" var="numMeetingDate"></fmt:parseNumber>
+			
 			<c:set var="isMeetingMember" value="false" />
 			
 			<!-- 정모와 정모참여 정모no가 같은지 확인, 정모에 참여한 멤버가 로그인한 유저인지 확인 -->
@@ -376,23 +459,30 @@
 			<!-- for문을 돌면서 정모정보를 계속 뿌려주는 div -->
 			<div class="meetingOne">
 				<div style="display: inline-block">
-					<span><fmt:formatDate value="${meetingDate}" pattern="MM/dd (E)"/></span> 
-					<span style=color:red>D-${numMeetingDate - numToday}</span>
-					<p>${meetingVO.meetingName}</p>
+					<div class="meeting-header">
+						<div>
+							<span style="margin-right: 10px;"><fmt:formatDate value="${meetingDate}" pattern="MM/dd (E)"/></span> 
+							<span style=color:red>D-${numMeetingDate - numToday}</span>						
+						</div>
+						<p>${meetingVO.meetingName}</p>					
+					</div>
 					<c:if test="${role eq 'crewMember' || role eq 'adminMember' || role eq 'leader'}">
 					<c:choose>
 						<c:when test="${not empty meetingMemberList}">
 							<c:choose>
-								<c:when test="${isMeetingMember}" >
-									<span><a href="meetingExit?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">정모 나가기</a></span>
+								<c:when test="${isMeetingMember && meetingVO.memberNo eq MemberVO.memberNo}">
+									<span><a class="meeting-attendExit-btn" href="meetingDelete?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">삭제</a></span>
+								</c:when>
+								<c:when test="${isMeetingMember}">
+									<span><a class="meeting-attendExit-btn" href="meetingExit?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">나가기</a></span>
 				        		</c:when>
 				        		<c:otherwise>
-				        			<span><a href="meetingAttend?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">정모 참석하기</a></span>
+				        			<span><a class="meeting-attendExit-btn" href="meetingAttend?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
 				        		</c:otherwise>      	
 		        			</c:choose>
 		        		</c:when>
 		        		<c:otherwise>
-		        			<span><a href="meetingAttend?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">정모 참석하기</a></span>
+		        			<span><a class="meeting-attendExit-btn" href="meetingAttend?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
 		        		</c:otherwise>
 	        		</c:choose>
 					</c:if>
@@ -400,36 +490,46 @@
 
 				<br />
 				<div class="meeting-info">
-					<img style="width: 100px; height:100px;" src="upload/${meetingVO.meetingSaveImg}" alt="" />
+					<img src="upload/${meetingVO.meetingSaveImg}" alt="" />
 					<div>
 						<div>일시 <fmt:formatDate value="${meetingDate}" pattern="MM/dd (E) aa hh:mm "/></div>
 						<div>위치 ${meetingVO.meetingLoc}</div>
-						<div>비용 ${meetingVO.meetingPrice}원</div>
-						<div>참석 ${meetingVO.meetingAttend}/${meetingVO.meetingMax} (${meetingVO.meetingMax-meetingVO.meetingAttend}명남음) </div>
+						<c:set var="won" value="원"/>
+						<div>비용 ${meetingVO.meetingPrice == 0 ? '없음' : meetingVO.meetingPrice += won}</div>
+						<div>참석 ${meetingVO.meetingAttend}/${meetingVO.meetingMax} (${meetingVO.meetingMax-meetingVO.meetingAttend}자리 남음) </div>
 					</div>
 				</div>
 			</div>
 			
-			<div>
+			<c:set var="i" value="${1}"/>
+			
+			<div class="meeting-icon">
 			<!-- 박스 밑의 사용자 이미지아이콘 띄우기 -->
-			<c:forEach var="meetingMemberVO" items="${meetingMemberList}">
-					<span>
-						<c:if test="${meetingMemberVO.meetingNo == meetingVO.meetingNo}" >
+				<span>
+					<c:forEach var="meetingMemberVO" items="${meetingMemberList}" varStatus="meetingMemberStatus">
+						<c:if test="${meetingMemberVO.meetingNo == meetingVO.meetingNo && i <= 7}" >
 							<a href="" style="text-decoration: none;"><span>
-								<c:if test="${empty meetingMemberVO.memberSaveImg}">
-									<box-icon type='solid' name='user-circle' style="margin-right: 5px"></box-icon>
-								</c:if>
-								<c:if test="${not empty meetingMemberVO.memberSaveImg}">
-									<img class="crew-member-img" src="upload/${meetingMemberVO.memberSaveImg}" style="margin-right: 5px" />
-								</c:if>
+							<c:if test="${empty meetingMemberVO.memberSaveImg}">
+								<box-icon type='solid' name='user-circle' style="margin-right: 5px;"></box-icon>
+							</c:if>
+							<c:if test="${not empty meetingMemberVO.memberSaveImg}">
+								<img class="crew-member-img" src="upload/${meetingMemberVO.memberSaveImg}" style="margin-right: 5px;" />
+							</c:if>
 							</span></a>
+							
+							<c:set var="i" value="${i+1}"/>
 						</c:if>
-					</span>
-			</c:forEach>
+					</c:forEach>
+					<c:if test="${i == 8}">
+						<a href="" class="list-icon" style="text-decoration: none; ">
+							<box-icon class="crew-member-img" name='dots-horizontal-rounded'></box-icon>
+						</a>
+					</c:if>
+				</span>
 			</div>
+		</div>
 		</c:forEach>
 		
-		</div>
 	</div>
 	
 	
