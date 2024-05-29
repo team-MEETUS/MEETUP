@@ -24,12 +24,11 @@ public class updateBoardAction extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		
-		
+
 		// 현재 로그인한 유저 정보 가져오기
 		HttpSession session = req.getSession();
 		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
-		
+
 		// 파일 경로 받아오기
 		String saveDir = req.getServletContext().getRealPath("/upload");
 
@@ -38,60 +37,58 @@ public class updateBoardAction extends HttpServlet {
 
 		// MultipartRequest 객체 생성
 		MultipartRequest mr = new MultipartRequest(req, saveDir, maxFileSize, "UTF-8", new DefaultFileRenamePolicy());
-				
-		 // MultipartRequest 객체로부터 파라미터 값 가져오기
+
+		// MultipartRequest 객체로부터 파라미터 값 가져오기
 		String b = mr.getParameter("boardNo");
 		int boardNo = 0;
-		if(b != null) {
+		if (b != null) {
 			boardNo = Integer.parseInt(b);
 		}
-        String cno = mr.getParameter("crewNo");
-        // 선택된 boardCategoryNo 가져오기
-        String selectedBoardCategoryNo = mr.getParameter("boardCategoryNo");
-        int boardCategoryNo = 0;
-        if (selectedBoardCategoryNo != null && !selectedBoardCategoryNo.isEmpty()) {
-            boardCategoryNo = Integer.parseInt(selectedBoardCategoryNo);
-        }
-        String boardTitle = mr.getParameter("boardTitle");
-        String boardContent = mr.getParameter("boardContent");
-        String bh = mr.getParameter("boardHit");
-        String bs = mr.getParameter("boardStatus");
+		String cno = mr.getParameter("crewNo");
+		// 선택된 boardCategoryNo 가져오기
+		String selectedBoardCategoryNo = mr.getParameter("boardCategoryNo");
+		int boardCategoryNo = 0;
+		if (selectedBoardCategoryNo != null && !selectedBoardCategoryNo.isEmpty()) {
+			boardCategoryNo = Integer.parseInt(selectedBoardCategoryNo);
+		}
+		String boardTitle = mr.getParameter("boardTitle");
+		String boardContent = mr.getParameter("boardContent");
+		String bh = mr.getParameter("boardHit");
+		String bs = mr.getParameter("boardStatus");
 
+//		//이미지의 원본파일명, 저장파일명
+		String boardImgOriginalImg = mr.getOriginalFileName("originalImg");
+		String boardImgSaveImg = mr.getFilesystemName("saveImg");			
 
-//			//이미지의 원본파일명, 저장파일명
-//		String boardImgOriginalImg = mr.getOriginalFileName("originalImg");
-//		String boardImgSaveImg = mr.getFilesystemName("saveImg");			
-			
-			//String > int 형변환
-        int crewNo = 0;
-        int boardHit = 0;
-        int boardStatus = 0;
-			
-        if (cno != null && !cno.equals("")) {
-            crewNo = Integer.parseInt(cno);
-        }
-        if (bh != null && !bh.equals("")) {
-            boardHit = Integer.parseInt(bh);
-        }
-        if (bs != null && !bs.equals("")) {
-            boardStatus = Integer.parseInt(bs);
-        }
-        
-	        BoardDAO dao = new BoardDAO();
-	        BoardVO vo = new BoardVO();
-	      
-	        vo.setBoardNo(boardNo);
-	        vo.setCrewNo(crewNo);
-	        vo.setBoardCategoryNo(boardCategoryNo);
-	        vo.setBoardTitle(boardTitle);
-	        vo.setBoardContent(boardContent);
-	        vo.setBoardHit(boardHit);
-	        vo.setBoardStatus(1);
-			System.out.println("vo:"+ vo);
-				dao.updateOneBoard(vo);
-	
-			
-			 // 작성 완료 후 게시글 목록 페이지로 리다이렉트
-	       resp.sendRedirect("board?cmd=listBoard&crewNo=" + crewNo);
-	    }
+		// String > int 형변환
+		int crewNo = 0;
+		int boardHit = 0;
+		int boardStatus = 0;
+
+		if (cno != null && !cno.equals("")) {
+			crewNo = Integer.parseInt(cno);
+		}
+		if (bh != null && !bh.equals("")) {
+			boardHit = Integer.parseInt(bh);
+		}
+		if (bs != null && !bs.equals("")) {
+			boardStatus = Integer.parseInt(bs);
+		}
+
+		BoardDAO dao = new BoardDAO();
+		BoardVO vo = new BoardVO();
+
+		vo.setBoardNo(boardNo);
+		vo.setCrewNo(crewNo);
+		vo.setBoardCategoryNo(boardCategoryNo);
+		vo.setBoardTitle(boardTitle);
+		vo.setBoardContent(boardContent);
+		vo.setBoardHit(boardHit);
+		vo.setBoardStatus(1);
+		System.out.println("vo:" + vo);
+		dao.updateOneBoard(vo);
+
+		// 작성 완료 후 게시글 목록 페이지로 리다이렉트
+		resp.sendRedirect("board?cmd=listBoard&crewNo=" + crewNo);
+	}
 }
