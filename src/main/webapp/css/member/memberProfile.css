@@ -58,3 +58,11 @@
 	font-size: 1.4rem;
     color: #2F2F2F;
 }
+
+hr {
+    margin-top: 40px;
+}
+
+.crew-container {
+	margin-top: 40px;
+}
