@@ -79,9 +79,7 @@ public class DetailAction implements Action {
 		List<MeetingMemberVO> meetingMemberList = mdao.selectAllMeetingMemberByCrewNo(crewNo);
 
 		System.out.println("meetingMemberList : " + meetingMemberList);	
-		if (meetingMemberList.toString() == null) {
-			
-		}
+
 		// meeting
 		req.setAttribute("meetingList", meetingList);
 		req.setAttribute("meetingMemberList", meetingMemberList);
