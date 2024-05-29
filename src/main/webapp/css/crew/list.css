@@ -17,6 +17,10 @@
   display: block;
   white-space: nowrap;
 }
+.ctg-crew__items li a:hover {
+  fill: var(--orange-5);
+  color: var(--orange-5);
+}
 .ctg-crew__icons {
   display: block;
   margin: 5px auto;

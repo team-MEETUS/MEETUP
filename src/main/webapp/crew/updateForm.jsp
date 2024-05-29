@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
 <link rel="stylesheet" href="./css/header.css" type="text/css" />
+<link rel="stylesheet" href="./css/crew/writeForm.css" type="text/css" />
 <!-- CDN -->
 <script src="component/header.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -78,56 +79,93 @@
 <body>
 <div class="container">
 	<jsp:include page="../component/header.jsp"></jsp:include>
-	<form action="crewUpdate" method="post" enctype="multipart/form-data" >
+	<main>
+    <h2 class="meeting-register">모임 등록</h2>
+	<form action="crewUpdate" method="post" enctype="multipart/form-data" class="meeting-form" >
 		<!-- crewNo 넣기 -->
 		<input type="hidden" name="crewNo" value="${crewVO.crewNo}" />
-		<p>카테고리</p>
-		<!-- 상위 카테고리 -->
-		<select name="categoryBigNo" id="categoryBigNo" class="form-select">
-            <c:forEach var="categoryBigVO" items="${categoryBigList}">
-                <option value="${categoryBigVO.categoryBigNo}" ${categoryBigVO.categoryBigNo == crewVO.categoryBigNo ? 'selected' : ''}>${categoryBigVO.categoryBigName}</option>
-            </c:forEach>
-        </select>
-        <!-- 하위 카테고리 -->
-		<select name="categorySmallNo" id="categorySmallNo" class="form-select">
-			<!-- <option value="">선택없음</option> -->
-			<!-- 상위 카테고리에 따라 유동적으로 변경 -->
-			
-		</select>
-        
-        <p>지역</p>
-        <!-- 상위 지역 -->
-        <select id="geoCity" name="geoCity" class="form-select">
-			<c:forEach var="geoCity" items="${geoList}">
-				<c:if test="${geoCity == GeoVO.geoCity}">
-					<option value="${geoCity}" selected>${geoCity}</option>
-				</c:if>
-				<c:if test="${geoCity != GeoVO.geoCity}">
-					<option value="${geoCity}">${geoCity}</option>
-				</c:if>
-			</c:forEach>
-		</select>
- 		<!-- 하위 지역 -->
-        <select id="geoDistrict" name="geoDistrict" class="form-select">
-			<option value="${GeoVO.geoDistrict}">${GeoVO.geoDistrict}</option>
-			<!-- 상위 지역에 따라 유동적으로 변경 -->
-		</select>
 		
-		<p>모임명</p>
-		<input type="text" name="crewName" id="crewName" value="${crewVO.crewName}" /> 최대 25자
-		<p>정원</p>
-		<input type="text" name="crewMax" id="crewMax" value="${crewVO.crewMax}" /> 명
-		<p>설명</p>
-		<textarea name="crewContent" id="crewContent" cols="30" rows="10" class="form-control" style="resize: none;">${crewVO.crewContent}</textarea> 최대 2000자 
-		<p>대표 이미지</p>
+		<!-- 카테고리 -->
+		<label class="category-label" aria-label="카테고리">카테고리</label>
+		<div class="form-group">
+			<select name="categoryBigNo" id="categoryBigNo" class="form-select">
+	            <c:forEach var="categoryBigVO" items="${categoryBigList}">
+	                <option value="${categoryBigVO.categoryBigNo}" ${categoryBigVO.categoryBigNo == crewVO.categoryBigNo ? 'selected' : ''}>${categoryBigVO.categoryBigName}</option>
+	            </c:forEach>
+	        </select>
+	        <!-- 하위 카테고리 -->
+			<select name="categorySmallNo" id="categorySmallNo" class="form-select">
+				<!-- 상위 카테고리에 따라 유동적으로 변경 -->
+			</select>
+        </div>
+        
+        <!-- 지역 -->
+        <label class="category-label">지역</label>
+      	<div class="form-group">
+	        <!-- 상위 지역 -->
+	        <select id="geoCity" name="geoCity" class="form-select">
+				<c:forEach var="geoCity" items="${geoList}">
+					<c:if test="${geoCity == GeoVO.geoCity}">
+						<option value="${geoCity}" selected>${geoCity}</option>
+					</c:if>
+					<c:if test="${geoCity != GeoVO.geoCity}">
+						<option value="${geoCity}">${geoCity}</option>
+					</c:if>
+				</c:forEach>
+			</select>
+	 		<!-- 하위 지역 -->
+	        <select id="geoDistrict" name="geoDistrict" class="form-select">
+				<option value="${GeoVO.geoDistrict}">${GeoVO.geoDistrict}</option>
+				<!-- 상위 지역에 따라 유동적으로 변경 -->
+			</select>
+		</div>
+		
+		<label class="category-label">모임명</label>
+      	<div class="meeting-input">	
+			<input class="meeting-register__crewName-input" type="text" name="crewName" id="crewName" value="${crewVO.crewName}" placeholder="최대 25자" />
+		</div>
+		
+		<label class="category-label">정원</label>
+		<div class="meeting-input">
+			<input class="meeting-register__crewMax-input" type="text" name="crewMax" id="crewMax" value="${crewVO.crewMax}" placeholder="최대 300" />
+			<span>명</span>
+		</div>
+		
+		<label class="category-label">설명</label>
+		<textarea name="crewContent" id="crewContent" cols="30" rows="10" class="meeting-register__crewContent-textarea" placeholder="최대 2000자" >${crewVO.crewContent}</textarea>  
+		
+		<%-- <p>대표 이미지</p>
 		<img id="formImg" src="upload/${crewVO.crewSaveImg}" alt="" />
 		<input type="file" name="crewImg" id="crewImg" value="${crewVO.crewSaveImg}" />
 		<p>배너 이미지</p>
 		<img id="formBanner" src="upload/${crewVO.crewSaveBanner}" alt="" />
-		<input type="file" name="crewBanner" id="crewBanner" value="${crewVO.crewSaveBanner}" />
+		<input type="file" name="crewBanner" id="crewBanner" value="${crewVO.crewSaveBanner}" /> --%>
 		
-		<input type="submit" value="수정" id="btn" class="btn btn-primary" /> 
+		<p>대표 이미지</p>
+		<div class="image-upload main-image">
+		  <label for="crewImg" class="image-label">
+		    <div class="image-preview" id="imagePreview">
+		      <span class="plus-sign">+</span>
+		    </div>
+		  </label>
+		  <input type="file" name="crewImg" id="crewImg" class="image-input" accept="image/*" />
+		</div>
+		
+		<p>배너 이미지</p>
+		<div class="image-upload banner-image">
+		  <label for="crewBanner" class="image-label">
+		    <div class="image-preview" id="bannerPreview">
+		      <span class="plus-sign">+</span>
+		    </div>
+		  </label>
+		  <input type="file" name="crewBanner" id="crewBanner" class="image-input" accept="image/*" />
+		</div>
+		
+		<!-- 버튼 -->
+		<button class="register-button" type="submit" id="btn" class="btn btn-primary" >등록</button>
+		
 	</form>
+	</main>
 	<jsp:include page="../component/footer.jsp"></jsp:include>
 </div>
 <script>
