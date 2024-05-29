@@ -7,21 +7,21 @@
 	<select id="selectAllMeetingByCrewNoCnt" parameterType="Hashmap" resultType="int">
 		SELECT count(*) as cnt 
 		  FROM meeting
-		 WHERE crewNo = #{crewNo}
+		 WHERE crewNo = #{crewNo} AND meetingStatus = 1
 	</select>
 	
 	<!-- 전체 게시물 수 (meetingDate 조건) -->
 	<select id="selectAllMeetingByMeetingDateCnt" parameterType="Hashmap" resultType="int">
 		SELECT count(*) as cnt 
 		  FROM meeting
-		 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' )
+		 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' ) AND meetingStatus = 1
 	</select>
 
 	<!-- 모임별 정모 조회 -->
 	<select id="selectAllMeetingByCrewNo" parameterType="int" resultType="MeetingVO">
 	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
 	  FROM meeting
-	 WHERE crewNo = #{crewNo} AND meetingDate > NOW()
+	 WHERE crewNo = #{crewNo} AND meetingDate > NOW() AND meetingStatus = 1
 	 ORDER BY meetingDate
 	</select>
 	
@@ -29,7 +29,7 @@
 	<select id="selectAllMeetingByDate" parameterType="Hashmap" resultType="MeetingVO">
 	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
 	  FROM meeting
-	 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' )
+	 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' ) AND meetingStatus = 1
 	 ORDER BY meetingNo
 	 LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
@@ -42,7 +42,7 @@
 	</select>
 	
 	<!-- 정모 모집 등록 -->
-	<insert id="addMeeting" parameterType="MeetingVO">
+	<insert id="addMeeting" parameterType="MeetingVO" useGeneratedKeys="true" keyProperty="meetingNo">
 		INSERT INTO meeting (crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingOriginalImg, meetingSaveImg)
 		VALUES (#{crewNo}, #{memberNo}, #{meetingName}, #{meetingDate}, #{meetingLoc}, #{meetingPrice}, #{meetingMax}, #{meetingOriginalImg}, #{meetingSaveImg})	
 	</insert>
@@ -80,15 +80,6 @@
 		WHERE meetingNo = #{meetingNo}
 	</update>
 	
-	<!-- 전체 모임회원 조회 -->
-	<select id="selectAllMeetingMember" parameterType="int" resultType="MeetingMemberVO">
-		SELECT cm.crewMemberNo, cm.crewNo, m.memberNo, cm.crewMemberStatus, cm.createdAt, m.memberNickname, m.memberSaveImg
-		FROM crew_member cm
-			LEFT JOIN member m ON cm.memberNo = m.memberNo 
-		WHERE crewNo = #{crewNo} 
-		ORDER BY cm.crewMemberStatus DESC
-	</select>
-	
 	<!-- 정모참석인원 조회 (cnt) -->
 	<select id="selectMeetingMemberCnt" parameterType="Hashmap" resultType="int">
 		SELECT count(*) as cnt 
@@ -103,7 +94,7 @@
 		 WHERE meetingNo = #{meetingNo} AND memberNo = #{memberNo}
 	</select>
 	
-	<!-- crewNo, meetingNo로 정모참여인원 조회 (meetingMember, member, meeting JOIN)-->
+	<!-- crewNo로 정모참여인원 조회 (meetingMember, member, meeting JOIN)-->
 	<select id="selectAllMeetingMemberByCrewNo" parameterType="int" resultType="MeetingMemberVO">
 		SELECT mm.meetingMemberNo, mm.meetingNo, m.memberNo, m.memberSaveImg
 		  FROM meeting_member mm
