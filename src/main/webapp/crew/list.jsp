@@ -44,7 +44,7 @@
 		</c:when>
 		
 		<c:otherwise>
-			<span class='meeting-button none'></span>
+			<<span aria-hidden="true" class='meeting-button none'></span>
 		</c:otherwise>
 		
 		</c:choose>
