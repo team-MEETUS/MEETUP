@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
 <link rel="stylesheet" href="./css/header.css" type="text/css" />
 <link rel="stylesheet" href="./css/member/memberProfile.css" type="text/css" />
+<link rel="stylesheet" href="./css/crew/list.css" type="text/css" />
 <!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -39,6 +40,24 @@
 						</div>
 					</div>
 					<hr />
+				</div>
+				<!-- 참여한 모임 -->
+				<div class="crew-container" id="participatedCrews"">
+					<c:forEach var="crewVO" items="${memberProfileCrewList}">
+				    	<div class="crew-item">
+				        	<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}">
+				        		<div class="card-crew">
+					            	<img class="crew-img" src="upload/${crewVO.crewSaveImg}" alt="${crewVO.crewName}" />
+					            	<div class="crew-details">
+					            		<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
+					                	<p class="crew-name">${crewVO.crewName}</p>
+					                	<p class="crew-intro">${crewVO.crewIntro}</p>
+					                	<p class="crew-geo">${crewVO.geoDistrict != null ? crewVO.geoDistrict : crewVO.geoCity} · 멤버 ${crewVO.crewAttend}</p>
+					            	</div>
+				                </div>
+				            </a>
+				    	</div>
+					</c:forEach>
 				</div>
 			</div>
 		</section>

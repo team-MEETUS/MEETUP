@@ -90,3 +90,54 @@
 .member__profile--mod:not(:hover) {
 	transition: 0.5s ease-out;
 }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 0 20px;
+}
+
+.button-container button {
+    flex: 1;
+    margin: 0 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.button-container button span {
+    position: relative;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.button-container button.active span::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--orange-5);
+}
+
+hr {
+    margin-top: 40px;
+}
+
+.crew-container {
+	margin-top: 20px;
+}
+
+.divider {
+    height: 20px;
+    width: 2px;
+    background-color: #9A9A9A;
+    margin: auto 5px;
+}
+
+.active {
+    color: var(--orange-5);
+}

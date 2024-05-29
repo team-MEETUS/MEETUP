@@ -65,8 +65,11 @@
     color: #292A5D;
 }
 
-.login__input-box > input:focus, .login__input-box > button:focus {
-    outline-color: var(--orange-5);
+.login__input-box > input[type=text]:focus, 
+.login__input-box > input[type=password]:focus, 
+.login__input-box > button:focus {
+	outline : 2px solid var(--orange-5);
+    /* outline-color: var(--orange-5); */
 }
 
 .login__input-box > button {
