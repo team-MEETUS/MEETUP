@@ -18,7 +18,7 @@
 	    $('form').submit(function(e) {
 	        e.preventDefault();
 
-	        var confirmResult = confirm("정말 삭제하시겠습니까?");
+	        var confirmResult = confirm("정말 탈퇴하시겠습니까?");
 	        
 	        if (confirmResult) {
 	            this.submit();
@@ -46,6 +46,7 @@
 						<span class="member__profile--img" style="background-image: url('upload/${not empty loginMember.memberSaveImg ? loginMember.memberSaveImg : 'first.png'}');"></span>
 						<div class="member__profile--details">
 							<strong class="member__profile--name">${loginMember.memberNickname}</strong>
+							<p class="member__profile--intro">${loginMember.memberIntro}</p>
 							<p class="member__profile--birth">${loginMember.memberBirth}</p>
 							<p class="member__profile--gender">${loginMember.memberGender}</p>
 							<p class="member__profile--geo">${GeoVO.geoCity}&nbsp;${GeoVO.geoDistrict}</p>

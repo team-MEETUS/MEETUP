@@ -52,6 +52,11 @@
     color: #2F2F2F;
 }
 
+.member__profile--intro {
+	font-size: 1.4rem;
+    color: #2F2F2F;
+}
+
 .member__profile--actions {
 	display: flex;
     flex-direction: column;

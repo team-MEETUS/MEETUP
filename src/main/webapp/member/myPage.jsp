@@ -38,7 +38,7 @@
 						</div>
 						<div class="myPage__input-box">
 							<label for="memberIntro">한줄소개</label>
-							<input type="text" name="memberIntro" value="${loginMember.memberIntro}" />
+							<input type="text" name="memberIntro" value="${loginMember.memberIntro}" maxlength="20" />
 						</div>
 						<div class="myPage__input-box myPage__input-box--birth">
 							<label for="memberBirth">생년월일</label>

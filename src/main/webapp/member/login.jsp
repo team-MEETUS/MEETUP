@@ -29,6 +29,7 @@
 						<div class="login__input-box">
 							<label for="memberPhone">핸드폰번호</label>
 							<input type="text" name="memberPhone" oninput="inputNum(this)" maxlength="11" />
+							<input type="hidden" name="memberNotice" id="memberNotice" value="${memberNotice}" />
 						</div>
 						<div class="login__input-box">
 							<label for="memberPw">비밀번호</label>

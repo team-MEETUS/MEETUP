@@ -15,11 +15,11 @@ public class MyMenuAction implements Action {
 		String url = "";
 		HttpSession session = req.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("loginMember");
-		GeoDAO gdao = new GeoDAO();
-		GeoVO gvo = gdao.selectOneGeoCityGeoDistrictByGeoCode(vo.getGeoCode());
 		
 		// 로그인이 되어있는 상태라면 마이페이지
 		if(vo != null) {
+			GeoDAO gdao = new GeoDAO();
+			GeoVO gvo = gdao.selectOneGeoCityGeoDistrictByGeoCode(vo.getGeoCode());
 			url = "member/myMenu.jsp";
 			req.setAttribute("GeoVO", gvo);
 		} 
