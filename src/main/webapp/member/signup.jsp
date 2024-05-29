@@ -9,6 +9,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
 <link rel="stylesheet" href="./css/member/signup.css" type="text/css" />
 <!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -16,6 +17,7 @@
 <body>
 	<div class="container">
 		<jsp:include page="../component/header.jsp"></jsp:include>
+		<script src="component/header.js"></script>
 		<section class="signup">
 			<div class="signup__box">
 				<h2 class="signup__title">회원가입</h2>
@@ -169,8 +171,29 @@
 				return;
 			}
 			// 필요한 정보를 모두 입력하였는지 확인용
-			if (!memberPw || !memberNickname || geoCity === "" || geoDistrict === "" || !memberBirth1 || !memberBirth2 || !memberBirth3 || !memberGender) {
-		        alert("필수 항목을 모두 입력해주세요.");
+			if (!memberPw) {
+		        alert("비밀번호는 필수 항목입니다.");
+		        event.preventDefault();
+		    } else if (!memberNickname) {
+		    	alert("닉네임은 필수 항목입니다.");
+		        event.preventDefault();
+		    } else if (!memberBirth1) {
+		    	alert("생년월일은 필수 항목입니다.");
+		        event.preventDefault();
+		    } else if (!memberBirth2) {
+		    	alert("생년월일은 필수 항목입니다.");
+		        event.preventDefault();
+		    } else if (!memberBirth3) {
+		    	alert("생년월일은 필수 항목입니다.");
+		        event.preventDefault();
+		    } else if (!memberGender) {
+		    	alert("성별을 선택해주세요.");
+		        event.preventDefault();
+		    } else if (geoCity === "") {
+		    	alert("관심 지역을 선택해주세요.");
+		        event.preventDefault();
+		    } else if (geoDistrict === "") {
+		    	alert("관심 지역을 선택해주세요.");
 		        event.preventDefault();
 		    } else {
 		    	combineBirthDate();

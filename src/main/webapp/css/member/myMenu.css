@@ -1,15 +1,16 @@
 @charset "UTF-8";
+.inner {
+	position : relative;
+	max-width: 1024px;
+	margin : 0 auto;
+}
 .subTitle {
 	font-size: 2rem;
-	margin-left: 4rem;
 	font-weight: bold;
-}
-.member--wrap {
-	width: 80%;
-	margin: 0 auto;
+	padding : 0 20px;
 }
 .member__profile-box {
-	padding: 3rem 4rem 2rem;
+	padding: 30px 20px 40px 20px;
     position: relative;
     display: flex;
     align-items: center;

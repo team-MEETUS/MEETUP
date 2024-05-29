@@ -9,6 +9,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
 <link rel="stylesheet" href="./css/member/login.css" type="text/css" />
 <!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -16,6 +17,7 @@
 <body>
 	<div class="container">
 		<jsp:include page="../component/header.jsp"></jsp:include>
+		<script src="component/header.js"></script>
 		<section class="login">
 			<div class="login__box">
 				<!-- Logo -->
@@ -62,8 +64,11 @@
 			var memberPhone = $("input[name='memberPhone']").val();
 			var memberPw = $("input[name='memberPw']").val();
 			
-			if(!memberPhone || !memberPw) {
-				alert("모든 필드를 입력해주세요.");
+			if(!memberPhone) {
+				alert("핸드폰번호를 입력해주세요.");
+		        event.preventDefault();
+			} else if (!memberPw) {
+				alert("비밀번호를 입력해주세요.");
 		        event.preventDefault();
 			}
 		});

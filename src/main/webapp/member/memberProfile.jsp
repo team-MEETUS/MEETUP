@@ -9,6 +9,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
 <link rel="stylesheet" href="./css/member/memberProfile.css" type="text/css" />
 <!-- CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -16,6 +17,7 @@
 <body>
 	<div class="container">
 		<jsp:include page="../component/header.jsp"></jsp:include>
+		<script src="component/header.js"></script>
 		<section class="subCommon">
 			<!-- subCommon -->
 			<div class="inner">
@@ -30,10 +32,9 @@
 							<span class="memberProfile__profile--img" style="background-image: url('upload/${not empty otherMember.memberSaveImg ? otherMember.memberSaveImg : 'first.png'}');"></span>
 							<div class="memberProfile__profile--details">
 								<strong class="memberProfile__profile--name">${otherMember.memberNickname}</strong>
-								<p class="memberProfile__profile--intro">${otherMember.memberIntro}</p>
-								<p class="memberProfile__profile--birth">${otherMember.memberBirth}</p>
-								<p class="memberProfile__profile--gender">${otherMember.memberGender}</p>
 								<p class="memberProfile__profile--geo">${GeoVO.geoCity}&nbsp;${GeoVO.geoDistrict}</p>
+								<p class="memberProfile__profile--birth">${otherMember.memberBirth}&nbsp;·&nbsp;${otherMember.memberGender}</p>
+								<p class="memberProfile__profile--intro">${otherMember.memberIntro}</p>
 							</div>
 						</div>
 					</div>
