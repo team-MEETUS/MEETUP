@@ -73,7 +73,7 @@ public class UpdateAction extends HttpServlet {
 			
 			req.getSession().setAttribute("loginMember", vo);
 			
-			resp.sendRedirect("member");
+			resp.sendRedirect("member?cmd=myMenu");
 		}
 		
 

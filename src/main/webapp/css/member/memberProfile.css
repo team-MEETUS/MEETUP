@@ -8,6 +8,7 @@
 	font-size: 2rem;
 	font-weight: bold;
 	padding: 0 20px;
+	color: #2F2F2F;
 }
 
 .memberProfile__profile-box {
@@ -65,4 +66,16 @@ hr {
 
 .crew-container {
 	margin-top: 40px;
+	min-height: 600px;
+}
+
+.crew-title {
+    margin-top: 30px;
+    padding: 0 20px;
+}
+
+.crew-title-contents {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--orange-5); /* 필요한 색상으로 변경하세요 */
 }

@@ -34,12 +34,12 @@
 	<div class="container">
 	<jsp:include page="../component/header.jsp"></jsp:include>
 	<script src="component/header.js"></script>
-	<section class="subCommon">
-		<!-- subCommon -->
+	<!-- <section class="subCommon">
+		subCommon
 		<div class="inner">
 			<h2 class="subTitle">마이페이지</h2>
 		</div>
-	</section>
+	</section> -->
 	<!-- Contents -->
 	<section class="subContents">
 		<div class="inner">
