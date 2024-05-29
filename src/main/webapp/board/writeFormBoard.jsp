@@ -25,9 +25,38 @@
    $(document).ready(function() {            
         $('.summernote').summernote({
             height: 150,
-			lang:"ko-KR"
+			lang:"ko-KR",
+			callbacks: {
+	            onImageUpload: function(files) {
+	                for (let i = 0; i < files.length; i++) {
+	                    uploadImage(files[i]);
+	                }
+	            }
+	        }
         });
     });
+   
+   function uploadImage(file) {
+	    const data = new FormData();
+	    data.append("file", file);
+
+	    $.ajax({
+	        url: 'imageUpload',
+	        type: 'POST',
+	        data: data,
+	        contentType: false,
+	        processData: false,
+	        dataType: 'json', // 이 부분을 추가하면, jQuery가 응답을 자동으로 JSON으로 파싱합니다.
+	        success: function(response) {
+	            // JSON.parse() 호출을 제거하고, response 객체를 직접 사용합니다.
+	            const url = response.url;
+	            $('.summernote').summernote('insertImage', url);
+	        },
+	        error: function() {
+	            alert("이미지 업로드 실패!");
+	        }
+	    });
+	}
 </script>
 
 <style>
