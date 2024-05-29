@@ -7,11 +7,13 @@
 <meta charset="UTF-8">
 <title>MEETUP</title>
 <!-- CSS -->
-<link rel="stylesheet" href="./css/reset.css"  type="text/css" />
-<link rel="stylesheet" href="./css/index.css"  type="text/css" />
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
 <!-- CDN -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+<script src="component/header.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 <style>
 	.container {
@@ -97,22 +99,22 @@
 			<c:if test="${crewMemberVO.crewMemberStatus == 2}">
 				<!-- 모임장만 가능 -->
 				<c:if test="${role eq 'leader'}">
-					<a href="crew?cmd=mng&requestType=transfer&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" >모임장양도</a>
+					<a href="crew?cmd=mng&requestType=transfer&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님께 모임장을 양도하시겠습니까?" >모임장양도</a>
 				</c:if>
 				<!-- 모임장 & 운영진(본인 제외) -->
 				<c:if test="${role eq 'leader' || (role eq 'adminMember' && sessionScope.loginMember.memberNo ne crewMemberVO.memberNo)}">
-					<a href="crew?cmd=mng&requestType=demote&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" >운영진해제</a>
+					<a href="crew?cmd=mng&requestType=demote&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 일반멤버로 변경 하시겠습니까?" >운영진해제</a>
 				</c:if>
 			</c:if>
 			<!-- 일반회원 -->
 			<c:if test="${crewMemberVO.crewMemberStatus == 1}">
 				<!-- 모임장만 가능 -->
 				<c:if test="${role eq 'leader'}">
-					<a href="crew?cmd=mng&requestType=transfer&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" >모임장양도</a>
+					<a href="crew?cmd=mng&requestType=transfer&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님께 모임장을 양도하시겠습니까?" >모임장양도</a>
 				</c:if>
 				<!-- 모임장 & 운영진 -->
-				<a href="crew?cmd=mng&requestType=appoint&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" >운영진임명</a>
-				<a href="crew?cmd=mng&requestType=kick&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" >강퇴</a>
+				<a href="crew?cmd=mng&requestType=appoint&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 운영진으로 임명하시겠습니까?" >운영진임명</a>
+				<a href="crew?cmd=mng&requestType=kick&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 강퇴하시겠습니까?" >강퇴</a>
 			</c:if>
 		</c:if>
 	</c:forEach>
@@ -138,5 +140,35 @@
 	</c:forEach>
     <jsp:include page="../component/footer.jsp"></jsp:include>
 </div>
+<script>
+$(document).ready(function () {
+    // alert 창
+    $('.crew-category').click(function (event) {
+        event.preventDefault(); // 기본 동작 막기
+        var href = $(this).attr('href'); // href 속성 가져오기
+        var message = $(this).data('message'); // data-message 속성 가져오기
+
+        Swal.fire({
+            title: "Meetup",
+            text: message,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+        	if (result.isConfirmed) {
+        		Swal.fire(
+	              'Meetup',
+	              '처리되었습니다.',
+	              'success'
+	            )
+	            window.location.href = href; 
+	        }
+        });
+    });
+});
+</script>
 </body>
 </html>
