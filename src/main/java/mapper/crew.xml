@@ -17,13 +17,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 카테고리 별 모든 모임 조회 -->
-	<select id="selectCrewByCategory" parameterType="HashMap" resultType="CrewVO">
+	<select id="selectAllCrewByCategory" parameterType="HashMap" resultType="CrewVO">
 	    SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
 	    FROM crew c
 	        LEFT JOIN geo g ON c.geoCode = g.geoCode
 	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
 	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
 	    WHERE c.categoryBigNo = #{ctg} AND c.crewStatus = 1
+	    ORDER BY c.createdAt DESC
+	    LIMIT #{recordPerPage} OFFSET #{startNo};
+	</select>
+	
+	<!-- 지역 별 모든 모임 조회 -->
+	<select id="selectAllCrewByGeo" parameterType="HashMap" resultType="CrewVO">
+	    SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	    WHERE c.geoCode = #{geoCode} AND c.crewStatus = 1
+	    ORDER BY c.createdAt DESC
+	    LIMIT #{recordPerPage} OFFSET #{startNo};
+	</select>
+	
+	<!-- 지역&카테고리 별 모든 모임 조회 -->
+	<select id="selectAllCrewByGeoCategory" parameterType="HashMap" resultType="CrewVO">
+	    SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	    WHERE c.geoCode = #{geoCode} AND c.categoryBigNo = #{ctg} AND c.crewStatus = 1
 	    ORDER BY c.createdAt DESC
 	    LIMIT #{recordPerPage} OFFSET #{startNo};
 	</select>
@@ -124,13 +148,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectCrewCnt" resultType="int">
 		SELECT count(*)
 		FROM crew
+		WHERE crewStatus = 1
 	</select>
 	
 	<!-- 카테고리 별 전체 모임 수 조회 -->
-	<select id="selectCrewByCategoryCnt" parameterType="int" resultType="int">
+	<select id="selectAllCrewCntByCategory" parameterType="int" resultType="int">
 		SELECT count(*)
 		FROM crew
-		WHERE categoryBigNo = #{categoryBigNo}
+		WHERE categoryBigNo = #{categoryBigNo} AND crewStatus = 1
+	</select>
+	
+	<!-- 지역 별 전체 모임 수 조회 -->
+	<select id="selectAllCrewCntByGeo" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM crew
+		WHERE geoCode = #{geoCode} AND crewStatus = 1
+	</select>
+	
+	<!-- 지역&카테고리 별 전체 모임 수 조회 -->
+	<select id="selectAllCrewCntByGeoCategory" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM crew
+		WHERE geoCode = #{geoCode} AND categoryBigNo = #{categoryBigNo} AND crewStatus = 1
 	</select>
 	
 	<!-- 찜 여부 조회 -->
