@@ -30,6 +30,7 @@
 							<span class="memberProfile__profile--img" style="background-image: url('upload/${not empty otherMember.memberSaveImg ? otherMember.memberSaveImg : 'first.png'}');"></span>
 							<div class="memberProfile__profile--details">
 								<strong class="memberProfile__profile--name">${otherMember.memberNickname}</strong>
+								<p class="memberProfile__profile--intro">${otherMember.memberIntro}</p>
 								<p class="memberProfile__profile--birth">${otherMember.memberBirth}</p>
 								<p class="memberProfile__profile--gender">${otherMember.memberGender}</p>
 								<p class="memberProfile__profile--geo">${GeoVO.geoCity}&nbsp;${GeoVO.geoDistrict}</p>
