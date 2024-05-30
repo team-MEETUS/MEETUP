@@ -94,12 +94,12 @@
 		 WHERE meetingNo = #{meetingNo} AND memberNo = #{memberNo}
 	</select>
 	
-	<!-- crewNo로 정모참여인원 조회 (meetingMember, member, meeting JOIN) -->
+	<!-- crewNo로 정모참여인원 조회 (meetingMember, member, meeting, crew JOIN) -->
 	<select id="selectAllMeetingMemberByCrewNo" parameterType="int" resultType="MeetingMemberVO">
-		SELECT mm.meetingMemberNo, mm.meetingNo, m.memberNo, m.memberSaveImg
+		SELECT mm.meetingMemberNo, mm.meetingNo, m.memberNo, m.memberSaveImg, m.memberNickname
 		  FROM meeting_member mm
 		  LEFT JOIN member m ON mm.memberNo = m.memberNo
-		  LEFT JOIN meeting mt ON mt.meetingNo = mm.meetingNo 
+		  LEFT JOIN meeting mt ON mt.meetingNo = mm.meetingNo
 		 WHERE mt.crewNo = #{crewNo}
 		 ORDER BY mm.meetingMemberNo DESC;
 	</select>

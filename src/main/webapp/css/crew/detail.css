@@ -1,193 +1,196 @@
 /* 모임 메뉴 */
 .crew-menu__items {
-	display: flex;
-	justify-content: center;
-	list-style: none;
-	padding: 0;
-	margin: 30px 0;
-	font-size: 20px;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+  font-size: 20px;
 }
 .crew-menu__items li {
-	margin: 0 15px;
+  margin: 0 15px;
 }
 .crew-menu__items a {
-	text-decoration: none;
-	color: black;
-	font-weight: bold;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
 }
 /* 모임 배너 이미지 */
 .crew-banner-container {
-	width: 100%;
+  width: 100%;
 }
 .crew-banner {
-	width: 100%;
-	height: 300px;
-	border-radius: 8px;
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
 }
 /* 지역 & 카테고리 & 아이콘 */
 .crew-info {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-	margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
 }
 .crew-geo, .crew-category {
-	display: inline-block;
-	margin: 10px 10px 10px 0;
-	border-radius: 20px;
-       background-color: var(--orange-4);
-       padding: 8px;
-       font-size: 14px;
-       color: white;
+  display: inline-block;
+  margin: 10px 10px 10px 0;
+  border-radius: 20px;
+  background-color: var(--orange-4);
+  padding: 8px;
+  font-size: 14px;
+  color: white;
 }
 .crew-info-left {
-	display: flex;
+  display: flex;
 }
 .crew-info-icon {
-	width: 37px;
-	height: 37px;
-	padding: 8px;
-	cursor: pointer;
+  width: 37px;
+  height: 37px;
+  padding: 8px;
+  cursor: pointer;
 }
 /* 모임정보 & 모임멤버 섹션 */
 .crew-container {
-	display: flex;
-	flex-direction: row;
-	margin-bottom: 50px;
-	height: 500px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 50px;
+  height: 500px;
 }
 .left-section {
-       flex: 3;
-       margin-right: 20px;
-   }
-   .right-section {
-       flex: 1; 
-       background-color: var(--gray-1);
-       border-radius: 20px;
-       padding: 10px;
-   }
+  flex: 3;
+  margin-right: 20px;
+}
+.right-section {
+  flex: 1; 
+  background-color: var(--gray-1);
+  border-radius: 20px;
+  padding: 10px;
+}
 /* 모임정보 */
 .crew-name {
-	font-size: 2em;
-	font-weight: bold;
-	margin-top: 10px;
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 10px;
 }
 .crew-content {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	height: 370px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 370px;
 }
 .btn-main {
-	margin-right: 15px;
-    border-radius: 10px;
-	background-color: var(--orange-4);
-    padding: 8px;
-    font-size: 14px;
-    width: 650px;
-    color: white;
-    text-align: center;
+  margin-right: 15px;
+  border-radius: 10px;
+  background-color: var(--orange-4);
+  padding: 8px;
+  font-size: 14px;
+  width: 650px;
+  color: white;
+  text-align: center;
 }
 .btn-main:hover {
   background-color: var(--orange-5);
 }
 .like-icon {
-	height: 30px;
-	width: 30px;
+  height: 30px;
+  width: 30px;
 }
 /* 모임멤버 */
 .crew-member-wrap {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-	margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
 }
 .crew-member {
-	width: 50%;
-	font-weight: bold;
-	margin-bottom: 20px;
-	display: flex;
+  width: 50%;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: flex;
 }
 .member-management-wrap {
-	display: flex;
+  display: flex;
 }
 .group-icon member-management {
-	display: inline-block;
+  display: inline-block;
 }
 .member-management {
-	color: black;
+  color: black;
 }
 .crew-member-item {
-	display: flex;
-	align-items: center;
-	margin: 10px;
-	position: relative;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  position: relative;
 }
 .member-badge-leader, .member-badge-admin {
-    position: absolute; /* 추가: 절대 위치 설정 */
-    bottom: 0; /* 추가: 하단에 위치 */
-    right: 170px; /* 추가: 우측에 위치 */
-    padding: 5px; /* 추가: 뱃지 내부 여백 */
-    border-radius: 50px;
+  position: absolute; /* 추가: 절대 위치 설정 */
+  bottom: 0; /* 추가: 하단에 위치 */
+  right: 170px; /* 추가: 우측에 위치 */
+  padding: 5px; /* 추가: 뱃지 내부 여백 */
+  border-radius: 50px;
 }
 .member-badge-leader {
-    background-color: lightpink;
+  background-color: lightpink;
 }
 .member-badge-admin {
-    background-color: var(--blue-3);
+  background-color: var(--blue-3);
 }
 .crew-member-item a {
-    text-decoration: none;
+  text-decoration: none;
 }
 .crew-member-img, box-icon[type="solid"][name="user-circle"] {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	margin-right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
 }
 .crew-member-nickname {
-	font-weight: bold;
-	line-height: 50px; 
-	margin: 0; 
-	color: black;
+  font-weight: bold;
+  line-height: 50px; 
+  margin: 0; 
+  color: black;
 }
 .meeting-container {
-	width: 100%;
-	margin-top: 50px;
+  width: 100%;
+  margin-top: 50px;
 }
 .meeting-logo {
-	font-size: 2em;
-	font-weight: bold;
+  font-size: 2em;
+  font-weight: bold;
 }
 /* 수정 및 삭제 팝업 */
 .edit-delete-popup {
-	display: none; 
-	position: absolute;
-	background-color: white;
-	border: 1px solid #ccc;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	border-radius: 8px;
-	padding: 10px;
-	z-index: 1000;
+  display: none; 
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 1000;
 }
 .edit-delete-popup a {
-	display: block;
-	text-decoration: none;
-	color: black;
-	margin-bottom: 5px;
+  display: block;
+  text-decoration: none;
+  color: black;
+  margin-bottom: 5px;
 }
 /* 정모 */
 .meetingOne-container {
-	width: 500px;
-	display: inline-block;
+  width: 500px;
+  display: inline-block;
 }
 .meeting-header {
-	font-size: 20px;
-	font-weight: bold;
-	margin-bottom: -30px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: -30px;
 }
 
 .meeting-header>div {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
+}
+.meeting-member-icon {
+  cursor: pointer;
 }
 /* 정모 박스 */
 .meetingOne {
@@ -206,72 +209,110 @@
 }
 
 .meetingOne:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 호버 시 더 진한 그림자 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 호버 시 더 진한 그림자 */
 }
 
 .meeting-info>img {
-	width: 160px;
-	height: 120px;
+  width: 160px;
+  height: 120px;
 }
 
 .meeting-info {
-	display: flex;
-	font-size: 17px;
+  display: flex;
+  font-size: 17px;
 }
 
 .meeting-info>div>div {
-	margin: 7px 7px;
+  margin: 7px 7px;
 }
 
 .meeting-icon {
-	margin-left: 10px;
-	position: relative; /* 상대 위치 설정 */
-   	display: inline-block; /* 내부 요소들을 인라인 블록으로 설정 */
+  margin-left: 10px;
+  position: relative; /* 상대 위치 설정 */
+  display: inline-block; /* 내부 요소들을 인라인 블록으로 설정 */
 }
 
 .meeting-icon>span>a {
-	width: 30px;
-	height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .list-icon {
-	position: absolute; /* 절대 위치 설정으로 다른 요소 위에 올라가게 함 */
-    top: 0; /* 상단에서 0px의 위치에 배치 */
-    left: 355px; /* 왼쪽에서 0px의 위치에 배치 */
-    z-index: 1; /* 다른 요소보다 위에 오게 설정 */
+  position: absolute; /* 절대 위치 설정으로 다른 요소 위에 올라가게 함 */
+  top: 0; /* 상단에서 0px의 위치에 배치 */
+  left: 355px; /* 왼쪽에서 0px의 위치에 배치 */
+  z-index: 1; /* 다른 요소보다 위에 오게 설정 */
 }
 
 .meeting-icon-img {
-    position: relative; /* 상대 위치 설정 */
-   	z-index: 0; /* 기본적으로 이 요소가 더 아래에 위치하도록 설정 */
+  position: relative; /* 상대 위치 설정 */
+  z-index: 0; /* 기본적으로 이 요소가 더 아래에 위치하도록 설정 */
 }
 
-.meeting-icon>span>a:nth-child(7)>span>img {
-	opacity: 0.5; /* 투명도 설정 (0 완전 투명, 1 완전 불투명) */
-}
-.meeting-icon>span>a:nth-child(7)>span>box-icon {
-	opacity: 0.5; /* 투명도 설정 (0 완전 투명, 1 완전 불투명) */
-}
-.meeting-insert-btn{
-       border-radius: 15px;
-       background-color: #FB9B00;
-       padding: 10px;
-       display: inline-block;
-       margin: 15px 0;
-       color: white;
-       position: relative;
-       left: 930px;
-       bottom: 45px;
+
+.meeting-insert-btn {
+  width: 90px;
+  text-align: center;
+  border-radius: 15px;
+  background-color: #FB9B00;
+  padding: 10px;
+  display: inline-block;
+  color: white;
+  position: relative;
+  left: 930px;
+  bottom: 45px;
 }
 .meeting-attendExit-btn {
-	width: 50px;
-	text-align: center;
-       border-radius: 15px;
-       background-color: #FB9B00;
-       padding: 10px;
-       display: inline-block;
-       color: white;
-       position: relative;
-       left: 309px;
-       bottom: 20px;
+  width: 50px;
+  text-align: center;
+  border-radius: 15px;
+  background-color: #FB9B00;
+  padding: 10px;
+  display: inline-block;
+  color: white;
+  position: relative;
+  left: 309px;
+  bottom: 20px;
+}
+
+/* 모임에 참여한 멤버 리스트 모달 */
+/* 모달 기본 스타일 */
+.modal {
+  display: none; /* 기본적으로 모달을 숨김 */
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+/* 모달 콘텐츠 */
+.modal-content {
+  position: absolute;
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300px; 
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* 정모 멤버 */
+.meeting-member-wrap {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+.meeting-member {
+  width: 50%;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: flex;
+}
+.meeting-member-management-wrap {
+  display: flex;
 }
