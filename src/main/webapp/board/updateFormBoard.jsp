@@ -29,7 +29,10 @@
         });
     });
    </script>
-
+	<!-- CSS -->
+	<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+	<link rel="stylesheet" href="./css/index.css" type="text/css" />
+	<link rel="stylesheet" href="./css/header.css" type="text/css" />
 <style>
 table {
 	width: 100%;
@@ -73,6 +76,8 @@ td .btn {
 	<h1>게시글 수정</h1>
 
 	<div class="container">
+	<jsp:include page="../component/header.jsp"></jsp:include>
+    <script src="component/header.js"></script>
 		<form action="boardUpdate" method="post" enctype="multipart/form-data">
 			<input type="text" name="crewNo" value="${crewNo}" /> <input
 				type="hidden" name="boardNo" value="${boardNo}" /> <input

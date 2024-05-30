@@ -17,16 +17,32 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 	crossorigin="anonymous"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+	<link rel="stylesheet" href="./css/index.css" type="text/css" />
+	<link rel="stylesheet" href="./css/header.css" type="text/css" />
+	<!-- <link rel="stylesheet" href="./css/board/listBoard.css" type="text/css" /> -->
+	<!-- CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
+.container {
+		width: 1024px;
+		margin: 0 auto;
+	}
 </style>
 </head>
 <body>
 	<div class="container">
+	<jsp:include page="../component/header.jsp"></jsp:include>
+    <script src="component/header.js"></script>
+	<section class="listBoard">
+	<div><a href="board?cmd=listBoard">게시판</a></div>
+	
+	
 		<table class="table table-striped">
 			<input type="hidden" name="loginMemberNo" id="loginMemberNo"
-				value="${loginMember.memberNo}" />
+				   value="${loginMember.memberNo}" />
 			<script>
 				var crewMemberList = [];
 				<c:forEach var="CrewMember" items="${crewMemberList}">
@@ -91,6 +107,7 @@
 				</nav>
 			</div>
 		</table>
+		</section>
 	</div>
 
 	<script>
@@ -107,7 +124,6 @@
 			});
 		});
 	</script>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
 </body>
 </html>
-
-
