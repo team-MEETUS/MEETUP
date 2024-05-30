@@ -76,6 +76,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ORDER BY c.createdAt DESC
 	</select>
 	
+	<!-- 사용자 많은 순 별 모임 조회  -->
+	<select id="selectAllCrewOrderMember" parameterType="HashMap" resultType="CrewVO">
+		SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	    WHERE c.crewStatus = 1
+	    ORDER BY c.crewAttend DESC
+	    LIMIT #{recordPerPage} OFFSET #{startNo}
+	</select>
+	
+	<!-- 사용자 많은 순 & 지역 별 모임 조회 -->
+	<select id="selectAllCrewOrderMemberByGeo" parameterType="HashMap" resultType="CrewVO">
+	    SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName
+	    FROM crew c
+	        LEFT JOIN geo g ON c.geoCode = g.geoCode
+	        LEFT JOIN category_big cb ON c.categoryBigNo = cb.categoryBigNo
+	        LEFT JOIN category_small cs ON c.categorySmallNo = cs.categorySmallNo
+	    WHERE c.geoCode = #{geoCode} AND c.crewStatus = 1
+	    ORDER BY c.crewAttend DESC
+	    LIMIT #{recordPerPage} OFFSET #{startNo}
+	</select>
+	
 	<!-- 한개 모임 조회 -->
 	<select id="selectOneCrew" parameterType="int" resultType="CrewVO">
 		SELECT c.crewNo, c.geoCode, c.categoryBigNo, c.categorySmallNo, c.crewName, c.crewIntro, c.crewContent, c.crewMax, c.crewAttend, c.crewStatus, c.crewOriginalImg, c.crewSaveImg, c.crewOriginalBanner, c.crewSaveBanner, c.crewDeadDate, c.createdAt, c.updatedAt, g.geoCity, g.geoDistrict, cb.categoryBigName, cs.categorySmallName

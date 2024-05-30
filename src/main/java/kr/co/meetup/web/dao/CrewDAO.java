@@ -101,6 +101,29 @@ public class CrewDAO {
 		return list;
 	}
 	
+	// 사용자 많은 순 별 모임 조회 
+	public List<CrewVO> selectAllCrewOrderMember(int startNo, int recordPerPage) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
+		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrewOrderMember", map);
+		ss.close();
+		return list;
+	}
+	
+	// 사용자 많은 순 & 지역 별 모임 조회 
+	public List<CrewVO> selectAllCrewOrderMemberByGeo(int geoCode, int startNo, int recordPerPage) {
+		SqlSession ss = factory.openSession(true);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("geoCode", geoCode);
+		map.put("startNo", startNo);
+		map.put("recordPerPage", recordPerPage);
+		List<CrewVO> list = ss.selectList("kr.co.meetup.crew.selectAllCrewOrderMemberByGeo", map);
+		ss.close();
+		return list;
+	}
+	
 	// 한개 모임 조회
 	public CrewVO selectOneCrew(int crewNo) {
 		SqlSession ss = factory.openSession(true);
