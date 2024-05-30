@@ -41,12 +41,16 @@ public class UpdateAction extends HttpServlet {
 		String crewContent = mr.getParameter("crewContent");
 		
 		// 메인 이미지의 원본파일명, 저장파일명
-		String crewOriginalImg = mr.getOriginalFileName("crewImg");
-		String crewSaveImg = mr.getFilesystemName("crewImg");;
+		String crewOriginalImg = null;
+		String crewSaveImg = null;
 		
 		// 배너 이미지의 원본파일명, 저장파일명
-		String crewOriginalBanner = mr.getOriginalFileName("crewBanner");
-		String crewSaveBanner = mr.getFilesystemName("crewBanner");;
+		String crewOriginalBanner = null;
+		String crewSaveBanner = null;
+		
+		// 이미지 삭제 여부 확인
+	    String crewImgDeleted = mr.getParameter("crewImgDeleted");
+	    String crewBannerDeleted = mr.getParameter("crewBannerDeleted");
 		
 		// crewContent 의 첫 줄을 crewIntro 로 저장 
 		String crewIntro = "";
@@ -80,6 +84,34 @@ public class UpdateAction extends HttpServlet {
 		}
 		
 		CrewDAO dao = new CrewDAO();
+	    CrewVO existingCrew = dao.selectOneCrew(crewNo);
+	    
+	    if("true".equals(crewImgDeleted)) {
+	    	crewOriginalImg = null;
+	    	crewSaveImg = null;
+	    } else {
+	    	crewOriginalImg = mr.getOriginalFileName("crewImg");
+	    	crewSaveImg = mr.getFilesystemName("crewImg");
+	    	
+	    	if (crewOriginalImg == null && crewSaveImg == null) {
+	    		crewOriginalImg = existingCrew.getCrewOriginalImg();
+	    		crewSaveImg = existingCrew.getCrewSaveImg();
+	    	}
+	    }
+	    
+	    if("true".equals(crewBannerDeleted)) {
+	    	crewOriginalBanner = null;
+	    	crewSaveImg = null;
+	    } else {
+	    	crewOriginalBanner = mr.getOriginalFileName("crewBanner");
+	    	crewSaveBanner = mr.getFilesystemName("crewBanner");
+	    	
+	    	if (crewOriginalBanner == null && crewSaveBanner == null) {
+	    		crewOriginalBanner = existingCrew.getCrewOriginalBanner();
+	    		crewSaveBanner = existingCrew.getCrewSaveBanner();
+	    	}
+	    }
+		
 		CrewVO vo = new CrewVO();
 
 		// DB 에 모임 수정
@@ -93,9 +125,9 @@ public class UpdateAction extends HttpServlet {
 		vo.setCrewIntro(crewIntro);
 		vo.setCrewMax(crewMax);
 		vo.setCrewOriginalImg(crewOriginalImg);
-		vo.setCrewSaveImg(crewSaveImg);
-		vo.setCrewOriginalBanner(crewOriginalBanner);
-		vo.setCrewSaveBanner(crewSaveBanner);
+        vo.setCrewSaveImg(crewSaveImg);
+        vo.setCrewOriginalBanner(crewOriginalBanner);
+        vo.setCrewSaveBanner(crewSaveBanner);
 		
 		dao.updateCrew(vo);
 		

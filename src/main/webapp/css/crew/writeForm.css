@@ -3,7 +3,7 @@
   display: flex;
   font-size: 24px;
   font-weight: bold;
-  border-bottom: 2px solid var(--gray-500);
+  border-bottom: 2px solid var(--gray-8);
   padding-bottom: 10px;
 }
 
@@ -31,7 +31,7 @@
     width: 100%;
     box-sizing: border-box;
     border-radius: 5px;
-    border: 1px solid var(--gray-500);
+    border: 1px solid var(--gray-5);
     padding: 10px 10px;
   }
 
@@ -41,32 +41,32 @@
     align-items: center;
 
     .meeting-register__crewName-input {
-      border: 1px solid var(--gray-500);
+      border: 1px solid var(--gray-5);
       border-radius: 5px;
       width: 100%;
 
       &:focus {
-        border: 1px solid var(--gray-800);
+        border: 1px solid var(--gray-8);
       }
     }
 
     .meeting-register__crewMax-input {
-      border: 1px solid var(--gray-500);
+      border: 1px solid var(--gray-5);
       max-width: 100px;
 
       &:focus {
-        border: 1px solid var(--gray-800);
+        border: 1px solid var(--gray-8);
       }
     }
 
     .meeting-register__crewContent-textarea {
-      border: 1px solid var(--gray-500);
+      border: 1px solid var(--gray-5);
       border-radius: 5px;
       resize: none;
       outline: none;
 
       &:focus {
-        border: 1px solid var(--gray-800);
+        border: 1px solid var(--gray-8);
       }
     }
   }
@@ -105,7 +105,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--gray-100);
+    background-color: var(--gray-1);
   }
 
   .image-preview img {
@@ -116,7 +116,7 @@
 
   .plus-sign {
     font-size: 50px;
-    color: var(--gray-800);
+    color: var(--gray-8);
   }
 
   .register-button {

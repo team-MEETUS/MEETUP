@@ -33,7 +33,7 @@
 				<c:otherwise>
  				 <img
 				      class="profile-image"
-				      src="upload/first.png"
+				      src="upload/profileDefault.png"
 				alt="${sessionScope.loginMember.memberNickname} 프로필"
 				/>
 				</c:otherwise>

@@ -30,7 +30,7 @@
 				<div class="memberProfile--wrap">
 					<div class="memberProfile__profile-box">
 						<div class="memberProfile__profile">
-							<span class="memberProfile__profile--img" style="background-image: url('upload/${not empty otherMember.memberSaveImg ? otherMember.memberSaveImg : 'first.png'}');"></span>
+							<span class="memberProfile__profile--img" style="background-image: url('upload/${not empty otherMember.memberSaveImg ? otherMember.memberSaveImg : 'profileDefault.png'}');"></span>
 							<div class="memberProfile__profile--details">
 								<strong class="memberProfile__profile--name">${otherMember.memberNickname}</strong>
 								<p class="memberProfile__profile--geo">${GeoVO.geoCity}&nbsp;${GeoVO.geoDistrict}</p>
@@ -45,7 +45,7 @@
 					<h3 class="crew-title-contents">참여한 모임</h3>
 				</div>
 				<!-- 참여한 모임 -->
-				<div class="crew-container" id="participatedCrews"">
+				<div class="crew-container" id="participatedCrews">
 					<c:forEach var="crewVO" items="${memberProfileCrewList}">
 				    	<div class="crew-item">
 				        	<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}">
