@@ -46,7 +46,7 @@
 				<!-- 메뉴 -->
 				<ul class="crew-menu__items">
 					<li><a href="crew?cmd=detail&crewNo=${crewNo}">정보</a></li>
-					<li><a href="board?cmd=listBoard&crewNo=${crewVO.crewNo}">게시판</a>
+					<li><a href="board?cmd=listBoard&crewNo=${crewNo}">게시판</a>
 					</li>
 					<li><a href="">사진첩</a></li>
 					<li><a href="">채팅</a></li>
@@ -81,12 +81,10 @@
 					<!-- 리스트 본문 -->
 					<div class="board-table">
 						<c:forEach var="BoardVO" items="${boardList}" varStatus="status">
-							<a
-								href="board?cmd=detailboard&boardNo=${BoardVO.boardNo}&crewNo=${crewNo}&memberNo=${memberList[status.index].memberNo}">
+							<a href="board?cmd=detailboard&boardNo=${BoardVO.boardNo}&crewNo=${BoardVO.crewNo}&memberNo=${memberList[status.index].memberNo}">
 								<div class="board-row">
-									<div class="board--No">${BoardVO.boardNo}</div>
-									<img
-										src="upload/${not empty memberList[status.index].memberSaveImg ? memberList[status.index].memberSaveImg : 'first.png'}"
+									<div class="board--No">${status.index + 1}</div>
+									<img src="upload/${not empty memberList[status.index].memberSaveImg ? memberList[status.index].memberSaveImg : 'profileDefault.png'}"
 										alt="" />
 									<div class="board--memberNickname">${memberList[status.index].memberNickname}</div>
 									<div class="board--detail">${BoardVO.boardTitle}</div>
@@ -94,10 +92,9 @@
 										varStatus="status">
 										<div class="board--category">
 											<c:choose>
-												<c:when
-													test="${BoardVO.boardCategoryNo == BoardCategory.boardCategoryNo}">
-						        ${BoardCategory.boardCategoryName}
-						      </c:when>
+												<c:when test="${BoardVO.boardCategoryNo == BoardCategory.boardCategoryNo}">
+						       								  ${BoardCategory.boardCategoryName}
+						                        </c:when>
 												<c:otherwise>
 													<!-- 아무것도 출력하지 않음 -->
 												</c:otherwise>
@@ -111,10 +108,6 @@
 										<span class="board--date-date"> <fmt:formatDate
 												value="${BoardVO.createdAt}" pattern="yyyy년 MM월 dd일" />
 										</span>
-										<%-- <span class="board--date-time">
-							  <fmt:formatDate value="${BoardVO.createdAt}" pattern="HH시 mm분 ss초" />
-							</span> --%>
-
 									</div>
 								</div>
 							</a>
@@ -155,6 +148,17 @@
 			</section>
 		</table>
 	</div>
+
+	<script>
+	    $(document).ready(function() {
+	        $('.board-row').on('click', function() {
+	            var href = $(this).closest('a').attr('href');
+	            if (href) {
+	                window.location.href = href;
+	            }
+	        });
+	    });
+	</script>
 
 	<script>
 		$(document).ready(function() {

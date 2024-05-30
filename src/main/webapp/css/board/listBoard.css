@@ -37,7 +37,7 @@
 	
 	.category-button:hover {
 	    background-color: #FB9B00;
-	    text-color: white;
+	    color: white;
 	    border-color: white;
 	}
 
@@ -70,13 +70,6 @@
   text-align: center; /* 텍스트 중앙 정렬 */
   margin-right: 15px;
   font-weight: bold;
-}
-
-img {
-  width: 40px; /* 이미지 너비 */
-  height: 40px; /* 이미지 높이 */
-  border-radius: 50%; /* 이미지를 원형으로 */
-  margin-right: 15px; /* 오른쪽 마진 */
 }
 
 .board--memberNickname {

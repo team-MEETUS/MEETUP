@@ -1,1 +1,246 @@
-@charset "EUC-KR";
+/* 모임 메뉴(crew-detail과 통일함) */
+.crew-menu__items {
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	padding: 0;
+	margin: 30px 0;
+	font-size: 20px;
+}
+
+.crew-menu__items li {
+	margin: 0 15px;
+}
+
+.crew-menu__items a {
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* General Styles */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+/* Board Main Section */
+.board-main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.board-titleSection {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.board--Title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.board--memberNickname {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.board-label {
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.board-date, .board-time, .board-hit {
+    display: inline-block;
+    margin-right: 10px;
+    color: #6c757d;
+}
+
+.board-Content {
+    padding: 20px 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Buttons */
+.board-listBoard, .board-updateBoard {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.board-listBoard a, .board-updateBoard a, .board-updateBoard button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    font-size: 0.875rem;
+}
+
+.board-updateBoard .btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.board-updateBoard .btn-danger:hover {
+    background-color: #bd2130;
+}
+
+.board-listBoard a:hover, .board-updateBoard a:hover, .board-updateBoard button:hover {
+    background-color: #0056b3;
+}
+
+/* Comment Section */
+.comment-section {
+    margin-top: 40px;
+}
+
+.comment-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.comment-body {
+    padding: 10px 0;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment-date {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.comment-text {
+    margin-bottom: 10px;
+}
+
+.comment-card button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+    margin-right: 5px;
+    font-size: 0.875rem;
+}
+
+.comment-card button:hover {
+    background-color: #218838;
+}
+
+.comment-card .deleteComment button {
+    background-color: #dc3545;
+}
+
+.comment-card .deleteComment button:hover {
+    background-color: #bd2130;
+}
+
+.comment-card form {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.comment-card .form-group {
+    margin-bottom: 10px;
+}
+
+/* Comment Write Section */
+.board-commentWrite {
+    margin-top: 40px;
+}
+
+.board-commentWrite form {
+    display: flex;
+    flex-direction: column;
+}
+
+.board-commentContent {
+    margin-bottom: 20px;
+}
+
+.board-commentContent textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    resize: vertical;
+    font-size: 1rem;
+}
+
+.board-commentWrite button {
+    align-self: flex-end;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.board-commentWrite button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .board-main {
+        padding: 15px;
+    }
+
+    .board-titleSection {
+        padding-bottom: 15px;
+    }
+
+    .board-Content {
+        padding: 15px 0;
+    }
+
+    .board-listBoard a, .board-updateBoard a, .board-updateBoard button {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+    }
+
+    .comment-card {
+        padding: 10px;
+    }
+
+    .comment-card button {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+} 
