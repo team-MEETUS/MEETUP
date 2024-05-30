@@ -97,12 +97,6 @@ public class ListAction implements Action {
 			crewList = dao.selectAllCrew(startNo, recordPerPage);
 		}
 		
-		
-		
-		
-		
-		
-		
 		// attribute 에 추가
 		req.setAttribute("crewList", crewList);
 		req.setAttribute("categoryBigList", categoryBigList);
@@ -117,6 +111,9 @@ public class ListAction implements Action {
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("isPrev", isPrev);
 		req.setAttribute("isNext", isNext);
+		req.setAttribute("categoryBigNo", categoryBigNo);
+		
+		System.out.println("categoryBigNo : " + categoryBigNo == null ? "null" : categoryBigNo);
 		
 		return "crew/list.jsp";
 	}

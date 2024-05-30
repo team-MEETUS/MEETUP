@@ -22,14 +22,14 @@
     <!-- 카테고리 -->
     <div class="main">
 	    <ul class="ctg-crew__items">
-	        <li>
+	        <li class="${categoryBigNo == 0 ? 'selected' : ''}" >
 	            <a href="crew?cmd=list">
 	            	<box-icon class="ctg-crew__icons" name="grid-alt"></box-icon>
 	            	전체모임
 	            </a>
 	        </li>
 	        <c:forEach var="categoryBigVO" items="${categoryBigList}">
-	        <li>
+	        <li class="${categoryBigNo != null && categoryBigNo == categoryBigVO.categoryBigNo ? 'selected' : ''}" >
 	            <a href="crew?cmd=list&ctg=${categoryBigVO.categoryBigNo}">
 	            	<box-icon class="ctg-crew__icons" name="${categoryBigVO.categoryBigIcon}"></box-icon>
 	            	${categoryBigVO.categoryBigName}

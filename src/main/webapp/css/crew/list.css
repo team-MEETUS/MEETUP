@@ -13,7 +13,6 @@
 }
 .ctg-crew__items li a {
   text-decoration: none;
-  color: black;
   display: block;
   white-space: nowrap;
 }
@@ -26,10 +25,40 @@
   margin: 5px auto;
   text-align: center;
 }
+.selected a {
+  color: var(--orange-5);
+  font-weight: bold ;
+}
+.selected box-icon {
+  fill: var(--orange-5);
+}
+
 /* 등록 버튼 */
 .d-flex {
   margin: 20px 0;
 }
+.meeting-button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.meeting-button none {
+	margin-bottom: 10px;	
+}
+.btn-main {
+  border-radius: 10px;
+  background-color: var(--orange-4);
+  padding: 10px 15px;
+  display: inline-block;
+  margin-bottom: 10px;
+  color: white;
+}
+.btn-main:hover {
+  background-color: var(--orange-5);
+}
+
 /* 모임 */
 .card-crew {
   border-radius: 20px;
@@ -78,44 +107,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* margin-top: 30px; */
-
   .crew-item {
     flex: 0 0 calc(50% - 10px); /* 50% 너비에 간격을 위한 여유를 줌 */
     box-sizing: border-box;
   }
-
   .crew-item a {
     text-decoration: none;
     color: black;
     display: block;
   }
-}
-
-/* 등록 버튼 */
-.meeting-button {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.meeting-button none {
-	margin-bottom: 10px;	
-}
-
-.btn-main {
-  border-radius: 10px;
-  background-color: var(--orange-4);
-  padding: 10px 15px;
-  display: inline-block;
-  margin-bottom: 10px;
-  color: white;
-}
-
-.btn-main:hover {
-  background-color: var(--orange-5);
 }
 
 /* 페이지 */
@@ -132,4 +132,10 @@
   .page-link {
     padding: 10px;
   }
+/* 현재 페이지 */
+.page-item.active .page-link {
+  color: var(--orange-5); 
+  font-weight: bold;
+}
+  
 }
