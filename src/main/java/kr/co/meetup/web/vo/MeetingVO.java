@@ -23,4 +23,10 @@ public class MeetingVO {
 	private String meetingOriginalImg;
 	private String meetingSaveImg;
 	private Timestamp createdAt;
+	
+	private String geoCity;
+	private String geoDistrict;
+	private String categoryBigName;
+	private String categorySmallName;
+	private String crewName;
 }
