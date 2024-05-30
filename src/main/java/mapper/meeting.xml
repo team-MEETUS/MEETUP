@@ -145,16 +145,23 @@
 	
 	<!-- geoCode를 매개변수로 오늘 이후 모든 정모 조회 (로그인) -->
 	<select id="selectAllMeetingByGeoCodeOrderMeetingDate" parameterType="int" resultType="MeetingVO">
-		SELECT m.meetingNo, m.crewNo, m.memberNo, m.meetingName, m.meetingDate, m.meetingLoc, m.meetingPrice, m.meetingMax, m.meetingAttend, m.meetingStatus, m.meetingOriginalImg, m.meetingSaveImg, m.createdAt, c.geoCode
+		SELECT m.meetingNo, m.crewNo, m.memberNo, m.meetingName, m.meetingDate, m.meetingLoc, m.meetingPrice, m.meetingMax, m.meetingAttend, m.meetingStatus, m.meetingOriginalImg, m.meetingSaveImg, m.createdAt, g.geoCity, g.geoDistrict , cs.categorySmallName, cb.categoryBigName , c.crewName
 		  FROM meeting m
-		  INNER JOIN crew c ON c.crewNo = m.crewNo
+		  LEFT JOIN crew c ON c.crewNo = m.crewNo
+		  LEFT JOIN category_big cb ON cb.categoryBigNo = c.categoryBigNo
+		  LEFT JOIN category_small cs ON cs.categorySmallNo = c.categorySmallNo
+		  LEFT JOIN geo g  ON g.geoCode = c.geoCode
 		 WHERE meetingDate > CURRENT_DATE() AND meetingStatus = 1 AND c.geoCode = #{geoCode}
 		 ORDER BY meetingDate;
 	</select>
 	<!-- 오늘 이후 모든 정모 조회 (비로그인) -->
 	<select id="selectAllMeetingOrderMeetingDate" resultType="MeetingVO">
-		SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
-		  FROM meeting
+		SELECT m.meetingNo, m.crewNo, m.memberNo, m.meetingName, m.meetingDate, m.meetingLoc, m.meetingPrice, m.meetingMax, m.meetingAttend, m.meetingStatus, m.meetingOriginalImg, m.meetingSaveImg, m.createdAt, g.geoCity, g.geoDistrict , cs.categorySmallName, cb.categoryBigName , c.crewName
+		  FROM meeting m
+		  LEFT JOIN crew c ON c.crewNo = m.crewNo
+		  LEFT JOIN category_big cb ON cb.categoryBigNo = c.categoryBigNo
+		  LEFT JOIN category_small cs ON cs.categorySmallNo = c.categorySmallNo
+		  LEFT JOIN geo g  ON g.geoCode = c.geoCode
 		 WHERE meetingDate > CURRENT_DATE() AND meetingStatus = 1
 		 ORDER BY meetingDate;
 	</select>
