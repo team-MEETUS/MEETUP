@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
@@ -30,13 +31,13 @@
     <div class="swiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img src="https://placehold.co/600x400" />
+          <img src="upload/banner1.png" />
         </div>
         <div class="swiper-slide">
-          <img src="https://placehold.co/500x300" />
+          <img src="upload/banner2.png" />
         </div>
         <div class="swiper-slide">
-          <img src="https://placehold.co/400x400" />
+          <img src="upload/banner3.png" />
         </div>
       </div>
       <div class="swiper-pagination"></div>
@@ -47,9 +48,11 @@
    		<!-- 로그인 상태 -->
    		<c:if test="${not empty sessionScope.loginMember}">
    			<!-- 참여한 모임 -->
-	   		<div class="crew-title">
-	   			<h3 class="crew-title-contents">참여한 모임</h3>
-	   		</div>
+   			<c:if test="${not empty sessionScope.loginMemberCrewList}">
+		   		<div class="crew-title">
+		   			<h3 class="crew-title-contents">참여한 모임</h3>
+		   		</div>
+	   		</c:if>
 	   		<div class="crew-container">
 	   			<c:forEach var="crewVO" items="${loginMemberCrewList}" end="3">
 	   				<div class="crew-item">
@@ -67,7 +70,7 @@
 	   				</div>
 	   			</c:forEach>
 	   		</div>
-	   		 <c:if test="${fn:length(loginMemberCrewList) > 5}">
+	   		 <c:if test="${fn:length(loginMemberCrewList) > 4}">
 	            <div class="more-list">
 	                <a href="member?cmd=myMenu">더보기</a>
 	            </div>
@@ -76,8 +79,92 @@
 	        <div class="crew-title">
 	   			<h3 class="crew-title-contents">인기있는 모임</h3>
 	   		</div>
+	   		<div class="crew-container">
+	   			<c:forEach var="crewVO" items="${loginPopularCrewList}" end="3">
+	   				<div class="crew-item">
+	   					<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}">
+				        	<div class="card-crew">
+					            <img class="crew-img" src="upload/${crewVO.crewSaveImg}" alt="${crewVO.crewName}" />
+					            <div class="crew-details">
+					            	<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
+					                <p class="crew-name">${crewVO.crewName}</p>
+					                <p class="crew-intro">${crewVO.crewIntro}</p>
+					                <p class="crew-geo">${crewVO.geoDistrict != null ? crewVO.geoDistrict : crewVO.geoCity} · 멤버 ${crewVO.crewAttend}</p>
+					            </div>
+				        	</div>
+				    	</a>
+	   				</div>
+	   			</c:forEach>
+	   		</div>
+	   		<c:if test="${fn:length(loginPopularCrewList) > 4}">
+	            <div class="more-list">
+	                <a href="crew?cmd=list">더보기</a>
+	            </div>
+	        </c:if>
+	        <!-- 다가오는 정모 -->
+	        <div class="crew-title">
+	   			<h3 class="crew-title-contents">다가오는 정모</h3>
+	   		</div>
+	   		<div class="crew-container">
+	   			<c:forEach var="meetingVO" items="${loginComingMeetingList}" end="3">
+	   				<c:set var="meetingDate" value="${meetingVO.meetingDate}"/>
+	   				<fmt:formatDate var="pdMeetingDate" value="${meetingDate}" pattern="MM/dd(E) hh:mm"/>
+	   				<div class="crew-item">
+	   					<a href="crew?cmd=detail&crewNo=${meetingVO.crewNo}">
+	   						<div class="card-crew">
+	   							<img class="crew-img" src="upload/${meetingVO.meetingSaveImg}" alt="${meetingVO.meetingName}" />
+	   							<div class="crew-details">
+	   								<span class="crew-category">${meetingVO.categorySmallName != null ? meetingVO.categorySmallName : meetingVO.categoryBigName}</span>
+	   								<p class="crew-name">${meetingVO.meetingName}</p>
+	   								<p class="crew-geo">${meetingVO.geoDistrict != null ? meetingVO.geoDistrict : meetingVO.geoCity} · ${meetingVO.crewName}</p>
+	   								<p class="meeting-attend">
+					                	<span style="margin-right:10px;">${pdMeetingDate}</span>
+					                    <box-icon style="position:relative; top:7px;" name='group' type='solid' ></box-icon> 
+					                    <span>${meetingVO.meetingAttend}/${meetingVO.meetingMax}</span>
+					                </p>
+	   							</div>
+	   						</div>
+	   					</a>
+	   				</div>
+	   			</c:forEach>
+	   		</div>
    		</c:if>
    		<!-- 비로그인 상태 -->
+   		<c:if test="${empty sessionScope.loginMember}">
+   			<!-- 인기있는 모임 -->
+	        <div class="crew-title">
+	   			<h3 class="crew-title-contents">인기있는 모임</h3>
+	   		</div>
+	   		<div class="crew-container">
+	   			<c:forEach var="crewVO" items="${noLoginPopularCrewList}" end="3">
+	   				<div class="crew-item">
+	   					<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}">
+				        	<div class="card-crew">
+					            <img class="crew-img" src="upload/${crewVO.crewSaveImg}" alt="${crewVO.crewName}" />
+					            <div class="crew-details">
+					            	<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
+					                <p class="crew-name">${crewVO.crewName}</p>
+					                <p class="crew-intro">${crewVO.crewIntro}</p>
+					                <p class="crew-geo">${crewVO.geoDistrict != null ? crewVO.geoDistrict : crewVO.geoCity} · 멤버 ${crewVO.crewAttend}</p>
+					            </div>
+				        	</div>
+				    	</a>
+	   				</div>
+	   			</c:forEach>
+	   		</div>
+	   		<c:if test="${fn:length(noLoginPopularCrewList) > 4}">
+	            <div class="more-list">
+	                <a href="crew?cmd=list">더보기</a>
+	            </div>
+	        </c:if>
+	        <!-- 다가오는 정모 -->
+	        <div class="crew-title">
+	   			<h3 class="crew-title-contents">다가오는 정모</h3>
+	   		</div>
+	   		<div class="crew-container">
+	   			
+	   		</div>
+   		</c:if>
    	</div>
    </section>
 </div>
@@ -88,6 +175,12 @@
     // Optional parameters
     direction: "horizontal",
     loop: true,
+    
+    autoplay: {
+        delay: 5000,
+      },
+      
+    speed: 1000,
 
     // If we need pagination
     pagination: {

@@ -13,7 +13,7 @@ public class LogoutAction implements Action {
 		// 세션에 담긴 회원 MemberVO 정보 삭제
 		session.invalidate();
 		// 메인페이지로 보냄
-		return "index.jsp";
+		return "main?cmd=null";
 	}
 
 }

@@ -10,8 +10,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.dao.GeoDAO;
 import kr.co.meetup.web.dao.MemberDAO;
+import kr.co.meetup.web.vo.GeoVO;
 import kr.co.meetup.web.vo.MemberVO;
 
 @WebServlet("/memberUpload")
@@ -71,7 +73,14 @@ public class UpdateAction extends HttpServlet {
 			
 			mdao.updateOneMemberByMemberNo(vo);
 			
-			req.getSession().setAttribute("loginMember", vo);
+			vo = mdao.selectOneMemberByMemberNo(memberNo);
+			GeoVO gvo = gdao.selectOneGeoCityGeoDistrictByGeoCode(geoCode);
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("loginMember", vo);
+			session.setAttribute("loginMemberGeo", gvo);
+			
+//			req.getSession().setAttribute("loginMember", vo);
 			
 			resp.sendRedirect("member?cmd=myMenu");
 		}

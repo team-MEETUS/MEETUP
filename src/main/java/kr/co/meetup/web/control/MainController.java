@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.meetup.web.action.Action;
 import kr.co.meetup.web.action.MainAction;
 
-@WebServlet("")
+@WebServlet("/main")
 public class MainController extends HttpServlet {
 	
 	private void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -20,7 +20,7 @@ public class MainController extends HttpServlet {
 		// cmd 파라미터 값 가져오기 
 		String cmd = req.getParameter("cmd");
 		String url = "";
-		Action action = null;
+		Action action = new MainAction();
 		
 		if(cmd == null) {
 			action = new MainAction();

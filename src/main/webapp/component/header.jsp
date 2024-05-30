@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header>
 	<nav>
-		<h1 class="header-logo"><a class="logo-link" href="member">MEETUP</a></h1>
+		<h1 class="header-logo"><a class="logo-link" href="main">MEETUP</a></h1>
 		<div class="header-link">
 			<a href="crew?cmd=list">모임</a>
 			<a href="meeting?cmd=list">정모</a>
