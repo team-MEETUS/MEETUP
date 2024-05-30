@@ -1,164 +1,131 @@
-<%@page import="java.time.LocalDateTime"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.time.Instant"%>
-<%@page import="java.sql.Date"%>
-<%@page import="java.sql.Timestamp"%>
-<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
-<%@page import="kr.co.meetup.web.vo.MeetingVO"%>
-<%@page import="java.util.List"%>
-<%@page import="kr.co.meetup.web.dao.MeetingDAO"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>list.jsp</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<style>
-h2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #333;
-  text-align: center;
-}
-
-.category {
- width: 100%;
-}
-
-.container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-gap: 20px;
-  justify-content: center;
-  align-items: center;
-}
-
-.meetingOne {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  align-items: center; /* 수직 중앙 정렬 */
-  margin: 10px 0;
-}
-
-.meetingOne:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.meetingOne img {
-  max-width: 100px;
-  height: auto;
-  border-radius: 4px;
-  margin-right: 20px;
-  float: left;
-}
-
-.meetingOne .meetingDate,
-.meetingOne .meetingName,
-.meetingOne .meetingPrice,
-.meetingOne .meetingAttend {
-  margin-bottom: 5px;
-  font-size: 14px;
-  color: #555;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.pagination .page-item .page-link {
-  color: #333;
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  padding: 8px 12px;
-  margin: 0 5px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.pagination .page-item.active .page-link {
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.pagination .page-item .page-link:hover {
-  background-color: #e9e9e9;
-}
-</style>
+<title>MEETUP</title>
+<!-- CSS -->
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
+<link rel="stylesheet" href="./css/meeting/list.css" type="text/css" />
+<!-- CDN -->
+<script src="component/header.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 <body>
-	<h2>정모 페이지</h2>
-	<div class="container">
-		<br />
-		<div class="category">
+<div class="container">
+	<jsp:include page="../component/header.jsp"></jsp:include>
+	
+	<!-- 날짜별 카테고리 -->
+	<ul class="meeting-menu_items">
 		<%
- 			String[] dayOfWeekArr = {"일", "월", "화", "수", "목", "금", "토"};
-			Timestamp today = new Timestamp(System.currentTimeMillis());
-			int day = today.getDay();
-			int dateOfMonth = today.getDate();
+			java.time.LocalDate LDate = java.time.LocalDate.now();
+			java.time.format.DateTimeFormatter fm = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String fdate = LDate.format(fm);
 			
 			// 초기값 설정
 			String strDate = request.getParameter("date");
-			if(strDate == null) {
-				strDate = sdf.format(today);
-			}
-			java.util.Date date = new java.util.Date(today.getTime());
-			
-			for(int i = 0; i < 7; i++) {
+// 			if(strDate == null) {
+// 				strDate = fdate;
+// 			}
 		%>
-				<a class="btn" href="meeting?cmd=list&date=<%=new Date(date.getTime() + (1000 * 60 * 60 * 24) * i)%>">		
-					<div><%= dateOfMonth + i %></div>
-					<div><%= dayOfWeekArr[(day + i) % 7] %></div>
-				</a>
+			<c:set var="today" value="<%= strDate %>"/>
+			<c:set var="ftoday" value="<%= fdate %>"/>
+			<h2>${today }</h2>
+			<h2>${ftoday }</h2>
+			<li class="${today eq null ? 'selected' : '' }"><a href="meeting?cmd=list&date=<%= LDate.plusDays(i) %>">
+				<div class="day-of-week"><%= LDate.plusDays(0).getDayOfWeek().getDisplayName(java.time.format.TextStyle.NARROW,  java.util.Locale.KOREAN) %> </div>
+	            <div><%= LDate.plusDays(0).getDayOfMonth() %></div>
+           	</a></li>		
 		<%
-			}
+			for(int i = 1; i < 7; i++) {
 		%>
-		</div>
-		
-		<br />		
-		<c:forEach var="MeetingVO" items="${list}">
-			<div class="meetingOne">
-				<div>${MeetingVO.meetingSaveImg}</div>
-				<a href="crew?cmd=detail&crewNo=${MeetingVO.crewNo}">${MeetingVO.meetingName}</a>
-				<img src="upload/${MeetingVO.meetingSaveImg}" alt="" />
-				
-				<div>${MeetingVO.meetingDate}</div>
-				<div>${MeetingVO.meetingAttend}/${MeetingVO.meetingMax} </div>
-			</div>
-		</c:forEach>
-
-		<br />
-		<div>
-			<nav aria-label="Page navigation example">
-			 	<ul class="pagination">
-			 		<c:if test="${isPrev}">
-				    	<li class="page-item"><a href="meeting?cmd=list&date=<%=strDate%>&cp=${currentPage-1}" class="page-link"><</a></li>
-				    </c:if>
-				    
-					<c:forEach var="i" begin="${startPage}" end="${endPage}">
-						<li class="page-item"><a class="page-link" href="meeting?cmd=list&date=<%=strDate%>&cp=${i}">[${i}]</a></li>
-					</c:forEach>
-				    
-				    <c:if test="${isNext}">
-				    	<li class="page-item"><a href="meeting?cmd=list&date=<%=strDate%>&cp=${currentPage+1}" class="page-link">></a></li>
-				    </c:if>
-			 	</ul>
-			</nav>
-		</div>
+				<c:set var="date" value="<%= LDate.plusDays(i).format(fm) %>"/>
+		        <li class="${date eq today ? 'selected' : '' }"><a href="meeting?cmd=list&date=<%= LDate.plusDays(i) %>">
+					<div class="day-of-week"><%= LDate.plusDays(i).getDayOfWeek().getDisplayName(java.time.format.TextStyle.NARROW,  java.util.Locale.KOREAN) %> </div>
+		            <div><%= LDate.plusDays(i).getDayOfMonth() %></div>
+            	</a></li>
+		<%  }  %>	
+			
+	</ul>
+	<div class="meeting-container">
+		<c:set var="i" value="${1}"/>
+		<c:forEach var="meetingVO" items="${meetingList}">
+			<c:set var="meetingDate" value="${meetingVO.meetingDate}"/>
+			<fmt:formatDate var="pdMeetingDate" value="${meetingDate}" pattern="MM/dd(E) hh:mm"/>
+            <div class="meeting-item">
+        		<a href="crew?cmd=detail&crewNo=${meetingVO.crewNo}"><div class="card-meeting">
+                    <img class="meeting-img" src="upload/${meetingVO.meetingSaveImg}" alt="${meetingVO.meetingName}" />
+                    <div class="meeting-details">
+                        <span class="meeting-category">${meetingVO.categorySmallName != null ? meetingVO.categorySmallName : meetingVO.categoryBigName}</span>
+                        <p class="meeting-name">${meetingVO.meetingName}</p>
+                        <p class="meeting-geo">${meetingVO.geoDistrict != null ? meetingVO.geoDistrict : meetingVO.geoCity} · ${meetingVO.crewName}</p>
+						<p class="meeting-attend">
+							<span style="margin-right:10px;">${pdMeetingDate}</span>
+							<box-icon style="position:relative; top:7px;" name='group' type='solid' ></box-icon> 
+							<span>${meetingVO.meetingAttend}/${meetingVO.meetingMax}</span>
+						</p>
+                    </div>
+                </div></a>
+            </div>
+            <c:set var="i" value="${i+1}"/>
+        </c:forEach>
+        <c:if test="${i == 1}">
+        	<div class="meeting-item"><a href="crew?cmd=detail&crewNo=${meetingVO.crewNo}"><div class="card-meeting" style="display: none;">1</div></a></div>
+        </c:if>
+        <c:if test="${i == 2}">
+        	<div class="meeting-item"><a href="crew?cmd=detail&crewNo=${meetingVO.crewNo}"><div class="card-meeting" style="display: none;">1</div></a></div>
+        </c:if>
+        
+        <!-- 페이지 -->
+	    <nav aria-label="Page navigation example">
+		    <ul class="pagination">
+		        <!-- 이전 페이지 -->
+		        <c:if test="${isPrev}">
+		            <c:if test="${not empty date}">
+		                <li class="page-item"><a class="page-link" href="crew?cmd=list&date=${date}&cp=${startPage - 1}">Previous</a></li>
+		            </c:if>
+		            <c:if test="${empty date}">
+		                <li class="page-item"><a class="page-link" href="crew?cmd=list&cp=${startPage - 1}">Previous</a></li>
+		            </c:if>
+		        </c:if>
+		        <!-- 페이지 목록 -->
+		        <c:forEach var="i" begin="${startPage}" end="${endPage}">    
+		            <c:choose>
+		                <c:when test="${i == currentPage}">
+		                    <li class="page-item active"><a class="page-link" >${i}</a></li>
+		                </c:when>
+		                <c:otherwise>
+		                    <c:if test="${not empty date}">
+		                        <li class="page-item"><a class="page-link" href="meeting?cmd=list&date=${date}&cp=${i}">${i}</a></li>
+		                    </c:if>
+		                    <c:if test="${empty date}">
+		                        <li class="page-item"><a class="page-link" href="meeting?cmd=list&cp=${i}">${i}</a></li>
+		                    </c:if>
+		                </c:otherwise>
+		            </c:choose>
+		        </c:forEach>
+		        <!-- 다음 페이지 -->
+		        <c:if test="${isNext}">
+		            <c:if test="${not empty date}">
+		                <li class="page-item"><a class="page-link" href="meeting?cmd=list&date=${date}&cp=${endPage + 1}">Next</a></li>
+		            </c:if>
+		            <c:if test="${empty date}">
+		                <li class="page-item"><a class="page-link" href="meeting?cmd=list&cp=${endPage + 1}">Next</a></li>
+		            </c:if>
+		        </c:if>
+		    </ul>
+		</nav>
 	</div>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
+</div>
 </body>
 </html>
