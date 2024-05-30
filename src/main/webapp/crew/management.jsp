@@ -10,65 +10,12 @@
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
 <link rel="stylesheet" href="./css/header.css" type="text/css" />
+<link rel="stylesheet" href="./css/crew/management.css" type="text/css" />
 <!-- CDN -->
 <script src="component/header.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-<style>
-	.container {
-		width: 1024px;
-		margin: 0 auto;
-	}
-	/* 모임 메뉴 */
-	.crew-menu__items {
-		display: flex;
-		justify-content: center;
-		list-style: none;
-		padding: 0;
-		margin: 30px 0;
-		font-size: 20px;
-	}
-	.crew-menu__items li {
-		margin: 0 50px;
-	}
-	.crew-menu__items a {
-		text-decoration: none;
-		color: black;
-		font-weight: bold;
-	}
-	/* 모임회원 */
-	.crew-member-item {
-		display: flex;
-		align-items: center;
-		margin: 10px;
-		width: 100%;
-	}
-	.crew-member-item a {
-	    text-decoration: none;
-	}
-	.crew-member-img, box-icon[type="solid"][name="user-circle"] {
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		margin-right: 20px;
-	}
-	.crew-member-nickname {
-		font-weight: bold;
-		line-height: 50px; 
-		margin: 0; 
-		color: black;
-	}
-	.crew-category {
-		display: inline-block;
-		margin: 10px 10px 10px 0;
-		border-radius: 20px;
-        background-color: #FB9B00;
-        padding: 8px;
-        font-size: 14px;
-        color: white;
-	}
-</style>
 </head>
 <body>
 <div class="container">
@@ -76,10 +23,10 @@
 	<!-- 메뉴 -->
 	<ul class="crew-menu__items">
 		<li>
-			<button id="showCrewMember">모임회원</button>
+			<button class="crew-menu__btn" id="showCrewMember">모임회원</button>
 		</li>
 		<li>
-			<button id="showCrewSignUp">가입신청</button>
+			<button class="crew-menu__btn" id="showCrewSignUp">가입신청</button>
 		</li>
 	</ul>
 	
@@ -87,38 +34,52 @@
 	<div class="crew-container" id="CrewMember" >
 	<c:forEach var="crewMemberVO" items="${crewMemberList}">
 		<!-- 회원멤버만 -->
-		<c:if test="${crewMemberVO.crewMemberStatus != 0 && crewMemberVO.crewMemberStatus != 4 && crewMemberVO.crewMemberStatus != 5}">
-			<a href="member?cmd=memberProfile&memberNo=${crewMemberVO.memberNo}" style="text-decoration: none;"><div class="crew-member-item">
-				<c:if test="${empty crewMemberVO.memberSaveImg}">
-					<box-icon type='solid' name='user-circle'></box-icon>
-				</c:if>
-				<c:if test="${not empty crewMemberVO.memberSaveImg}">
-					<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
-				</c:if>
-				<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
-			</div></a>
-			<!--  운영진 -->
-			<c:if test="${crewMemberVO.crewMemberStatus == 2}">
-				<!-- 모임장만 가능 -->
-				<c:if test="${role eq 'leader'}">
-					<a href="crew?cmd=mng&requestType=transfer&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님께 모임장을 양도하시겠습니까?" >모임장양도</a>
-				</c:if>
-				<!-- 모임장 & 운영진(본인 제외) -->
-				<c:if test="${role eq 'leader' || (role eq 'adminMember' && sessionScope.loginMember.memberNo ne crewMemberVO.memberNo)}">
-					<a href="crew?cmd=mng&requestType=demote&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 일반멤버로 변경 하시겠습니까?" >운영진해제</a>
-				</c:if>
-			</c:if>
-			<!-- 일반회원 -->
-			<c:if test="${crewMemberVO.crewMemberStatus == 1}">
-				<!-- 모임장만 가능 -->
-				<c:if test="${role eq 'leader'}">
-					<a href="crew?cmd=mng&requestType=transfer&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님께 모임장을 양도하시겠습니까?" >모임장양도</a>
-				</c:if>
-				<!-- 모임장 & 운영진 -->
-				<a href="crew?cmd=mng&requestType=appoint&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 운영진으로 임명하시겠습니까?" >운영진임명</a>
-				<a href="crew?cmd=mng&requestType=kick&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 강퇴하시겠습니까?" >강퇴</a>
-			</c:if>
-		</c:if>
+        <c:if test="${crewMemberVO.crewMemberStatus != 0 && crewMemberVO.crewMemberStatus != 4 && crewMemberVO.crewMemberStatus != 5}">
+            <div class="crew-member-item">
+                <a href="member?cmd=memberProfile&memberNo=${crewMemberVO.memberNo}" style="text-decoration: none;">
+                    <!-- 프로필 -->
+                    <c:if test="${empty crewMemberVO.memberSaveImg}">
+                        <box-icon type='solid' name='user-circle'></box-icon>
+                    </c:if>
+                    <c:if test="${not empty crewMemberVO.memberSaveImg}">
+                        <img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
+                    </c:if>
+                    <!-- 닉네임 -->
+                    <span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
+                    <!-- 뱃지 -->
+                    <c:if test="${crewMemberVO.crewMemberStatus eq 3}">
+                        <box-icon type='solid' name='star' color='white' class="member-badge-leader"></box-icon>
+                    </c:if>
+                    <c:if test="${crewMemberVO.crewMemberStatus eq 2}">
+                        <box-icon type='solid' name='shield-alt-2' color='white' class="member-badge-admin"></box-icon>
+                    </c:if>
+                </a>
+                <!-- 역할 별 승인버튼 -->
+                <div class="crew-actions">
+                    <!-- 운영진 -->
+                    <c:if test="${crewMemberVO.crewMemberStatus == 2}">
+                        <!-- 모임장만 가능 -->
+                        <c:if test="${role eq 'leader'}">
+                            <a href="crew?cmd=mng&requestType=transfer&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님께 모임장을 양도하시겠습니까?" >모임장양도</a>
+                        </c:if>
+                        <!-- 모임장 & 운영진(본인 제외) -->
+                        <c:if test="${role eq 'leader' || (role eq 'adminMember' && sessionScope.loginMember.memberNo ne crewMemberVO.memberNo)}">
+                            <a href="crew?cmd=mng&requestType=demote&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 일반멤버로 변경 하시겠습니까?" >운영진해제</a>
+                        </c:if>
+                    </c:if>
+                    <!-- 일반회원 -->
+                    <c:if test="${crewMemberVO.crewMemberStatus == 1}">
+                        <!-- 모임장만 가능 -->
+                        <c:if test="${role eq 'leader'}">
+                            <a href="crew?cmd=mng&requestType=transfer&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님께 모임장을 양도하시겠습니까?" >모임장양도</a>
+                        </c:if>
+                        <!-- 모임장 & 운영진 -->
+                        <a href="crew?cmd=mng&requestType=appoint&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 운영진으로 임명하시겠습니까?" >운영진임명</a>
+                        <a href="crew?cmd=mng&requestType=kick&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님을 강퇴하시겠습니까?" >강퇴</a>
+                    </c:if>
+                </div>
+            </div>
+        </c:if>
 	</c:forEach>
 	</div>
 	
@@ -126,17 +87,29 @@
 	<div class="crew-container" id="CrewSignUp" style="display:none;">
 	<c:forEach var="crewMemberVO" items="${crewMemberList}">
 	<c:if test="${crewMemberVO.crewMemberStatus == 4}">
-		<a href="" style="text-decoration: none;"><div class="crew-member-item">
-			<c:if test="${empty crewMemberVO.memberSaveImg}">
-				<box-icon type='solid' name='user-circle'></box-icon>
-			</c:if>
-			<c:if test="${not empty crewMemberVO.memberSaveImg}">
-				<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
-			</c:if>
-			<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
-		</div></a>
-		<a href="crew?cmd=mng&requestType=approval&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님의 가입을 승인하시겠습니까?" >가입승인</a>
-		<a href="crew?cmd=mng&requestType=reject&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님의 가입을 거절하시겠습니까?" >가입거절</a>
+		<div class="crew-member-item">
+			<a href="" style="text-decoration: none;">
+				<c:if test="${empty crewMemberVO.memberSaveImg}">
+					<box-icon type='solid' name='user-circle'></box-icon>
+				</c:if>
+				<c:if test="${not empty crewMemberVO.memberSaveImg}">
+					<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
+				</c:if>
+				<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
+				<!-- 뱃지 -->
+				<c:if test="${crewMemberVO.crewMemberStatus eq 3}">
+				<box-icon type='solid' name='star' color='white' class="member-badge-leader" ></box-icon>
+				</c:if>
+				<c:if test="${crewMemberVO.crewMemberStatus eq 2}">
+				<box-icon type='solid' name='shield-alt-2' color='white' class="member-badge-admin" ></box-icon>
+				</c:if>
+			</a>
+			<!-- 가입신청 승인버튼 -->
+	        <div class="crew-actions">
+				<a href="crew?cmd=mng&requestType=approval&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님의 가입을 승인하시겠습니까?" >가입승인</a>
+				<a href="crew?cmd=mng&requestType=reject&crewNo=${crewNo}&memberNo=${crewMemberVO.memberNo}" class="crew-category" data-message="${crewMemberVO.memberNickname}님의 가입을 거절하시겠습니까?" >가입거절</a>
+			</div>
+		</div>
 	</c:if>
 	</c:forEach>
 	</div>
@@ -171,20 +144,26 @@ $(document).ready(function () {
 	        }
         });
     });
-    
- 	// "모임회원" 버튼 클릭 이벤트
-    $("#showCrewMember").click(function () {
-        $("#CrewMember").show(); 
-        $("#CrewSignUp").hide(); 
-    });
 
-    // "가입신청" 버튼 클릭 이벤트
-    $("#showCrewSignUp").click(function () {
-        $("#CrewSignUp").show(); 
-        $("#CrewMember").hide();
+    // 메뉴 버튼 클릭 이벤트
+    $(".crew-menu__btn").click(function () {
+        $(".crew-menu__btn").removeClass("active"); // 모든 버튼에서 active 클래스 제거
+        $(this).addClass("active"); // 클릭된 버튼에 active 클래스 추가
+
+        // 섹션 전환
+        var targetId = $(this).attr("id") === "showCrewMember" ? "#CrewMember" : "#CrewSignUp";
+        $(".crew-container").hide();
+        $(targetId).show();
     });
     
 });
+
+//초기 로드시 모임회원 버튼에 active 클래스 추가
+$("#showCrewMember").addClass("active");
+// 초기 로드시 모임회원 섹션 표시
+$("#CrewMember").show();
+    
+
 </script>
 </body>
 </html>
