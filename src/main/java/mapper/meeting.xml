@@ -21,7 +21,7 @@
 	<select id="selectAllMeetingByCrewNo" parameterType="int" resultType="MeetingVO">
 	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
 	  FROM meeting
-	 WHERE crewNo = #{crewNo} AND meetingDate > NOW() AND meetingStatus = 1
+	 WHERE crewNo = #{crewNo} AND meetingDate > CURRENT_DATE() AND meetingStatus = 1
 	 ORDER BY meetingDate
 	</select>
 	
