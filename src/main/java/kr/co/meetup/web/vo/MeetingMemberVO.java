@@ -12,5 +12,7 @@ public class MeetingMemberVO {
 	private int meetingNo;
 	private int memberNo;
 	
+	// JOIN 해오는 테이블 정보
 	private String memberSaveImg;
+	private String memberNickname;
 }

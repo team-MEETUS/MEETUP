@@ -12,292 +12,12 @@
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
 <link rel="stylesheet" href="./css/header.css" type="text/css" />
+<link rel="stylesheet" href="./css/crew/detail.css" type="text/css" />
 <!-- CDN -->
 <script src="component/header.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-<style>
-	.container {
-		width: 1024px;
-		margin: 0 auto;
-	}
-	/* 모임 메뉴 */
-	.crew-menu__items {
-		display: flex;
-		justify-content: center;
-		list-style: none;
-		padding: 0;
-		margin: 30px 0;
-		font-size: 20px;
-	}
-	.crew-menu__items li {
-		margin: 0 15px;
-	}
-	.crew-menu__items a {
-		text-decoration: none;
-		color: black;
-		font-weight: bold;
-	}
-	/* 모임 배너 이미지 */
-	.crew-banner-container {
-		width: 100%;
-	}
-	.crew-banner {
-		width: 100%;
-		height: 300px;
-		border-radius: 8px;
-	}
-    /* 지역 & 카테고리 & 아이콘 */
-	.crew-info {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		margin-top: 10px;
-	}
-	.crew-geo, .crew-category {
-		display: inline-block;
-		margin: 10px 10px 10px 0;
-		border-radius: 20px;
-        background-color: #FB9B00;
-        padding: 8px;
-        font-size: 14px;
-        color: white;
-	}
-	.crew-info-left {
-		display: flex;
-	}
-	.crew-info-icon {
-		width: 37px;
-		height: 37px;
-		padding: 8px;
-		cursor: pointer;
-	}
-	/* 모임정보 & 모임멤버 섹션 */
-	.crew-container {
-		display: flex;
-		flex-direction: row;
-		margin-bottom: 50px;
-		height: 500px;
-	}
-	.left-section {
-        flex: 3;
-        margin-right: 20px;
-    }
-    .right-section {
-        flex: 1; 
-        background-color: #e6e6e6;
-        border-radius: 20px;
-        padding: 10px;
-    }
-    /* 모임정보 */
-	.crew-name {
-		font-size: 2em;
-		font-weight: bold;
-	}
-	.crew-content {
-		margin-top: 10px;
-		margin-bottom: 20px;
-		height: 370px;
-	}
-	.btn-main {
-		margin-right: 15px;
-        background-color: #FB9B00;
-        padding: 8px;
-        font-size: 14px;
-        width: 650px;
-        color: white;
-        text-align: center;
-	}
-	.like-icon {
-		height: 30px;
-		width: 30px;
-	}
-	/* 모임멤버 */
-	.crew-member-wrap {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		margin-top: 10px;
-	}
-	.crew-member {
-		width: 50%;
-		font-weight: bold;
-		margin-bottom: 20px;
-		display: flex;
-	}
-	.member-management-wrap {
-		display: flex;
-	}
-	.group-icon member-management {
-		display: inline-block;
-	}
-	.member-management {
-		color: black;
-	}
-	.crew-member-item {
-		display: flex;
-		align-items: center;
-		margin: 10px;
-		position: relative;
-	}
-	.member-badge-leader {
-	    position: absolute; /* 추가: 절대 위치 설정 */
-	    bottom: 0; /* 추가: 하단에 위치 */
-	    right: 170px; /* 추가: 우측에 위치 */
-	    padding: 5px; /* 추가: 뱃지 내부 여백 */
-	    background-color: lightpink;
-	    border-radius: 50px;
-	}
-	.member-badge-admin {
-	    position: absolute; /* 추가: 절대 위치 설정 */
-	    bottom: 0; /* 추가: 하단에 위치 */
-	    right: 170px; /* 추가: 우측에 위치 */
-	    padding: 5px; /* 추가: 뱃지 내부 여백 */
-	    background-color: var(--blue-3);
-	    border-radius: 50px;
-	}
-	.crew-member-item a {
-	    text-decoration: none;
-	}
-	.crew-member-img, box-icon[type="solid"][name="user-circle"] {
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		margin-right: 20px;
-	}
-	.crew-member-nickname {
-		font-weight: bold;
-		line-height: 50px; 
-		margin: 0; 
-		color: black;
-	}
-	.meeting-container {
-		width: 100%;
-		margin-top: 50px;
-	}
-	.meeting-logo {
-		font-size: 2em;
-		font-weight: bold;
-	}
-	/* 수정 및 삭제 팝업 */
-	.edit-delete-popup {
-		display: none; 
-		position: absolute;
-		background-color: white;
-		border: 1px solid #ccc;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		border-radius: 8px;
-		padding: 10px;
-		z-index: 1000;
-	}
-	.edit-delete-popup a {
-		display: block;
-		text-decoration: none;
-		color: black;
-		margin-bottom: 5px;
-	}
-	/* 정모 */
-	.meetingOne-container {
-		width: 500px;
-		display: inline-block;
-	}
-	.meeting-header {
-		font-size: 20px;
-		font-weight: bold;
-		margin-bottom: -30px;
-	}
-	
-	.meeting-header>div {
-		margin-bottom: 10px;
-	}
-	/* 정모 박스 */
-	.meetingOne {
-	  width: 380px;
-	  border: 1px solid #ccc;
-	  border-radius: 20px;
-	  padding: 20px 40px;
-	  text-align: left;
-	  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	  display: inline-block;
-	  margin: 10px;
-	  background-color: rgb(230, 230, 230);
-	  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
-	  transition: box-shadow 0.3s ease; /* 부드러운 전환 효과 추가 */
-	  line-height: 20px;
-	}
-	
-	.meetingOne:hover {
-	    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 호버 시 더 진한 그림자 */
-	}
-	
-	.meeting-info>img {
-		width: 160px;
-		height: 120px;
-	}
-	
-	.meeting-info {
-		display: flex;
-		font-size: 17px;
-	}
-	
-	.meeting-info>div>div {
-		margin: 7px 7px;
-	}
-	
-	.meeting-icon {
-		margin-left: 10px;
-		position: relative; /* 상대 위치 설정 */
-    	display: inline-block; /* 내부 요소들을 인라인 블록으로 설정 */
-	}
-	
-	.meeting-icon>span>a {
-		width: 30px;
-		height: 30px;
-	}
-	
-	.list-icon {
-		position: absolute; /* 절대 위치 설정으로 다른 요소 위에 올라가게 함 */
-	    top: 0; /* 상단에서 0px의 위치에 배치 */
-	    left: 355px; /* 왼쪽에서 0px의 위치에 배치 */
-	    z-index: 1; /* 다른 요소보다 위에 오게 설정 */
-	}
-	
-	.meeting-icon-img {
-	    position: relative; /* 상대 위치 설정 */
-    	z-index: 0; /* 기본적으로 이 요소가 더 아래에 위치하도록 설정 */
-	}
-	
-	.meeting-icon>span>a:nth-child(7)>span>img {
-		opacity: 0.5; /* 투명도 설정 (0 완전 투명, 1 완전 불투명) */
-	}
-	.meeting-icon>span>a:nth-child(7)>span>box-icon {
-		opacity: 0.5; /* 투명도 설정 (0 완전 투명, 1 완전 불투명) */
-	}
-	.meeting-insert-btn{
-        border-radius: 15px;
-        background-color: #FB9B00;
-        padding: 10px;
-        display: inline-block;
-        margin: 15px 0;
-        color: white;
-        position: relative;
-        left: 930px;
-        bottom: 45px;
-	}
-	.meeting-attendExit-btn {
-		width: 50px;
-		text-align: center;
-        border-radius: 15px;
-        background-color: #FB9B00;
-        padding: 10px;
-        display: inline-block;
-        color: white;
-        position: relative;
-        left: 309px;
-        bottom: 20px;
-	}
-</style>
 </head>
 <body>
 <div class="container">
@@ -425,11 +145,11 @@
 		<p class="meeting-logo">정기모임</p>
 		<p>
 		<c:if test="${role eq 'leader' || role eq 'adminMember'}">
-			<a class="meeting-insert-btn" href="meeting?cmd=write&crewNo=${crewVO.crewNo}">정모 등록하기</a>
-
+			<a class="crew-alert-confirm meeting-insert-btn" data-message="정모를 등록하시겠습니까?" href="meeting?cmd=write&crewNo=${crewVO.crewNo}">정모 등록하기</a>
 		</c:if>
 		</p>
-		<c:forEach var="meetingVO" items="${meetingList}">
+		
+		<c:forEach var="meetingVO" items="${meetingList}" varStatus="meetingStatus">
 		<div class="meetingOne-container">
 			<!-- 오늘 날짜 생성 및 데이터 가공 -->
 			<c:set var="today" value="<%=new java.util.Date() %>"/>
@@ -475,18 +195,18 @@
 						<c:when test="${not empty meetingMemberList}">
 							<c:choose>
 								<c:when test="${isMeetingMember && meetingVO.memberNo eq MemberVO.memberNo}">
-									<span><a class="meeting-attendExit-btn" href="meetingDelete?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">삭제</a></span>
+									<span><a class="meeting-attendExit-btn crew-alert-confirm" data-message="모임을 삭제하시겠습니까?" href="meetingDelete?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">삭제</a></span>
 								</c:when>
 								<c:when test="${isMeetingMember}">
-									<span><a class="meeting-attendExit-btn" href="meetingExit?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">나가기</a></span>
+									<span><a class="meeting-attendExit-btn crew-alert" data-message="${meetingVO.meetingName} 정모에서 나갔습니다." href="meetingExit?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">나가기</a></span>
 				        		</c:when>
 				        		<c:otherwise>
-				        			<span><a class="meeting-attendExit-btn" href="meetingAttend?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
+				        			<span><a class="meeting-attendExit-btn crew-alert" data-message="${meetingVO.meetingName} 정모에 참석했습니다." href="meetingAttend?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
 				        		</c:otherwise>      	
 		        			</c:choose>
 		        		</c:when>
 		        		<c:otherwise>
-		        			<span><a class="meeting-attendExit-btn" href="meetingAttend?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
+		        			<span><a class="meeting-attendExit-btn crew-alert" data-message="${meetingVO.meetingName} 정모에 참석했습니다." href="meetingAttend?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
 		        		</c:otherwise>
 	        		</c:choose>
 					</c:if>
@@ -508,11 +228,11 @@
 			<c:set var="i" value="${1}"/>
 			
 			<div class="meeting-icon">
-			<!-- 박스 밑의 사용자 이미지아이콘 띄우기 -->
-				<span>
+				<!-- 박스 밑의 사용자 이미지아이콘 띄우기 -->
+				<span onclick="openModal(${meetingVO.meetingNo}, event)" style="cursor:pointer;">
 					<c:forEach var="meetingMemberVO" items="${meetingMemberList}" varStatus="meetingMemberStatus">
-						<c:if test="${meetingMemberVO.meetingNo == meetingVO.meetingNo && i <= 7}" >
-							<a href="" style="text-decoration: none;"><span>
+						<c:if test="${meetingMemberVO.meetingNo == meetingVO.meetingNo && i < 7}" >
+							<a style="text-decoration: none;"><span>
 							<c:if test="${empty meetingMemberVO.memberSaveImg}">
 								<box-icon type='solid' name='user-circle' style="margin-right: 5px;"></box-icon>
 							</c:if>
@@ -523,13 +243,44 @@
 							
 							<c:set var="i" value="${i+1}"/>
 						</c:if>
-					</c:forEach>
-					<c:if test="${i == 8}">
-						<a href="" class="list-icon" style="text-decoration: none; ">
+						<c:if test="${meetingMemberVO.meetingNo == meetingVO.meetingNo && i == 7}" >
+							<a style="text-decoration: none;"><span>
+							<c:if test="${empty meetingMemberVO.memberSaveImg}">
+								<box-icon style="opacity: 0.5;" type='solid' name='user-circle' style="margin-right: 5px;"></box-icon>
+							</c:if>
+							<c:if test="${not empty meetingMemberVO.memberSaveImg}">
+								<img style="opacity: 0.5;" class="crew-member-img" src="upload/${meetingMemberVO.memberSaveImg}" style="margin-right: 5px;" />
+							</c:if>
+							</span></a>
+							<c:set var="i" value="${i+1}"/>
+						</c:if>
+						<c:if test="${i > 7}" >
+						<a class="list-icon" style="text-decoration: none; "><span>
 							<box-icon class="crew-member-img" name='dots-horizontal-rounded'></box-icon>
-						</a>
-					</c:if>
+						</span></a>
+						</c:if>
+					</c:forEach>
 				</span>
+				
+				<!-- 모달 내용 -->
+				<div id="modal${meetingVO.meetingNo}" class="modal" >
+					<div class="modal-content">
+						<p class="crew-member">모임 멤버 (${meetingVO.meetingAttend})</p>
+						<c:forEach var="meetingMemberVO" items="${meetingMemberList}">
+							<c:if test="${meetingMemberVO.meetingNo eq meetingVO.meetingNo}">
+								<a href="member?cmd=memberProfile&memberNo=${meetingMemberVO.memberNo}" style="text-decoration: none;"><div class="crew-member-item">
+									<c:if test="${empty meetingMemberVO.memberSaveImg}">
+										<box-icon type='solid' name='user-circle'></box-icon>
+									</c:if>
+									<c:if test="${not empty meetingMemberVO.memberSaveImg}">
+										<img class="crew-member-img" src="upload/${meetingMemberVO.memberSaveImg}" />
+									</c:if>
+									<span class="crew-member-nickname">${meetingMemberVO.memberNickname}</span>
+								</div></a>
+							</c:if>
+						</c:forEach>
+					</div>
+				</div>
 			</div>
 		</div>
 		</c:forEach>
@@ -623,6 +374,28 @@ $(document).ready(function () {
         });
     });
 });
+
+// 모달 열기
+function openModal(meetingNo, event) {
+  var modal = document.getElementById('modal' + meetingNo);
+  var modalContent = modal.querySelector('.modal-content');
+  
+  // Set the position of the modal content
+  modalContent.style.top = event.clientY + 'px';
+  modalContent.style.left = event.clientX + 'px';
+  
+  modal.style.display = "block";
+}
+
+// 모달 외부 클릭 시 닫기
+window.onclick = function(event) {
+	var modals = document.getElementsByClassName('modal');
+	for (var i = 0; i < modals.length; i++) {
+		if (event.target == modals[i]) {
+			modals[i].style.display = "none";
+		}
+	}
+}
 </script>
 </body>
 </html>
