@@ -20,8 +20,10 @@
 
 	<!-- 로그인 후 -->
 	<c:if test="${not empty sessionScope.loginMember}">
+	<div class="header-container">
 		<div class="header-address">
 			<box-icon name='map' type='solid' ></box-icon>
+			
 			<c:if test="${not empty sessionScope.loginMemberGeo.geoDistrict }">
 				<a href="member?cmd=update&memberNo=${sessionScope.loginMember.memberNo}"><span>${sessionScope.loginMemberGeo.geoDistrict}</span></a>
 			</c:if>
@@ -32,22 +34,7 @@
 		<div class="header-profile">
 			<div class="header-account">
 				<span class="header-profile-nickname">${sessionScope.loginMember.memberNickname}</span>
-				<c:choose>
-					<c:when test="${not empty sessionScope.loginMember.memberSaveImg}">
-						<img
-						    class="profile-image"
-						    src="upload/${sessionScope.loginMember.memberSaveImg}"
-						alt="${sessionScope.loginMember.memberNickname} 프로필"
-						/>
-					</c:when>
-					<c:otherwise>
-	 				 <img
-					      class="profile-image"
-					      src="upload/profileDefault.png"
-					alt="${sessionScope.loginMember.memberNickname} 프로필"
-					/>
-					</c:otherwise>
-				</c:choose>
+				<img class="profile-image" src="upload/${sessionScope.loginMember.memberSaveImg}" onerror="this.onerror=null; this.src='upload/profileDefault.png'" alt="${sessionScope.loginMember.memberNickname} 프로필" />
 				<div class="dropdown-menu">
 					<a class="link" href="member?cmd=myMenu">마이페이지</a>
 					<a class="link" href="#">내 모임</a>
@@ -55,5 +42,6 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</c:if>
 </header>
