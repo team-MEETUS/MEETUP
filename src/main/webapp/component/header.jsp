@@ -20,28 +20,39 @@
 
 	<!-- 로그인 후 -->
 	<c:if test="${not empty sessionScope.loginMember}">
+		<div class="header-address">
+			<box-icon name='map' type='solid' ></box-icon>
+			<c:if test="${not empty sessionScope.loginMemberGeo.geoDistrict }">
+				<a href="member?cmd=update&memberNo=${sessionScope.loginMember.memberNo}"><span>${sessionScope.loginMemberGeo.geoDistrict}</span></a>
+			</c:if>
+			<c:if test="${empty sessionScope.loginMemberGeo.geoDistrict}">
+				<a href="member?cmd=update&memberNo=${sessionScope.loginMember.memberNo}"><span>${sessionScope.loginMemberGeo.geoCity}</span></a>
+			</c:if>
+		</div>
 		<div class="header-profile">
-			<span>${sessionScope.loginMember.memberNickname}</span>
-			<c:choose>
-				<c:when test="${not empty sessionScope.loginMember.memberSaveImg}">
-					<img
-					    class="profile-image"
-					    src="upload/${sessionScope.loginMember.memberSaveImg}"
+			<div class="header-account">
+				<span class="header-profile-nickname">${sessionScope.loginMember.memberNickname}</span>
+				<c:choose>
+					<c:when test="${not empty sessionScope.loginMember.memberSaveImg}">
+						<img
+						    class="profile-image"
+						    src="upload/${sessionScope.loginMember.memberSaveImg}"
+						alt="${sessionScope.loginMember.memberNickname} 프로필"
+						/>
+					</c:when>
+					<c:otherwise>
+	 				 <img
+					      class="profile-image"
+					      src="upload/profileDefault.png"
 					alt="${sessionScope.loginMember.memberNickname} 프로필"
 					/>
-				</c:when>
-				<c:otherwise>
- 				 <img
-				      class="profile-image"
-				      src="upload/profileDefault.png"
-				alt="${sessionScope.loginMember.memberNickname} 프로필"
-				/>
-				</c:otherwise>
-			</c:choose>
-			<div class="dropdown-menu">
-				<a class="link" href="member?cmd=myMenu">마이페이지</a>
-				<a class="link" href="#">내 모임</a>
-				<a class="link" href="member?cmd=logout">로그아웃</a>
+					</c:otherwise>
+				</c:choose>
+				<div class="dropdown-menu">
+					<a class="link" href="member?cmd=myMenu">마이페이지</a>
+					<a class="link" href="#">내 모임</a>
+					<a class="link" href="member?cmd=logout">로그아웃</a>
+				</div>
 			</div>
 		</div>
 	</c:if>
