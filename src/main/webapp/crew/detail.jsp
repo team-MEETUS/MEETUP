@@ -120,17 +120,14 @@
 			<c:forEach var="crewMemberVO" items="${crewMemberList}">
 			<c:if test="${crewMemberVO.crewMemberStatus != 0 && crewMemberVO.crewMemberStatus != 4 && crewMemberVO.crewMemberStatus != 5}">
 				<a href="member?cmd=memberProfile&memberNo=${crewMemberVO.memberNo}" style="text-decoration: none;"><div class="crew-member-item">
-					<c:if test="${empty crewMemberVO.memberSaveImg}">
-						<box-icon type='solid' name='user-circle'></box-icon>
-					</c:if>
-					<c:if test="${not empty crewMemberVO.memberSaveImg}">
-						<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
-					</c:if>
+					<!-- 프로필 -->
+					<img class="crew-member-img" src="upload/${not empty crewMemberVO.memberSaveImg ? crewMemberVO.memberSaveImg : 'profileDefault.png'}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
+					<!-- 닉네임 -->
 					<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
 					<!-- 뱃지 -->
 					<c:if test="${crewMemberVO.crewMemberStatus eq 3}">
 					<box-icon type='solid' name='star' color='white' class="member-badge-leader" ></box-icon>
-					</c:if>
+					</c:if>a
 					<c:if test="${crewMemberVO.crewMemberStatus eq 2}">
 					<box-icon type='solid' name='shield-alt-2' color='white' class="member-badge-admin" ></box-icon>
 					</c:if>

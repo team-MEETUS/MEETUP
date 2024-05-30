@@ -38,12 +38,7 @@
             <div class="crew-member-item">
                 <a href="member?cmd=memberProfile&memberNo=${crewMemberVO.memberNo}" style="text-decoration: none;">
                     <!-- 프로필 -->
-                    <c:if test="${empty crewMemberVO.memberSaveImg}">
-                        <box-icon type='solid' name='user-circle'></box-icon>
-                    </c:if>
-                    <c:if test="${not empty crewMemberVO.memberSaveImg}">
-                        <img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
-                    </c:if>
+                    <img class="crew-member-img" src="upload/${not empty crewMemberVO.memberSaveImg ? crewMemberVO.memberSaveImg : 'profileDefault.png'}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
                     <!-- 닉네임 -->
                     <span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
                     <!-- 뱃지 -->

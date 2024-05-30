@@ -7,23 +7,28 @@
   margin: 30px 0;
   font-size: 20px;
 }
+
 .crew-menu__items li {
   margin: 0 15px;
 }
+
 .crew-menu__items a {
   text-decoration: none;
   color: black;
   font-weight: bold;
 }
+
 /* 모임 배너 이미지 */
 .crew-banner-container {
   width: 100%;
 }
+
 .crew-banner {
   width: 100%;
   height: 300px;
   border-radius: 8px;
 }
+
 /* 지역 & 카테고리 & 아이콘 */
 .crew-info {
   display: flex;
@@ -31,24 +36,28 @@
   width: 100%;
   margin-top: 10px;
 }
+
 .crew-geo, .crew-category {
-  display: inline-block;
-  margin: 10px 10px 10px 0;
-  border-radius: 20px;
+	display: inline-block;
+	margin: 10px 10px 10px 0;
+	border-radius: 20px;
   background-color: var(--orange-4);
   padding: 8px;
   font-size: 14px;
   color: white;
 }
+
 .crew-info-left {
   display: flex;
 }
+
 .crew-info-icon {
   width: 37px;
   height: 37px;
   padding: 8px;
   cursor: pointer;
 }
+
 /* 모임정보 & 모임멤버 섹션 */
 .crew-container {
   display: flex;
@@ -56,27 +65,32 @@
   margin-bottom: 50px;
   height: 500px;
 }
+
 .left-section {
   flex: 3;
   margin-right: 20px;
 }
+
 .right-section {
   flex: 1; 
   background-color: var(--gray-1);
   border-radius: 20px;
   padding: 10px;
 }
+
 /* 모임정보 */
 .crew-name {
   font-size: 2em;
   font-weight: bold;
   margin-top: 10px;
 }
+
 .crew-content {
   margin-top: 20px;
   margin-bottom: 20px;
   height: 370px;
 }
+
 .btn-main {
   margin-right: 15px;
   border-radius: 10px;
@@ -87,13 +101,16 @@
   color: white;
   text-align: center;
 }
+
 .btn-main:hover {
-  background-color: var(--orange-5);
+	background-color: var(--orange-5);
 }
+
 .like-icon {
   height: 30px;
   width: 30px;
 }
+
 /* 모임멤버 */
 .crew-member-wrap {
   display: flex;
@@ -101,27 +118,33 @@
   width: 100%;
   margin-top: 10px;
 }
+
 .crew-member {
   width: 50%;
   font-weight: bold;
   margin-bottom: 20px;
   display: flex;
 }
+
 .member-management-wrap {
   display: flex;
 }
+
 .group-icon member-management {
   display: inline-block;
 }
+
 .member-management {
   color: black;
 }
+
 .crew-member-item {
   display: flex;
   align-items: center;
   margin: 10px;
   position: relative;
 }
+
 .member-badge-leader, .member-badge-admin {
   position: absolute; /* 추가: 절대 위치 설정 */
   bottom: 0; /* 추가: 하단에 위치 */
@@ -129,35 +152,33 @@
   padding: 5px; /* 추가: 뱃지 내부 여백 */
   border-radius: 50px;
 }
+
 .member-badge-leader {
   background-color: lightpink;
 }
+
 .member-badge-admin {
   background-color: var(--blue-3);
 }
+
 .crew-member-item a {
   text-decoration: none;
 }
+
 .crew-member-img, box-icon[type="solid"][name="user-circle"] {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-right: 20px;
 }
+
 .crew-member-nickname {
   font-weight: bold;
   line-height: 50px; 
   margin: 0; 
   color: black;
 }
-.meeting-container {
-  width: 100%;
-  margin-top: 50px;
-}
-.meeting-logo {
-  font-size: 2em;
-  font-weight: bold;
-}
+
 /* 수정 및 삭제 팝업 */
 .edit-delete-popup {
   display: none; 
@@ -169,17 +190,20 @@
   padding: 10px;
   z-index: 1000;
 }
+
 .edit-delete-popup a {
   display: block;
   text-decoration: none;
   color: black;
   margin-bottom: 5px;
 }
+
 /* 정모 */
 .meetingOne-container {
   width: 500px;
   display: inline-block;
 }
+
 .meeting-header {
   font-size: 20px;
   font-weight: bold;
@@ -192,20 +216,21 @@
 .meeting-member-icon {
   cursor: pointer;
 }
+
 /* 정모 박스 */
 .meetingOne {
-  width: 380px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 20px 40px;
-  text-align: left;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: inline-block;
-  margin: 10px;
-  background-color: rgb(230, 230, 230);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
-  transition: box-shadow 0.3s ease; /* 부드러운 전환 효과 추가 */
-  line-height: 20px;
+	width: 380px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	padding: 20px 40px;
+	text-align: left;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+	margin: 10px;
+	background-color: rgb(230, 230, 230);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+	transition: box-shadow 0.3s ease; /* 부드러운 전환 효과 추가 */
+	line-height: 20px;
 }
 
 .meetingOne:hover {
@@ -262,6 +287,7 @@
   left: 930px;
   bottom: 45px;
 }
+
 .meeting-attendExit-btn {
   width: 50px;
   text-align: center;
