@@ -33,18 +33,18 @@
 			
 			// 초기값 설정
 			String strDate = request.getParameter("date");
-// 			if(strDate == null) {
-// 				strDate = fdate;
-// 			}
+			if(strDate == null) {
+				strDate = fdate;
+			}
 		%>
 			<c:set var="today" value="<%= strDate %>"/>
 			<c:set var="ftoday" value="<%= fdate %>"/>
-			<h2>${today }</h2>
-			<h2>${ftoday }</h2>
-			<li class="${today eq null ? 'selected' : '' }"><a href="meeting?cmd=list&date=<%= LDate.plusDays(i) %>">
+			<li class="${ftoday eq today ? 'selected' : '' }">
+			<a href="meeting?cmd=list&date=<%= LDate.plusDays(0) %>">
 				<div class="day-of-week"><%= LDate.plusDays(0).getDayOfWeek().getDisplayName(java.time.format.TextStyle.NARROW,  java.util.Locale.KOREAN) %> </div>
 	            <div><%= LDate.plusDays(0).getDayOfMonth() %></div>
-           	</a></li>		
+           	</a>
+           	</li>		
 		<%
 			for(int i = 1; i < 7; i++) {
 		%>
