@@ -1,0 +1,90 @@
+/* 메뉴 */
+.crew-menu__items {
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	padding: 0;
+	margin: 30px 0;
+}
+.crew-menu__items li {
+   margin: 0 50px;
+}
+.crew-menu__items a {
+    text-decoration: none;
+    color: black;
+}
+.crew-menu__btn {
+	font-size: 20px;
+    font-weight: bold;
+}
+/* 선택된 메뉴 버튼 스타일 */
+.crew-menu__btn.active {
+    color: var(--orange-4);
+    text-decoration: underline;
+  	text-underline-position : under;
+}
+/* 모임회원 */
+.crew-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+    justify-content: center;
+    margin: 0 auto;
+}
+.crew-member-item {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    width: 750px; 
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.crew-member-item a {
+    display: flex;
+    align-items: center;
+}
+.crew-member-img, box-icon[type="solid"][name="user-circle"] {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.crew-member-nickname {
+    font-weight: bold;
+    margin: 0;
+    color: black;
+}
+.member-badge-leader, .member-badge-admin {
+    position: absolute; /* 추가: 절대 위치 설정 */
+    margin-left: 30px;
+    margin-bottom: -25px;
+    padding: 5px; /* 추가: 뱃지 내부 여백 */
+    border-radius: 50px;
+}
+.member-badge-leader {
+    background-color: lightpink;
+}
+.member-badge-admin {
+    background-color: var(--blue-3);
+}
+.crew-actions {
+	width: 286px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: center;
+}
+.crew-category {
+    border-radius: 10px;
+    background-color: var(--orange-4);
+    padding: 10px 15px;
+    display: inline-block;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    margin-left: 10px; /* Align with the design */
+}
+.crew-category:hover {
+    background-color: var(--orange-5);
+}
+
