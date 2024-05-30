@@ -143,11 +143,11 @@
 		<p class="meeting-logo">정기모임</p>
 		<p>
 		<c:if test="${role eq 'leader' || role eq 'adminMember'}">
-			<a class="meeting-insert-btn" href="meeting?cmd=write&crewNo=${crewVO.crewNo}">정모 등록하기</a>
-
+			<a class="crew-alert-confirm meeting-insert-btn" data-message="정모를 등록하시겠습니까?" href="meeting?cmd=write&crewNo=${crewVO.crewNo}">정모 등록하기</a>
 		</c:if>
 		</p>
-		<c:forEach var="meetingVO" items="${meetingList}">
+		
+		<c:forEach var="meetingVO" items="${meetingList}" varStatus="meetingStatus">
 		<div class="meetingOne-container">
 			<!-- 오늘 날짜 생성 및 데이터 가공 -->
 			<c:set var="today" value="<%=new java.util.Date() %>"/>
@@ -193,18 +193,18 @@
 						<c:when test="${not empty meetingMemberList}">
 							<c:choose>
 								<c:when test="${isMeetingMember && meetingVO.memberNo eq MemberVO.memberNo}">
-									<span><a class="meeting-attendExit-btn" href="meetingDelete?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">삭제</a></span>
+									<span><a class="meeting-attendExit-btn crew-alert-confirm" data-message="모임을 삭제하시겠습니까?" href="meetingDelete?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">삭제</a></span>
 								</c:when>
 								<c:when test="${isMeetingMember}">
-									<span><a class="meeting-attendExit-btn" href="meetingExit?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">나가기</a></span>
+									<span><a class="meeting-attendExit-btn crew-alert" data-message="${meetingVO.meetingName} 정모에서 나갔습니다." href="meetingExit?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">나가기</a></span>
 				        		</c:when>
 				        		<c:otherwise>
-				        			<span><a class="meeting-attendExit-btn" href="meetingAttend?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
+				        			<span><a class="meeting-attendExit-btn crew-alert" data-message="${meetingVO.meetingName} 정모에 참석했습니다." href="meetingAttend?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
 				        		</c:otherwise>      	
 		        			</c:choose>
 		        		</c:when>
 		        		<c:otherwise>
-		        			<span><a class="meeting-attendExit-btn" href="meetingAttend?memberNo=${MemberVO.memberNo}&meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
+		        			<span><a class="meeting-attendExit-btn crew-alert" data-message="${meetingVO.meetingName} 정모에 참석했습니다." href="meetingAttend?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">참석</a></span>
 		        		</c:otherwise>
 	        		</c:choose>
 					</c:if>
@@ -226,11 +226,11 @@
 			<c:set var="i" value="${1}"/>
 			
 			<div class="meeting-icon">
-			<!-- 박스 밑의 사용자 이미지아이콘 띄우기 -->
-				<span>
+				<!-- 박스 밑의 사용자 이미지아이콘 띄우기 -->
+				<span onclick="openModal(${meetingVO.meetingNo}, event)" style="cursor:pointer;">
 					<c:forEach var="meetingMemberVO" items="${meetingMemberList}" varStatus="meetingMemberStatus">
-						<c:if test="${meetingMemberVO.meetingNo == meetingVO.meetingNo && i <= 7}" >
-							<a href="" style="text-decoration: none;"><span>
+						<c:if test="${meetingMemberVO.meetingNo == meetingVO.meetingNo && i < 7}" >
+							<a style="text-decoration: none;"><span>
 							<c:if test="${empty meetingMemberVO.memberSaveImg}">
 								<box-icon type='solid' name='user-circle' style="margin-right: 5px;"></box-icon>
 							</c:if>
@@ -241,13 +241,44 @@
 							
 							<c:set var="i" value="${i+1}"/>
 						</c:if>
-					</c:forEach>
-					<c:if test="${i == 8}">
-						<a href="" class="list-icon" style="text-decoration: none; ">
+						<c:if test="${meetingMemberVO.meetingNo == meetingVO.meetingNo && i == 7}" >
+							<a style="text-decoration: none;"><span>
+							<c:if test="${empty meetingMemberVO.memberSaveImg}">
+								<box-icon style="opacity: 0.5;" type='solid' name='user-circle' style="margin-right: 5px;"></box-icon>
+							</c:if>
+							<c:if test="${not empty meetingMemberVO.memberSaveImg}">
+								<img style="opacity: 0.5;" class="crew-member-img" src="upload/${meetingMemberVO.memberSaveImg}" style="margin-right: 5px;" />
+							</c:if>
+							</span></a>
+							<c:set var="i" value="${i+1}"/>
+						</c:if>
+						<c:if test="${i > 7}" >
+						<a class="list-icon" style="text-decoration: none; "><span>
 							<box-icon class="crew-member-img" name='dots-horizontal-rounded'></box-icon>
-						</a>
-					</c:if>
+						</span></a>
+						</c:if>
+					</c:forEach>
 				</span>
+				
+				<!-- 모달 내용 -->
+				<div id="modal${meetingVO.meetingNo}" class="modal" >
+					<div class="modal-content">
+						<p class="crew-member">모임 멤버 (${meetingVO.meetingAttend})</p>
+						<c:forEach var="meetingMemberVO" items="${meetingMemberList}">
+							<c:if test="${meetingMemberVO.meetingNo eq meetingVO.meetingNo}">
+								<a href="member?cmd=memberProfile&memberNo=${meetingMemberVO.memberNo}" style="text-decoration: none;"><div class="crew-member-item">
+									<c:if test="${empty meetingMemberVO.memberSaveImg}">
+										<box-icon type='solid' name='user-circle'></box-icon>
+									</c:if>
+									<c:if test="${not empty meetingMemberVO.memberSaveImg}">
+										<img class="crew-member-img" src="upload/${meetingMemberVO.memberSaveImg}" />
+									</c:if>
+									<span class="crew-member-nickname">${meetingMemberVO.memberNickname}</span>
+								</div></a>
+							</c:if>
+						</c:forEach>
+					</div>
+				</div>
 			</div>
 		</div>
 		</c:forEach>
@@ -341,6 +372,28 @@ $(document).ready(function () {
         });
     });
 });
+
+// 모달 열기
+function openModal(meetingNo, event) {
+  var modal = document.getElementById('modal' + meetingNo);
+  var modalContent = modal.querySelector('.modal-content');
+  
+  // Set the position of the modal content
+  modalContent.style.top = event.clientY + 'px';
+  modalContent.style.left = event.clientX + 'px';
+  
+  modal.style.display = "block";
+}
+
+// 모달 외부 클릭 시 닫기
+window.onclick = function(event) {
+	var modals = document.getElementsByClassName('modal');
+	for (var i = 0; i < modals.length; i++) {
+		if (event.target == modals[i]) {
+			modals[i].style.display = "none";
+		}
+	}
+}
 </script>
 </body>
 </html>
