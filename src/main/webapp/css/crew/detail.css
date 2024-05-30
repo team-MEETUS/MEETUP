@@ -57,15 +57,17 @@
 	height: 500px;
 }
 .left-section {
-       flex: 3;
-       margin-right: 20px;
-   }
-   .right-section {
-       flex: 1; 
-       background-color: var(--gray-1);
-       border-radius: 20px;
-       padding: 10px;
-   }
+    flex: 3;
+    margin-right: 20px;
+}
+.right-section {
+    max-height: 500px; /* 또는 원하는 높이 값으로 조정 */
+    overflow-y: auto; /* 세로 스크롤바 활성화 */
+    flex: 1; 
+    background-color: var(--gray-1);
+    border-radius: 20px;
+    padding: 10px;
+}
 /* 모임정보 */
 .crew-name {
 	font-size: 2em;
@@ -125,7 +127,7 @@
 .member-badge-leader, .member-badge-admin {
     position: absolute; /* 추가: 절대 위치 설정 */
     bottom: 0; /* 추가: 하단에 위치 */
-    right: 170px; /* 추가: 우측에 위치 */
+    right: 160px; /* 추가: 우측에 위치 */
     padding: 5px; /* 추가: 뱃지 내부 여백 */
     border-radius: 50px;
 }
