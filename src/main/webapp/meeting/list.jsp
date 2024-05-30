@@ -63,7 +63,7 @@
 			<fmt:formatDate var="pdMeetingDate" value="${meetingDate}" pattern="MM/dd(E) hh:mm"/>
             <div class="meeting-item">
         		<a href="crew?cmd=detail&crewNo=${meetingVO.crewNo}"><div class="card-meeting">
-                    <img class="meeting-img" src="upload/${meetingVO.meetingSaveImg}" alt="${meetingVO.meetingName}" />
+                    <img class="meeting-img" src="upload/${meetingVO.meetingSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${meetingVO.meetingName} 정모 이미지" />
                     <div class="meeting-details">
                         <span class="meeting-category">${meetingVO.categorySmallName != null ? meetingVO.categorySmallName : meetingVO.categoryBigName}</span>
                         <p class="meeting-name">${meetingVO.meetingName}</p>
