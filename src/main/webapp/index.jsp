@@ -128,6 +128,11 @@
 	   				</div>
 	   			</c:forEach>
 	   		</div>
+	   		<c:if test="${fn:length(loginComingMeetingList) > 4}">
+	            <div class="more-list">
+	                <a href="meeting?cmd=list">더보기</a>
+	            </div>
+	        </c:if>
    		</c:if>
    		<!-- 비로그인 상태 -->
    		<c:if test="${empty sessionScope.loginMember}">
@@ -162,8 +167,33 @@
 	   			<h3 class="crew-title-contents">다가오는 정모</h3>
 	   		</div>
 	   		<div class="crew-container">
-	   			
+	   			<c:forEach var="meetingVO" items="${noLoginComingMeetinList}" end="3">
+	   				<c:set var="meetingDate" value="${meetingVO.meetingDate}"/>
+	   				<fmt:formatDate var="pdMeetingDate" value="${meetingDate}" pattern="MM/dd(E) hh:mm"/>
+	   				<div class="crew-item">
+	   					<a href="crew?cmd=detail&crewNo=${meetingVO.crewNo}">
+	   						<div class="card-crew">
+	   							<img class="crew-img" src="upload/${meetingVO.meetingSaveImg}" alt="${meetingVO.meetingName}" />
+	   							<div class="crew-details">
+	   								<span class="crew-category">${meetingVO.categorySmallName != null ? meetingVO.categorySmallName : meetingVO.categoryBigName}</span>
+	   								<p class="crew-name">${meetingVO.meetingName}</p>
+	   								<p class="crew-geo">${meetingVO.geoDistrict != null ? meetingVO.geoDistrict : meetingVO.geoCity} · ${meetingVO.crewName}</p>
+	   								<p class="meeting-attend">
+					                	<span style="margin-right:10px;">${pdMeetingDate}</span>
+					                    <box-icon style="position:relative; top:7px;" name='group' type='solid' ></box-icon> 
+					                    <span>${meetingVO.meetingAttend}/${meetingVO.meetingMax}</span>
+					                </p>
+	   							</div>
+	   						</div>
+	   					</a>
+	   				</div>
+	   			</c:forEach>
 	   		</div>
+	   		<c:if test="${fn:length(noLoginComingMeetinList) > 4}">
+	            <div class="more-list">
+	                <a href="meeting?cmd=list">더보기</a>
+	            </div>
+	        </c:if>
    		</c:if>
    	</div>
    </section>
