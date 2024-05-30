@@ -452,12 +452,21 @@
 			</c:forEach>
 			
 			<!-- for문을 돌면서 정모정보를 계속 뿌려주는 div -->
+			<c:set var="meetingDDay" value="D-${numMeetingDate - numToday}"></c:set>
 			<div class="meetingOne">
 				<div style="display: inline-block">
 					<div class="meeting-header">
 						<div>
-							<span style="margin-right: 10px;"><fmt:formatDate value="${meetingDate}" pattern="MM/dd (E)"/></span> 
-							<span style=color:red>D-${numMeetingDate - numToday}</span>						
+							<span style="margin-right: 10px;"><fmt:formatDate value="${meetingDate}" pattern="MM/dd (E)"/></span>
+							<c:choose>
+								<c:when test="${meetingDDay eq 'D-0'}">
+									<span style=color:red>D-DAY</span>
+								</c:when>
+								<c:otherwise>
+									<span style=color:red>${meetingDDay}</span>
+								</c:otherwise>
+							</c:choose> 
+													
 						</div>
 						<p>${meetingVO.meetingName}</p>					
 					</div>
