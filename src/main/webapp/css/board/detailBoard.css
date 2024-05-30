@@ -1,21 +1,21 @@
 /* 모임 메뉴(crew-detail과 통일함) */
 .crew-menu__items {
-	display: flex;
-	justify-content: center;
-	list-style: none;
-	padding: 0;
-	margin: 30px 0;
-	font-size: 20px;
+   display: flex;
+   justify-content: center;
+   list-style: none;
+   padding: 0;
+   margin: 30px 0;
+   font-size: 20px;
 }
 
 .crew-menu__items li {
-	margin: 0 15px;
+   margin: 0 15px;
 }
 
 .crew-menu__items a {
-	text-decoration: none;
-	color: black;
-	font-weight: bold;
+   text-decoration: none;
+   color: black;
+   font-weight: bold;
 }
 
 a {
@@ -24,14 +24,7 @@ a {
 }
 
 /* General Styles */
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+
 
 h3 {
     color: #343a40;
