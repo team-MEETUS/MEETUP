@@ -27,12 +27,11 @@ public class ImageUpload extends HttpServlet {
 
         // 업로드된 파일 가져오기
         String fileName = mr.getFilesystemName("file");
-        String fileUrl = req.getContextPath() + "/upload/" + fileName;
+        String fileUrl = "upload/" + fileName;
 
         // 응답으로 이미지 URL 반환
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-        System.out.println("{\"url\": \"" + fileUrl + "\"}");
         out.print("{\"url\": \"" + fileUrl + "\"}");
         out.flush();
     }

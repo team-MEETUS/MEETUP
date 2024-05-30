@@ -21,6 +21,11 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
+<!-- CSS -->
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
+
 <script>    
    $(document).ready(function() {            
         $('.summernote').summernote({
@@ -102,6 +107,8 @@ td .btn {
 	<h1>게시글 작성</h1>
 
 	<div class="container">
+	<jsp:include page="../component/header.jsp"></jsp:include>
+   <script src="component/header.js"></script>
 		<form action="boardWrite" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="crewNo" value="${crewNo}" /> <input
 				type="hidden" name="memberNo" value="${memberNo}" />

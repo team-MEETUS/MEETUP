@@ -18,9 +18,15 @@
 	crossorigin="anonymous"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="./css/reset.css" type="text/css" />
+<link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/header.css" type="text/css" />
 </head>
 <body>
 	<div class="container">
+	<jsp:include page="../component/header.jsp"></jsp:include>
+    <script src="component/header.js"></script>
 		<h2>상세보기</h2>
 		<table class="table table-striped">
 			<tr>
