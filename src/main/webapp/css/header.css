@@ -49,8 +49,8 @@ header {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
-
+    gap: 30px;
+    
     .profile-image {
       width: 70px;
       height: 70px;
@@ -81,4 +81,14 @@ header {
       }
     }
   }
+}
+
+.header-address {
+    margin-left: 350px;
+}
+
+.header-address, .header-account {
+	display: flex;
+	align-items : center;
+	gap : 10px;
 }

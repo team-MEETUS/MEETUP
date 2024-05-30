@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,7 @@
 <link rel="stylesheet" href="./css/index.css"  type="text/css" />
 <link rel="stylesheet" href="./css/header.css" type="text/css" />
 <link rel="stylesheet" href="./css/swiper.css" type="text/css" />
+<link rel="stylesheet" href="./css/crew/list.css" type="text/css" />
 <!-- SWIPER -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -40,6 +42,44 @@
       <div class="swiper-pagination"></div>
     </div>
    </div>
+   <section class="subContents">
+   	<div class="inner">
+   		<!-- 로그인 상태 -->
+   		<c:if test="${not empty sessionScope.loginMember}">
+   			<!-- 참여한 모임 -->
+	   		<div class="crew-title">
+	   			<h3 class="crew-title-contents">참여한 모임</h3>
+	   		</div>
+	   		<div class="crew-container">
+	   			<c:forEach var="crewVO" items="${loginMemberCrewList}" end="3">
+	   				<div class="crew-item">
+	   					<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}">
+				        	<div class="card-crew">
+					            <img class="crew-img" src="upload/${crewVO.crewSaveImg}" alt="${crewVO.crewName}" />
+					            <div class="crew-details">
+					            	<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
+					                <p class="crew-name">${crewVO.crewName}</p>
+					                <p class="crew-intro">${crewVO.crewIntro}</p>
+					                <p class="crew-geo">${crewVO.geoDistrict != null ? crewVO.geoDistrict : crewVO.geoCity} · 멤버 ${crewVO.crewAttend}</p>
+					            </div>
+				        	</div>
+				    	</a>
+	   				</div>
+	   			</c:forEach>
+	   		</div>
+	   		 <c:if test="${fn:length(loginMemberCrewList) > 5}">
+	            <div class="more-list">
+	                <a href="member?cmd=myMenu">더보기</a>
+	            </div>
+	        </c:if>
+	        <!-- 인기있는 모임 -->
+	        <div class="crew-title">
+	   			<h3 class="crew-title-contents">인기있는 모임</h3>
+	   		</div>
+   		</c:if>
+   		<!-- 비로그인 상태 -->
+   	</div>
+   </section>
 </div>
 <jsp:include page="component/footer.jsp"></jsp:include>
 </body>

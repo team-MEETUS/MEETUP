@@ -1,12 +1,19 @@
 package kr.co.meetup.web.action.member;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kr.co.meetup.web.action.Action;
+import kr.co.meetup.web.dao.CrewDAO;
+import kr.co.meetup.web.dao.GeoDAO;
+import kr.co.meetup.web.dao.MeetingDAO;
 import kr.co.meetup.web.dao.MemberDAO;
+import kr.co.meetup.web.vo.CrewVO;
+import kr.co.meetup.web.vo.GeoVO;
+import kr.co.meetup.web.vo.MeetingVO;
 import kr.co.meetup.web.vo.MemberVO;
 
 public class LoginAction implements Action {
@@ -26,6 +33,10 @@ public class LoginAction implements Action {
 			
 			MemberDAO dao = new MemberDAO();		
 			MemberVO vo = dao.selectOneMemberByPhone(memberPhone, memberPw);
+			GeoDAO gdao = new GeoDAO();
+			GeoVO gvo = gdao.selectOneGeoCityGeoDistrictByGeoCode(vo.getGeoCode());
+			CrewDAO cdao = new CrewDAO();
+			MeetingDAO mdao = new MeetingDAO();
 			
 			// 가압된 정보가 있는 회원이라면
 			if(vo != null) {
@@ -33,9 +44,14 @@ public class LoginAction implements Action {
 				
 				// memberStatus가 정상이라면
 				if (memberStatus == 1) {
+					List<CrewVO> loginMemberCrewList = cdao.selectAllCrewByMember(vo.getMemberNo());
+					List<MeetingVO> loginMemberMeetingList = mdao.selectAllMeetingByGeoCodeOrderMeetingDate(vo.getGeoCode());
 					// 로그인 성공
 					HttpSession session = req.getSession();
 					session.setAttribute("loginMember", vo);
+					session.setAttribute("loginMemberGeo", gvo);
+					session.setAttribute("loginMemberCrewList", loginMemberCrewList);
+					session.setAttribute("loginMemberMeetingList", loginMemberMeetingList);
 					
 					url = "index.jsp";
 				} 

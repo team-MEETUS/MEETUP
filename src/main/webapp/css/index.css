@@ -51,3 +51,34 @@ body {
   width: 1024px;
   margin: 0 auto;
 }
+
+.inner {
+	position : relative;
+	max-width: 1024px;
+	margin : 0 auto;
+}
+
+.crew-container {
+	margin-top: 20px;
+}
+
+.crew-title {
+    margin-top: 30px;
+    padding: 0 20px;
+}
+
+.crew-title-contents {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--orange-5); /* 필요한 색상으로 변경하세요 */
+}
+
+.more-list {
+	text-align: right;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.more-list > a {
+	color: var(--orange-5);
+}
