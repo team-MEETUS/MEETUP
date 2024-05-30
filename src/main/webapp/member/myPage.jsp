@@ -29,7 +29,7 @@
 							<div class="myPage__profile--img-container">
 								<span class="myPage__profile--img" style="background-image: url('upload/${not empty loginMember.memberSaveImg ? loginMember.memberSaveImg : 'profileDefault.png'}');"></span>
 								<input type="hidden" name="removeImg" id="removeImg" value="false" />
-								<span class="remove-img">x</span>
+								<span class="remove-img">X</span>
 							</div>
 							<input type="file" name="memberImg" id="memberImg" value="${loginMember.memberSaveImg}" style="display: none;" />
 						</div>
