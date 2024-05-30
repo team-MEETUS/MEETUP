@@ -1,3 +1,18 @@
+/* 뒤로가기 */
+.mng-back {
+	display: inline-flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+	margin-left: 25px;
+}
+
+.mng-back:hover {
+	fill: var(--orange-4);
+	color: var(--orange-4);
+	transition: all 0.3s;
+}
+
 /* 메뉴 */
 .crew-menu__items {
 	display: flex;
@@ -30,6 +45,7 @@
     gap: 20px; 
     justify-content: center;
     margin: 0 auto;
+    margin-bottom: 50px;
 }
 .crew-member-item {
     display: flex;

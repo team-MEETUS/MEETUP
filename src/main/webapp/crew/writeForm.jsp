@@ -126,7 +126,9 @@ window.onload = function() {
 		</div>
       
 		<label class="category-label">설명</label>
-		<textarea class="meeting-register__crewContent-textarea" name="crewContent" id="crewContent" cols="30" rows="10" placeholder="최대 2000자" ></textarea>
+        <div class="meeting-input">
+			<textarea class="meeting-register__crewContent-textarea" name="crewContent" id="crewContent" cols="80" rows="30" placeholder="최대 2000자" ></textarea>
+		</div>
 		
 		<p>대표 이미지</p>
 		<div class="image-upload main-image">

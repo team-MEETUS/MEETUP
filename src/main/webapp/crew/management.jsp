@@ -20,6 +20,12 @@
 <body>
 <div class="container">
 	<jsp:include page="../component/header.jsp"></jsp:include>
+	<!-- 뒤로가기 -->
+	<a class="mng-back" href="crew?cmd=detail&crewNo=${crewNo}">
+		<box-icon class="mng-back-icon" name='arrow-back' width='10px'></box-icon>
+		<span>뒤로가기</span>
+	</a>
+	
 	<!-- 메뉴 -->
 	<ul class="crew-menu__items">
 		<li>
@@ -38,7 +44,7 @@
             <div class="crew-member-item">
                 <a href="member?cmd=memberProfile&memberNo=${crewMemberVO.memberNo}" style="text-decoration: none;">
                     <!-- 프로필 -->
-                    <img class="crew-member-img" src="upload/${not empty crewMemberVO.memberSaveImg ? crewMemberVO.memberSaveImg : 'profileDefault.png'}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
+                    <img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" onerror="this.onerror=null; this.src='upload/profileDefault.png'" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
                     <!-- 닉네임 -->
                     <span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
                     <!-- 뱃지 -->
@@ -84,20 +90,8 @@
 	<c:if test="${crewMemberVO.crewMemberStatus == 4}">
 		<div class="crew-member-item">
 			<a href="" style="text-decoration: none;">
-				<c:if test="${empty crewMemberVO.memberSaveImg}">
-					<box-icon type='solid' name='user-circle'></box-icon>
-				</c:if>
-				<c:if test="${not empty crewMemberVO.memberSaveImg}">
-					<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
-				</c:if>
+				<img class="crew-member-img" src="upload/${crewMemberVO.memberSaveImg}" onerror="this.onerror=null; this.src='upload/profileDefault.png'" alt="${crewMemberVO.memberNickname} 프로필 이미지" />
 				<span class="crew-member-nickname">${crewMemberVO.memberNickname}</span>
-				<!-- 뱃지 -->
-				<c:if test="${crewMemberVO.crewMemberStatus eq 3}">
-				<box-icon type='solid' name='star' color='white' class="member-badge-leader" ></box-icon>
-				</c:if>
-				<c:if test="${crewMemberVO.crewMemberStatus eq 2}">
-				<box-icon type='solid' name='shield-alt-2' color='white' class="member-badge-admin" ></box-icon>
-				</c:if>
 			</a>
 			<!-- 가입신청 승인버튼 -->
 	        <div class="crew-actions">

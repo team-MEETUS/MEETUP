@@ -18,6 +18,10 @@
   font-weight: bold;
 }
 
+.crew-menu__items a:hover {
+  color: var(--orange-5);
+}
+
 /* 모임 배너 이미지 */
 .crew-banner-container {
   width: 100%;
@@ -72,6 +76,8 @@
 }
 
 .right-section {
+    max-height: 500px; 
+    overflow-y: auto;
   flex: 1; 
   background-color: var(--gray-1);
   border-radius: 20px;
@@ -115,19 +121,24 @@
 .crew-member-wrap {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   margin-top: 10px;
+}
+
+.crew-member-list {
+	margin-top: 20px;
 }
 
 .crew-member {
   width: 50%;
   font-weight: bold;
-  margin-bottom: 20px;
   display: flex;
 }
 
 .member-management-wrap {
   display: flex;
+  align-items: center;
 }
 
 .group-icon member-management {
@@ -148,7 +159,7 @@
 .member-badge-leader, .member-badge-admin {
   position: absolute; /* 추가: 절대 위치 설정 */
   bottom: 0; /* 추가: 하단에 위치 */
-  right: 170px; /* 추가: 우측에 위치 */
+  right: 160px; /* 추가: 우측에 위치 */
   padding: 5px; /* 추가: 뱃지 내부 여백 */
   border-radius: 50px;
 }
@@ -199,38 +210,82 @@
 }
 
 /* 정모 */
-.meetingOne-container {
-  width: 500px;
+.meeting-container {
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+.meeting-head {
+	margin: 20px 0;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.meeting-logo {
+	font-size: 1.6rem;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.meeting-insert-btn {
+  margin-left:auto;
+  border-radius: 10px;
+  background-color: var(--orange-4);
+  padding: 10px 15px;
   display: inline-block;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  color: white;
+}
+
+.meeting-insert-btn:hover {
+  background-color: var(--orange-5);
+}
+
+.meeting-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .meetingOne-container {
+    flex: 0 0 calc(50% - 10px); /* 50% 너비에 간격을 위한 여유를 줌 */
+    box-sizing: border-box;
+  }
+}
+
+/* 정모 하나 */
+.meetingOne-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.meetingOne {
+	width: 420px;
+	border-radius: 20px;
+	padding: 20px 30px;
+	text-align: left;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+	margin-bottom: 15px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+	transition: box-shadow 0.3s ease; /* 부드러운 전환 효과 추가 */
+	line-height: 20px;
 }
 
 .meeting-header {
   font-size: 20px;
-  font-weight: bold;
   margin-bottom: -30px;
 }
 
 .meeting-header>div {
   margin-bottom: 10px;
 }
+
 .meeting-member-icon {
   cursor: pointer;
-}
-
-/* 정모 박스 */
-.meetingOne {
-	width: 380px;
-	border: 1px solid #ccc;
-	border-radius: 20px;
-	padding: 20px 40px;
-	text-align: left;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	display: inline-block;
-	margin: 10px;
-	background-color: rgb(230, 230, 230);
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
-	transition: box-shadow 0.3s ease; /* 부드러운 전환 효과 추가 */
-	line-height: 20px;
 }
 
 .meetingOne:hover {
@@ -238,10 +293,20 @@
 }
 
 .meeting-info>img {
-  width: 160px;
+  width: 180px;
   height: 120px;
+  border-radius: 10px;
+  margin-right: 20px;
 }
 
+.meeting-date {
+	font-weight: bold;
+}
+
+.meeting-name {
+	font-size: 19px;
+	margin-bottom: 10px;
+}
 .meeting-info {
   display: flex;
   font-size: 17px;
@@ -252,7 +317,8 @@
 }
 
 .meeting-icon {
-  margin-left: 10px;
+	width: 460px;
+  padding-left: 35px;
   position: relative; /* 상대 위치 설정 */
   display: inline-block; /* 내부 요소들을 인라인 블록으로 설정 */
 }
@@ -265,40 +331,25 @@
 .list-icon {
   position: absolute; /* 절대 위치 설정으로 다른 요소 위에 올라가게 함 */
   top: 0; /* 상단에서 0px의 위치에 배치 */
-  left: 355px; /* 왼쪽에서 0px의 위치에 배치 */
+  left: 390px; /* 왼쪽에서 0px의 위치에 배치 */
   z-index: 1; /* 다른 요소보다 위에 오게 설정 */
-}
-
-.meeting-icon-img {
-  position: relative; /* 상대 위치 설정 */
-  z-index: 0; /* 기본적으로 이 요소가 더 아래에 위치하도록 설정 */
-}
-
-
-.meeting-insert-btn {
-  width: 90px;
-  text-align: center;
-  border-radius: 15px;
-  background-color: #FB9B00;
-  padding: 10px;
-  display: inline-block;
-  color: white;
-  position: relative;
-  left: 930px;
-  bottom: 45px;
 }
 
 .meeting-attendExit-btn {
   width: 50px;
   text-align: center;
-  border-radius: 15px;
-  background-color: #FB9B00;
-  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--blue-3);
+  padding: 8px;
   display: inline-block;
   color: white;
   position: relative;
-  left: 309px;
-  bottom: 20px;
+  left: 359px;
+  bottom: 30px;
+}
+
+.meeting-attendExit-btn:hover {
+	background-color: var(--blue-4);
 }
 
 /* 모임에 참여한 멤버 리스트 모달 */
@@ -341,4 +392,10 @@
 }
 .meeting-member-management-wrap {
   display: flex;
+}
+.meeting-member-img, box-icon[type="solid"][name="user-circle"] {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
