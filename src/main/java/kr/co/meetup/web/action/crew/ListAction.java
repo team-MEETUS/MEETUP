@@ -113,8 +113,6 @@ public class ListAction implements Action {
 		req.setAttribute("isNext", isNext);
 		req.setAttribute("categoryBigNo", categoryBigNo);
 		
-		System.out.println("categoryBigNo : " + categoryBigNo == null ? "null" : categoryBigNo);
-		
 		return "crew/list.jsp";
 	}
 	
