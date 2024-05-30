@@ -54,13 +54,6 @@ public class UploadAction extends HttpServlet {
 			String meetingSaveImg = mr.getFilesystemName("meetingImg");
 			String meetingDate = meetingDay + " " + meetingTime1 + ":" + meetingTime2 + ":00";
 			
-			if(meetingOriginalImg == null) {
-				meetingOriginalImg = "meetingDefault.jpg";
-			}
-			if(meetingSaveImg == null) {
-				meetingSaveImg = "meetingDefault.jpg";
-			}
-			
 			System.out.println("crewNo : " + crewNo);
 			System.out.println("memberNo : " + memberNo);
 			System.out.println("meetingName : " + meetingName);
