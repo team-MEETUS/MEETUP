@@ -80,7 +80,7 @@
 <div class="container">
 	<jsp:include page="../component/header.jsp"></jsp:include>
 	<main>
-    <h2 class="meeting-register">모임 등록</h2>
+    <h2 class="meeting-register">모임 수정</h2>
 	<form action="crewUpdate" method="post" enctype="multipart/form-data" class="meeting-form" >
 		<!-- crewNo 넣기 -->
 		<input type="hidden" name="crewNo" value="${crewVO.crewNo}" />
@@ -132,14 +132,9 @@
 		</div>
 		
 		<label class="category-label">설명</label>
-		<textarea name="crewContent" id="crewContent" cols="30" rows="10" class="meeting-register__crewContent-textarea" placeholder="최대 2000자" >${crewVO.crewContent}</textarea>  
-		
-		<%-- <p>대표 이미지</p>
-		<img id="formImg" src="upload/${crewVO.crewSaveImg}" alt="" />
-		<input type="file" name="crewImg" id="crewImg" value="${crewVO.crewSaveImg}" />
-		<p>배너 이미지</p>
-		<img id="formBanner" src="upload/${crewVO.crewSaveBanner}" alt="" />
-		<input type="file" name="crewBanner" id="crewBanner" value="${crewVO.crewSaveBanner}" /> --%>
+        <div class="meeting-input">
+			<textarea class="meeting-register__crewContent-textarea" name="crewContent" id="crewContent" cols="80" rows="30" placeholder="최대 2000자" >${crewVO.crewContent}</textarea>
+		</div>
 		
 		<p>대표 이미지</p>
 		<div class="image-upload main-image">
