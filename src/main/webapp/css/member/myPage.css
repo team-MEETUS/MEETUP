@@ -192,3 +192,8 @@
     cursor: pointer;
     font-size: 14px; /* 텍스트 크기 조정 */
 }
+
+/* 'x' 표시 숨김 */
+.remove-img.hidden {
+    display: none;
+}
