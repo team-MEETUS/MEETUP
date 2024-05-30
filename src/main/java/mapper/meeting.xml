@@ -138,4 +138,20 @@
 					       WHERE m.crewNo = #{crewNo}
 					         AND mm.memberNo = #{memberNo} ) t );
 	</delete>
+	
+	<!-- geoCode를 매개변수로 오늘 이후 모든 정모 조회 (로그인) -->
+	<select id="selectAllMeetingByGeoCodeOrderMeetingDate" parameterType="int" resultType="MeetingVO">
+		SELECT m.meetingNo, m.crewNo, m.memberNo, m.meetingName, m.meetingDate, m.meetingLoc, m.meetingPrice, m.meetingMax, m.meetingAttend, m.meetingStatus, m.meetingOriginalImg, m.meetingSaveImg, m.createdAt, c.geoCode
+		  FROM meeting m
+		  INNER JOIN crew c ON c.crewNo = m.crewNo
+		 WHERE meetingDate > CURRENT_DATE() AND meetingStatus = 1 AND c.geoCode = #{geoCode}
+		 ORDER BY meetingDate;
+	</select>
+	<!-- 오늘 이후 모든 정모 조회 (비로그인) -->
+	<select id="selectAllMeetingOrderMeetingDate" resultType="MeetingVO">
+		SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
+		  FROM meeting
+		 WHERE meetingDate > CURRENT_DATE() AND meetingStatus = 1
+		 ORDER BY meetingDate;
+	</select>
 </mapper>

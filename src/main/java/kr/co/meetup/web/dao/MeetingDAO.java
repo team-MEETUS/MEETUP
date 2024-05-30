@@ -73,7 +73,6 @@ public class MeetingDAO {
 		SqlSession ss = factory.openSession(true);
 		
 		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingByCrewNo", crewNo);
-		System.out.println("모임별 정모 조회 : " + list);
 		ss.close();
 		
 		return list;
@@ -87,7 +86,6 @@ public class MeetingDAO {
 		map.put("date", date);
 		map.put("startNo", startNo);
 		map.put("recordPerPage", recordPerPage);
-		System.out.println(map);
 		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingByDate", map);
 		
 		System.out.println(list);
@@ -102,7 +100,6 @@ public class MeetingDAO {
 		SqlSession ss = factory.openSession(true);
 		
 		ss.insert("kr.co.meetup.meeting.addMeeting", vo);
-		System.out.println("meetingNo : " + vo.getMeetingNo());
 		int generatedMeetingNo = vo.getMeetingNo();
 		
 		addMeetingMember(generatedMeetingNo, memberNo);
@@ -217,5 +214,27 @@ public class MeetingDAO {
 		
 		ss.commit();
 		ss.close();
+	}
+	
+	// geoCode를 매개변수로 오늘 이후 모든 정모 조회 (로그인)
+	public List<MeetingVO> selectAllMeetingByGeoCodeOrderMeetingDate(int geoCode) {
+		SqlSession ss = factory.openSession(true);
+
+		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingByGeoCodeOrderMeetingDate", geoCode);
+		
+		ss.close();
+		
+		return list;
+	}
+	
+	// 오늘 이후 모든 정모 조회 (비로그인)
+	public List<MeetingVO> selectAllMeetingOrderMeetingDate() {
+		SqlSession ss = factory.openSession(true);
+
+		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingOrderMeetingDate");
+		
+		ss.close();
+		
+		return list;
 	}
 }
