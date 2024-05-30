@@ -124,7 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateCrew" parameterType="CrewVO">
 		UPDATE crew
 		SET geoCode = #{geoCode}, categoryBigNo = #{categoryBigNo}, categorySmallNo = #{categorySmallNo}, crewName = #{crewName}, crewIntro = #{crewIntro}, crewContent = #{crewContent}, 
-			crewMax = #{crewMax}<if test="crewOriginalImg != null">, crewOriginalImg = #{crewOriginalImg}</if><if test="crewSaveImg != null">, crewSaveImg = #{crewSaveImg}</if><if test="crewOriginalBanner != null">, crewOriginalBanner = #{crewOriginalBanner}</if><if test="crewSaveBanner != null">, crewSaveBanner = #{crewSaveBanner}</if>
+			crewMax = #{crewMax}, crewOriginalImg = #{crewOriginalImg}, crewSaveImg = #{crewSaveImg}, crewOriginalBanner = #{crewOriginalBanner}, crewSaveBanner = #{crewSaveBanner} 
 		WHERE crewNo = #{crewNo}
 	</update>
 	

@@ -144,21 +144,23 @@
 		<p>대표 이미지</p>
 		<div class="image-upload main-image">
 		  <label for="crewImg" class="image-label">
-		    <div class="image-preview" id="imagePreview">
+		    <div class="image-preview" id="imagePreview" data-img-src="upload/${crewVO.crewSaveImg}">
 		      <span class="plus-sign">+</span>
 		    </div>
 		  </label>
 		  <input type="file" name="crewImg" id="crewImg" class="image-input" accept="image/*" />
+		  <input type="hidden" name="crewImgDeleted" id="crewImgDeleted" value="false" />
 		</div>
 		
 		<p>배너 이미지</p>
 		<div class="image-upload banner-image">
 		  <label for="crewBanner" class="image-label">
-		    <div class="image-preview" id="bannerPreview">
+		    <div class="image-preview" id="bannerPreview" data-img-src="upload/${crewVO.crewSaveBanner}">
 		      <span class="plus-sign">+</span>
 		    </div>
 		  </label>
 		  <input type="file" name="crewBanner" id="crewBanner" class="image-input" accept="image/*" />
+		  <input type="hidden" name="crewBannerDeleted" id="crewBannerDeleted" value="false" />
 		</div>
 		
 		<!-- 버튼 -->
@@ -253,7 +255,7 @@ $(document).ready(function() {
 		loadGeoDistricts(geoCity, null); // 시/도가 변경된 경우 군/구는 선택되지 않도록 null 전달
 	});
 	
-	// 이미지 반영
+	/* // 이미지 반영
 	$('#crewImg').change(function() {
 		var file = this.files[0];
 		if(file) {
@@ -273,7 +275,70 @@ $(document).ready(function() {
 			}
 			reader.readAsDataURL(file);
 		}
-	});
+	}); */
+	
+	$(document).ready(function() {
+		  addDeleteButtonToExistingImages();
+
+		  $('#crewImg, #crewBanner').change(function() {
+		    var reader = new FileReader();
+		    var file = this.files[0];
+		    var previewId = $(this).attr('id') === 'crewImg' ? 'imagePreview' : 'bannerPreview';
+		    var inputId = $(this).attr('id');
+		    var previewElement = $('#' + previewId);
+		    var plusSign = previewElement.find('.plus-sign');
+
+		    if (file) {
+		      reader.onload = function(e) {
+		        previewElement.empty(); // 기존 내용 삭제
+		        var imgElement = $('<img>').attr('src', e.target.result);
+		        previewElement.append(imgElement);
+		        addDeleteButton(previewElement, inputId, plusSign);
+		        plusSign.hide(); // 이미지가 로드되면 plus-sign 숨기기
+		        $('#' + inputId + 'Deleted').val('false'); // 파일이 선택되었으므로 hidden input 필드 값 업데이트
+		      };
+		      reader.readAsDataURL(file);
+		    } else {
+		      resetPreview(previewElement, plusSign); // 파일이 선택되지 않았을 때 초기 상태로 복구
+		    }
+		  });
+
+		  function addDeleteButtonToExistingImages() {
+		    $('.image-preview').each(function() {
+		      var previewElement = $(this);
+		      var inputId = previewElement.closest('.image-upload').find('.image-input').attr('id');
+		      var plusSign = previewElement.find('.plus-sign');
+		      var imgSrc = previewElement.data('img-src'); // 예시로 data-img-src를 사용해 이미지 src를 가져옵니다. 실제 사용 시에는 적절한 방법으로 이미지 경로를 가져와야 합니다.
+
+		      if (imgSrc && imgSrc !== 'upload/') { // 이미지 경로가 있는 경우
+		        var imgElement = $('<img>').attr('src', imgSrc);
+		        previewElement.empty().append(imgElement); // 기존 내용을 삭제하고 새 이미지를 추가
+		        addDeleteButton(previewElement, inputId, plusSign); // 이미지가 있으면 삭제 버튼 추가 및 plus-sign 숨기기
+		        plusSign.hide();
+		      } else { // 이미지 경로가 없는 경우
+		        resetPreview(previewElement, plusSign); // 초기 상태로 복구하여 plus-sign 표시
+		      }
+		    });
+		  }
+
+		  function addDeleteButton(previewElement, inputId, plusSign) {
+		    var deleteButton = $('<button>').text('X').addClass('delete-button');
+		    previewElement.append(deleteButton);
+
+		    deleteButton.on('click', function(event) {
+		      event.preventDefault();
+		      resetPreview(previewElement, plusSign); // 미리보기 초기화
+		      $('#' + inputId).val(null); // 파일 입력 값 초기화
+		      $('#' + inputId + 'Deleted').val('true'); // hidden input 필드 값 업데이트
+		    });
+		  }
+
+		  function resetPreview(previewElement, plusSign) {
+		    previewElement.empty(); // 미리보기 요소 비우기
+		    plusSign.show(); // plus-sign을 다시 표시
+		    previewElement.append(plusSign); // plus-sign을 미리보기 요소에 추가
+		  }
+		});
 	
 });
 </script>
