@@ -88,7 +88,7 @@ public class MeetingDAO {
 		map.put("recordPerPage", recordPerPage);
 		List<MeetingVO> list = ss.selectList("kr.co.meetup.meeting.selectAllMeetingByDate", map);
 		
-		System.out.println(list);
+		System.out.println("list : " + list);
 		
 		ss.close();
 		

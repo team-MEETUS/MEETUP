@@ -27,8 +27,12 @@
 	
 	<!-- 날짜별 정모 조회 -->
 	<select id="selectAllMeetingByDate" parameterType="Hashmap" resultType="MeetingVO">
-	SELECT meetingNo, crewNo, memberNo, meetingName, meetingDate, meetingLoc, meetingPrice, meetingMax, meetingAttend, meetingStatus, meetingOriginalImg, meetingSaveImg, createdAt
-	  FROM meeting
+	SELECT m.meetingNo, m.crewNo, m.memberNo, m.meetingName, m.meetingDate, m.meetingLoc, m.meetingPrice, m.meetingMax, m.meetingAttend, m.meetingStatus, m.meetingOriginalImg, m.meetingSaveImg, m.createdAt, g.geoCity, g.geoDistrict , cs.categorySmallName, cb.categoryBigName , c.crewName 
+	  FROM meeting m
+	  LEFT JOIN crew c ON c.crewNo = m.crewNo
+	  LEFT JOIN category_big cb ON cb.categoryBigNo = c.categoryBigNo
+	  LEFT JOIN category_small cs ON cs.categorySmallNo = c.categorySmallNo
+	  LEFT JOIN geo g  ON g.geoCode = c.geoCode
 	 WHERE meetingDate BETWEEN concat( #{date}, ' 00:00:00' ) AND concat( #{date}, ' 23:59:59' ) AND meetingStatus = 1
 	 ORDER BY meetingNo
 	 LIMIT #{recordPerPage} OFFSET #{startNo};

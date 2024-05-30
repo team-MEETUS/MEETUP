@@ -1,0 +1,111 @@
+.meeting-menu_items {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+  gap: 30px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  font-size: 25px;
+}
+.meeting-menu_items li {
+  text-align: center;
+}
+.meeting-menu_items li a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+.meeting-menu_items li a:hover {
+  fill: var(--orange-5);
+  color: var(--orange-5);
+}
+.selected a {
+  color: var(--orange-5);
+  font-weight: bold ;
+  fill: var(--orange-5);
+}
+.day-of-week {
+	margin: 0 5px;
+}
+.meeting-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.meeting-item {
+  flex: 0 0 calc(50% - 10px);
+  box-sizing: border-box;
+  margin-right: 10px
+}
+.meeting-item a {
+  text-decoration: none;
+  color: black;
+  display: block;
+}
+.card-meeting {
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+  line-height: 20px;
+}
+.card-meeting:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+.meeting-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  margin-right: 20px;
+  object-fit: cover;
+}
+.meeting-details {
+  flex-direction: column;
+  gap: 10px;
+}
+.meeting-category {
+  border-radius: 10px;
+  background-color: var(--orange-4);
+  padding: 0 10px;
+  display: inline-block;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+.meeting-name {
+  margin-top: 10px;
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.meeting-intro,
+.meeting-geo {
+  margin-bottom: 5px;
+}
+
+
+/* 페이지 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding-left: 0;
+  list-style: none;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.page-link {
+  padding: 10px;
+}
+현재 페이지
+.page-item.active .page-link {
+  color: var(--orange-5); 
+  font-weight: bold;
+}
