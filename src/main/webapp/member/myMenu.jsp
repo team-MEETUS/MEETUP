@@ -17,19 +17,39 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 <script>
-	$(document).ready(function() {
-	    // 회원탈퇴 click하면 재확인용 창 나오게함
-	    $('form').submit(function(e) {
-	        e.preventDefault();
+$(document).ready(function() {
+    // 회원탈퇴 버튼 클릭 시 재확인 창 표시
+    $('form').submit(function(e) {
+        e.preventDefault();
 
-	        var confirmResult = confirm("정말 탈퇴하시겠습니까?");
-	        
-	        if (confirmResult) {
-	            this.submit();
-	        }
-	        
-	    });
-	});
+        var form = this; // 현재 폼을 가리키는 this를 form 변수에 저장
+
+        Swal.fire({
+            title: "Meetup",
+            text: "탈퇴하시겠습니까?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Meetup',
+                    text: '처리되었습니다.',
+                    icon: 'success'
+                });
+                
+                // 1초 후 폼 제출
+                setTimeout(function() {
+                    form.submit(); // 여기서 form은 위에서 저장한 현재 폼을 가리킵니다.
+                }, 1000); // 1000ms = 1초
+            }
+        });
+        
+    });
+});
 </script>
 </head>
 <body>

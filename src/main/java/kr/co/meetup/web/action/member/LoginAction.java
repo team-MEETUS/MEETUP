@@ -34,7 +34,6 @@ public class LoginAction implements Action {
 			MemberDAO dao = new MemberDAO();		
 			MemberVO vo = dao.selectOneMemberByPhone(memberPhone, memberPw);
 			GeoDAO gdao = new GeoDAO();
-			GeoVO gvo = gdao.selectOneGeoCityGeoDistrictByGeoCode(vo.getGeoCode());
 			CrewDAO cdao = new CrewDAO();
 			MeetingDAO mdao = new MeetingDAO();
 			
@@ -44,14 +43,17 @@ public class LoginAction implements Action {
 				
 				// memberStatus가 정상이라면
 				if (memberStatus == 1) {
+					GeoVO gvo = gdao.selectOneGeoCityGeoDistrictByGeoCode(vo.getGeoCode());
 					List<CrewVO> loginMemberCrewList = cdao.selectAllCrewByMember(vo.getMemberNo());
-					List<MeetingVO> loginMemberMeetingList = mdao.selectAllMeetingByGeoCodeOrderMeetingDate(vo.getGeoCode());
+					List<CrewVO> loginPopularCrewList = cdao.selectAllCrewOrderMemberByGeo(vo.getGeoCode(), 0, 5);
+					List<MeetingVO> loginComingMeetingList = mdao.selectAllMeetingByGeoCodeOrderMeetingDate(vo.getGeoCode());
 					// 로그인 성공
 					HttpSession session = req.getSession();
 					session.setAttribute("loginMember", vo);
 					session.setAttribute("loginMemberGeo", gvo);
 					session.setAttribute("loginMemberCrewList", loginMemberCrewList);
-					session.setAttribute("loginMemberMeetingList", loginMemberMeetingList);
+					session.setAttribute("loginComingMeetingList", loginComingMeetingList);
+					session.setAttribute("loginPopularCrewList", loginPopularCrewList);
 					
 					url = "index.jsp";
 				} 

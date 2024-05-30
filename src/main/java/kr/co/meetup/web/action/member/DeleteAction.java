@@ -23,7 +23,7 @@ public class DeleteAction implements Action {
 		HttpSession session = req.getSession();
 		session.invalidate();
 		
-		return "index.jsp";
+		return "main?cmd=null";
 	}
 
 }
