@@ -46,7 +46,7 @@
 			<div class="member--wrap">
 				<div class="member__profile-box">
 					<div class="member__profile">
-						<span class="member__profile--img" style="background-image: url('upload/${not empty loginMember.memberSaveImg ? loginMember.memberSaveImg : 'first.png'}');"></span>
+						<span class="member__profile--img" style="background-image: url('upload/${not empty loginMember.memberSaveImg ? loginMember.memberSaveImg : 'profileDefault.png'}');"></span>
 						<div class="member__profile--details">
 							<strong class="member__profile--name">${loginMember.memberNickname}</strong>
 							<p class="member__profile--geo">${GeoVO.geoCity}&nbsp;${GeoVO.geoDistrict}</p>

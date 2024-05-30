@@ -27,7 +27,7 @@
 					<div class="myPage__form-cnt">
 						<div class="myPage__profile">
 							<div class="myPage__profile--img-container">
-								<span class="myPage__profile--img" style="background-image: url('upload/${not empty loginMember.memberSaveImg ? loginMember.memberSaveImg : 'first.png'}');"></span>
+								<span class="myPage__profile--img" style="background-image: url('upload/${not empty loginMember.memberSaveImg ? loginMember.memberSaveImg : 'profileDefault.png'}');"></span>
 								<input type="hidden" name="removeImg" id="removeImg" value="false" />
 								<span class="remove-img">x</span>
 							</div>
@@ -192,26 +192,53 @@
 		}
 		
 		document.addEventListener('DOMContentLoaded', function() {
+		    var defaultImgUrl = 'upload/profileDefault.png';
+		    var profileImgElement = document.querySelector('.myPage__profile--img');
+		    var removeImgElement = document.querySelector('.remove-img');
+		    var memberImgInput = document.getElementById('memberImg');
+		    var removeImgInput = document.getElementById('removeImg');
+		    var originalImgUrl = profileImgElement.style.backgroundImage;
+
+		    function updateImageVisibility() {
+		        var currentImgUrl = profileImgElement.style.backgroundImage;
+		        if (currentImgUrl.includes(defaultImgUrl) || currentImgUrl === 'none') {
+		            removeImgElement.classList.add('hidden');
+		        } else {
+		            removeImgElement.classList.remove('hidden');
+		        }
+		    }
+
+		    // 초기 이미지 상태에 따라 'x' 표시 보임/숨김 제어
+		    updateImageVisibility();
+
 		    // 프로필 이미지 컨테이너 클릭 시
 		    document.querySelector('.myPage__profile').addEventListener('click', function(e) {
-		    	if (e.target.classList.contains('remove-img')) {
-		            document.querySelector('.myPage__profile--img').style.backgroundImage = '';
-		            document.getElementById('memberImg').value = ''; // 파일 입력 필드 초기화
-		            document.getElementById('removeImg').value = 'true'; // 이미지 제거 플래그 설정
-		         	// 폼 제출 로직 추가
-		            // 예: document.getElementById('yourFormId').submit(); 여기서 'yourFormId'는 폼의 id입니다.
+		        if (e.target.classList.contains('remove-img')) {
+		            profileImgElement.style.backgroundImage = "url('" + defaultImgUrl + "')";
+		            memberImgInput.value = '';
+		            removeImgInput.value = 'true';
+		            // 'x' 표시 숨김
+		            removeImgElement.classList.add('hidden');
 		            return;
 		        }
-		        document.getElementById('memberImg').click(); // 실제 파일 입력 필드를 클릭하는 효과
+		        memberImgInput.click();
 		    });
 
-		    // 선택된 이미지를 배경으로 설정
-		    document.getElementById('memberImg').addEventListener('change', function(e) {
-		        var reader = new FileReader();
-		        reader.onload = function(e) {
-		            document.querySelector('.myPage__profile--img').style.backgroundImage = 'url(' + e.target.result + ')';
+		    memberImgInput.addEventListener('change', function(e) {
+		        if (e.target.files.length > 0) {
+		            var reader = new FileReader();
+		            reader.onload = function(event) {
+		                profileImgElement.style.backgroundImage = 'url(' + event.target.result + ')';
+		                // 이미지 변경 시 'x' 표시 보임
+		                removeImgElement.classList.remove('hidden');
+		                removeImgInput.value = 'false';
+		            }
+		            reader.readAsDataURL(e.target.files[0]);
+		        } else {
+		            // 파일 선택 취소 시 원래 이미지로 설정
+		            profileImgElement.style.backgroundImage = originalImgUrl;
+		            updateImageVisibility();
 		        }
-		        reader.readAsDataURL(e.target.files[0]);
 		    });
 		});
 	</script>
