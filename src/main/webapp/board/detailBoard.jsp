@@ -57,7 +57,7 @@
 								<c:when test="${vo.boardCategoryNo == 5}">투표|</c:when>
 								<c:otherwise>${vo.boardCategoryNo}</c:otherwise>
 							</c:choose>
-							<fmt:formatDate value="${vo.createdAt}" pattern="yyyy년 MM월 dd일 a HH:mm" />
+							<fmt:formatDate value="${vo.createdAt}" pattern="yyyy년 MM월 dd일 a hh:mm" />
 	    				</span>
     				</div>
     			</div>
