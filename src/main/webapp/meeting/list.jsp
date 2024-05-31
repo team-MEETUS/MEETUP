@@ -81,7 +81,7 @@
         <c:if test="${i == 1}">
         	<div class="meeting-item"><a href="crew?cmd=detail&crewNo=${meetingVO.crewNo}"><div class="card-meeting" style="display: none;">1</div></a></div>
         </c:if>
-        <c:if test="${i == 2}">
+        <c:if test="${i % 2 == 0}">
         	<div class="meeting-item"><a href="crew?cmd=detail&crewNo=${meetingVO.crewNo}"><div class="card-meeting" style="display: none;">1</div></a></div>
         </c:if>
         
