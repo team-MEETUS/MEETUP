@@ -237,3 +237,68 @@ h3 {
         font-size: 0.75rem;
     }
 } 
+
+.crew-menu__items {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+  font-size: 20px;
+}
+
+.crew-menu__items li {
+  margin: 0 15px;
+}
+
+.crew-menu__items a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.crew-menu__items a:hover {
+  color: var(--orange-5);
+}
+
+.inner {
+	width: 80%;
+	height: auto;
+	align-content: center;
+}
+
+.subTitle {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.writer > img {
+	width: 50px; /* 이미지 너비 */
+  	height: 50px; /* 이미지 높이 */
+  	border-radius: 50%;
+}
+
+.writer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 세로 중앙 정렬을 위해 추가 */
+}
+
+.writer-nickname {
+	margin-left: -320px;
+}
+
+.writer-category {
+	margin-right: 20px;
+}
+
+.detail-board-member {
+	margin-left: 20px;
+}
+
+.detail-board-content img {
+	max-width: 100%; /* 이미지가 .inner의 너비를 넘지 않도록 함 */
+    height: auto; /* 이미지의 비율을 유지하면서 높이를 조정 */
+    display: block; /* 이미지를 블록 요소로 만듦 */
+    margin: 0 auto;
+}
