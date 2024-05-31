@@ -23,41 +23,53 @@
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
 <link rel="stylesheet" href="./css/header.css" type="text/css" />
+<link rel="stylesheet" href="./css/board/detailBoard.css" type="text/css" />
 </head>
 <body>
 	<div class="container">
-	<jsp:include page="../component/header.jsp"></jsp:include>
-    <script src="component/header.js"></script>
-		<h2>상세보기</h2>
-		<table class="table table-striped">
-			<tr>
-				<th>카테고리</th>
-				<td><c:choose>
-						<c:when test="${vo.boardCategoryNo == 1}">공지사항</c:when>
-						<c:when test="${vo.boardCategoryNo == 2}">가입인사</c:when>
-						<c:when test="${vo.boardCategoryNo == 3}">정모후기</c:when>
-						<c:when test="${vo.boardCategoryNo == 4}">자유</c:when>
-						<c:when test="${vo.boardCategoryNo == 5}">투표</c:when>
-						<c:otherwise>${vo.boardCategoryNo}</c:otherwise>
-					</c:choose></td>
-				<th>조회수</th>
-				<td>${vo.boardHit}</td>
-				<th>작성일시</th>
-				<td><fmt:formatDate value="${vo.createdAt}"
-						pattern="yyyy-MM-dd HH:mm:ss" /></td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td colspan="5">${vo.boardTitle}</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td colspan="5">${boardMemberVO.memberNickname}</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td colspan="5">${vo.boardContent}</td>
-			</tr>
+		<jsp:include page="../component/header.jsp"></jsp:include>
+	    <script src="component/header.js"></script>
+	    <!-- 메뉴 -->
+	    <ul class="crew-menu__items">
+			<li><a href="crew?cmd=detail&crewNo=${crewNo}">정보</a></li>
+			<li><a href="board?cmd=listBoard&crewNo=${crewNo}">게시판</a></li>
+			<li><a href="">사진첩</a></li>
+			<li><a href="">채팅</a></li>
+		</ul>
+    
+    	<section class="subContents">
+    		<div class="inner">
+    			<!-- 제목 -->
+    			<div class="detail-board">
+    				<h3 class="subTitle">${vo.boardTitle}</h3>
+    			</div>
+    			<!-- 회원 정보 -->
+    			<div class="detail-board-member">
+    				<div class="writer">
+	    				<img src="upload/${not empty boardMemberVO.memberSaveImg ? boardMemberVO.memberSaveImg : 'profileDefault.png'}" alt="" />
+	    				<span class="writer-nickname">${boardMemberVO.memberNickname}</span>
+	    				<span class="writer-category">
+	    					<c:choose>
+								<c:when test="${vo.boardCategoryNo == 1}">공지사항|</c:when>
+								<c:when test="${vo.boardCategoryNo == 2}">가입인사|</c:when>
+								<c:when test="${vo.boardCategoryNo == 3}">정모후기|</c:when>
+								<c:when test="${vo.boardCategoryNo == 4}">자유|</c:when>
+								<c:when test="${vo.boardCategoryNo == 5}">투표|</c:when>
+								<c:otherwise>${vo.boardCategoryNo}</c:otherwise>
+							</c:choose>
+							<fmt:formatDate value="${vo.createdAt}" pattern="yyyy년 MM월 dd일 a HH:mm" />
+	    				</span>
+    				</div>
+    			</div>
+    			<hr />
+    			<div class="detail-board-content">
+    				${vo.boardContent}
+    			</div>
+    			<hr />
+    		</div>
+    	</section>
+		<!-- <h2>상세보기</h2> -->
+		<%-- <table class="table table-striped">
 			<tr>
 				<td colspan="6"><a href="board?cmd=listBoard&crewNo=${crewNo}"
 					class="btn btn-primary">목록</a> <!-- 게시글 수정 --> <c:if
@@ -133,7 +145,7 @@
 						</c:if>
 					</div>
 				</div>
-			</c:forEach>
+			</c:forEach> --%>
 		</div>
 		<script>
 	$(document).ready(function() {

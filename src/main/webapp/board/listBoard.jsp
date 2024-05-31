@@ -29,7 +29,7 @@
 <body>
 	<div class="container">
 		<jsp:include page="../component/header.jsp"></jsp:include>
-		<script src="component/header.js"></script>
+		<!-- <script src="component/header.js"></script> -->
 
 		<table>
 			<input type="hidden" name="loginMemberNo" id="loginMemberNo"
