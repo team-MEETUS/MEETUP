@@ -61,8 +61,8 @@
 	                    <img class="crew-img" src="upload/${crewVO.crewSaveImg}" alt="${crewVO.crewName}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" />
 	                    <div class="crew-details">
 	                        <span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
-	                        <p class="crew-name">${crewVO.crewName}</p>
-	                        <p class="crew-intro">${crewVO.crewIntro}</p>
+	                        <p class="crew-name" id="crewName-${crewVO.crewNo}" >${crewVO.crewName}</p>
+	                        <p class="crew-intro" id="crewIntro-${crewVO.crewNo}" >${crewVO.crewIntro}</p>
 	                        <p class="crew-geo">${crewVO.geoDistrict != null ? crewVO.geoDistrict : crewVO.geoCity} · 멤버 ${crewVO.crewAttend}</p>
 	                    </div>
 	                </div></a>
@@ -112,5 +112,24 @@
 	</div>
     <jsp:include page="../component/footer.jsp"></jsp:include>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const maxNameLength = 19; // crewName 최대 글자 수
+    const maxIntroLength = 25; // crewIntro 최대 글자 수
+
+    document.querySelectorAll('.crew-name').forEach(function(element) {
+        if (element.textContent.length > maxNameLength) {
+            element.textContent = element.textContent.substring(0, maxNameLength) + '...';
+        }
+    });
+
+    document.querySelectorAll('.crew-intro').forEach(function(element) {
+        if (element.textContent.length > maxIntroLength) {
+            element.textContent = element.textContent.substring(0, maxIntroLength) + '...';
+        }
+    });
+});
+
+</script>
 </body>
 </html>

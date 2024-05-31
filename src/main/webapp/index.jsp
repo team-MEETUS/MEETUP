@@ -61,8 +61,8 @@
 					            <img class="crew-img" src="upload/${crewVO.crewSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${crewVO.crewName}" />
 					            <div class="crew-details">
 					            	<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
-					                <p class="crew-name">${crewVO.crewName}</p>
-					                <p class="crew-intro">${crewVO.crewIntro}</p>
+					                <p class="crew-name" id="crewName-${crewVO.crewNo}" >${crewVO.crewName}</p>
+					                <p class="crew-intro" id="crewIntro-${crewVO.crewNo}" >${crewVO.crewIntro}</p>
 					                <p class="crew-geo">${crewVO.geoDistrict != null ? crewVO.geoDistrict : crewVO.geoCity} · 멤버 ${crewVO.crewAttend}</p>
 					            </div>
 				        	</div>
@@ -87,8 +87,8 @@
 					            <img class="crew-img" src="upload/${crewVO.crewSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${crewVO.crewName}" />
 					            <div class="crew-details">
 					            	<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
-					                <p class="crew-name">${crewVO.crewName}</p>
-					                <p class="crew-intro">${crewVO.crewIntro}</p>
+					                <p class="crew-name" id="crewName-${crewVO.crewNo}" >${crewVO.crewName}</p>
+					                <p class="crew-intro" id="crewIntro-${crewVO.crewNo}" >${crewVO.crewIntro}</p>
 					                <p class="crew-geo">${crewVO.geoDistrict != null ? crewVO.geoDistrict : crewVO.geoCity} · 멤버 ${crewVO.crewAttend}</p>
 					            </div>
 				        	</div>
@@ -115,7 +115,7 @@
 	   							<img class="crew-img" src="upload/${meetingVO.meetingSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${meetingVO.meetingName}" />
 	   							<div class="crew-details">
 	   								<span class="crew-category">${meetingVO.categorySmallName != null ? meetingVO.categorySmallName : meetingVO.categoryBigName}</span>
-	   								<p class="crew-name">${meetingVO.meetingName}</p>
+	   								<p class="crew-name" id="meetingName-${crewVO.crewNo}" >${meetingVO.meetingName}</p>
 	   								<p class="crew-geo">${meetingVO.geoDistrict != null ? meetingVO.geoDistrict : meetingVO.geoCity} · ${meetingVO.crewName}</p>
 	   								<p class="meeting-attend">
 					                	<span style="margin-right:10px;">${pdMeetingDate}</span>
@@ -148,8 +148,8 @@
 					            <img class="crew-img" src="upload/${crewVO.crewSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${crewVO.crewName}" />
 					            <div class="crew-details">
 					            	<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
-					                <p class="crew-name">${crewVO.crewName}</p>
-					                <p class="crew-intro">${crewVO.crewIntro}</p>
+					                <p class="crew-name" id="crewName-${crewVO.crewNo}" >${crewVO.crewName}</p>
+					                <p class="crew-intro" id="crewIntro-${crewVO.crewNo}" >${crewVO.crewIntro}</p>
 					                <p class="crew-geo">${crewVO.geoDistrict != null ? crewVO.geoDistrict : crewVO.geoCity} · 멤버 ${crewVO.crewAttend}</p>
 					            </div>
 				        	</div>
@@ -176,7 +176,7 @@
 	   							<img class="crew-img" src="upload/${meetingVO.meetingSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${meetingVO.meetingName}" />
 	   							<div class="crew-details">
 	   								<span class="crew-category">${meetingVO.categorySmallName != null ? meetingVO.categorySmallName : meetingVO.categoryBigName}</span>
-	   								<p class="crew-name">${meetingVO.meetingName}</p>
+	   								<p class="crew-name" id="meetingName-${crewVO.crewNo}" >${meetingVO.meetingName}</p>
 	   								<p class="crew-geo">${meetingVO.geoDistrict != null ? meetingVO.geoDistrict : meetingVO.geoCity} · ${meetingVO.crewName}</p>
 	   								<p class="meeting-attend">
 					                	<span style="margin-right:10px;">${pdMeetingDate}</span>
@@ -201,6 +201,30 @@
 <jsp:include page="component/footer.jsp"></jsp:include>
 </body>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const maxNameLength = 19; // crewName 최대 글자 수
+    const maxIntroLength = 25; // crewIntro 최대 글자 수
+
+    document.querySelectorAll('.crew-name').forEach(function(element) {
+        if (element.textContent.length > maxNameLength) {
+            element.textContent = element.textContent.substring(0, maxNameLength) + '...';
+        }
+    });
+
+    document.querySelectorAll('.crew-intro').forEach(function(element) {
+        if (element.textContent.length > maxIntroLength) {
+            element.textContent = element.textContent.substring(0, maxIntroLength) + '...';
+        }
+    });
+    
+    document.querySelectorAll('.meeting-name').forEach(function(element) {
+        if (element.textContent.length > maxNameLength) {
+            element.textContent = element.textContent.substring(0, maxNameLength) + '...';
+        }
+    });
+    
+});
+
   const swiper = new Swiper(".swiper", {
     // Optional parameters
     direction: "horizontal",
