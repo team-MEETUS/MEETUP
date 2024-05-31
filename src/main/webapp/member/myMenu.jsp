@@ -97,7 +97,7 @@ $(document).ready(function() {
 				<c:forEach var="crewVO" items="${loginMemberCrewList}">
 			    	<div class="crew-item">
 			        	<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}"><div class="card-crew">
-			            	<img class="crew-img" src="upload/${crewVO.crewSaveImg}" alt="${crewVO.crewName}" />
+			            	<img class="crew-img" src="upload/${crewVO.crewSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${crewVO.crewName}" />
 			            	<div class="crew-details">
 			            		<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
 			                	<p class="crew-name">${crewVO.crewName}</p>
@@ -115,7 +115,7 @@ $(document).ready(function() {
 				<c:forEach var="crewVO" items="${loginMemberLikeCrewList}">
 			    	<div class="crew-item">
 			        	<a href="crew?cmd=detail&crewNo=${crewVO.crewNo}"><div class="card-crew">
-			            	<img class="crew-img" src="upload/${crewVO.crewSaveImg}" alt="${crewVO.crewName}" />
+			        		<img class="crew-img" src="upload/${crewVO.crewSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${crewVO.crewName}" />
 			            	<div class="crew-details">
 			            		<span class="crew-category">${crewVO.categorySmallName != null ? crewVO.categorySmallName : crewVO.categoryBigName}</span>
 			                	<p class="crew-name">${crewVO.crewName}</p>

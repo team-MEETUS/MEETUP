@@ -20,17 +20,22 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
+	
+	
 <!-- CSS -->
 <link rel="stylesheet" href="./css/reset.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
 <link rel="stylesheet" href="./css/header.css" type="text/css" />
+<link rel="stylesheet" href="./css/board/writeFormBoard.css" type="text/css" />
+<!-- CDN -->
+<script src="component/header.js"></script>
 
 <script>    
    $(document).ready(function() {            
         $('.summernote').summernote({
-            height: 150,
+            height: 300,
 			lang:"ko-KR",
+			width: 1024, 
 			callbacks: {
 	            onImageUpload: function(files) {
 	                for (let i = 0; i < files.length; i++) {
@@ -63,95 +68,46 @@
 	    });
 	}
 </script>
-
-<style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th {
-	display: block;
-	text-align: left;
-}
-
-td {
-	display: block;
-	width: 100%;
-}
-
-td .btn {
-	display: inline-block;
-	margin-right: 10px;
-}
-
-.button-container {
-	width: 100%;
-	text-align: right;
-}
-
-.button-container .btn {
-	width: 100%;
-}
-
-.input-container {
-	width: 100%;
-}
-
-.input-container input {
-	width: 100%;
-}
-</style>
 </head>
 <body>
-	<h1>게시글 작성</h1>
-
-	<div class="container">
+<div class="container">
 	<jsp:include page="../component/header.jsp"></jsp:include>
-   <script src="component/header.js"></script>
-		<form action="boardWrite" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="crewNo" value="${crewNo}" /> <input
-				type="hidden" name="memberNo" value="${memberNo}" />
-			<table class="table table-nonbordered">
-				<tr>
-
-					<th>카테고리</th>
-					<td><c:if
-							test="${crewMemberVO.crewMemberStatus == 2 || crewMemberVO.crewMemberStatus == 3}">
-							<input class="btn btn-success category-btn" type="button"
-								name="boardCategoryNo" value="공지사항" data-category-no="1"
-								onclick="selectCategory(1)">
-						</c:if> <input class="btn btn-success category-btn" type="button"
-								name="boardCategoryNo1" value="가입인사" data-category-no="2"
-								onclick="selectCategory(2)"> <input
-								class="btn btn-success category-btn" type="button"
-								name="boardCategoryNo2" value="정모후기" data-category-no="3"
-								onclick="selectCategory(3)"> <input
-								class="btn btn-success category-btn" type="button"
-								name="boardCategoryNo3" value="자유" data-category-no="4"
-								onclick="selectCategory(4)"> <input
-								class="btn btn-success category-btn" type="button"
-								name="boardCategoryNo4" value="투표" data-category-no="5"
-								onclick="selectCategory(5)"> <input type="hidden"
-								name="boardCategoryNo" id="selectedCategoryNo" value="" /></td>
-
-					<th>제목</th>
-					<td class="input-container"><input type="text"
-						name="boardTitle" /></td>
-				</tr>
-
-				<tr>
-					<th>내용</th>
-					<td><textarea class="summernote" name="boardContent" id=""
-								  cols="30" rows="10"></textarea></td>
-				</tr>
-				<tr>
-					<td class="button-container"><input class="btn btn-primary"
-						type="submit" value="등록" /></td>
-				</tr>
-			</table>
-		</form>
-	</div>
+	<main>
+    <h2 class="board-register">게시글 작성</h2>
+	<form action="boardWrite" method="post" enctype="multipart/form-data" class="board-form" >
+		<input type="hidden" name="crewNo" value="${crewNo}" /> 
+		<input type="hidden" name="memberNo" value="${memberNo}" />
+		
+		<label class="category-label">카테고리</label>
+      	<div class="board-input">	
+			<c:if test="${crewMemberVO.crewMemberStatus == 2 || crewMemberVO.crewMemberStatus == 3}">
+				<input class="category-btn" type="button"
+				name="boardCategoryNo" value="공지사항" data-category-no="1"
+				onclick="selectCategory(1)">
+			</c:if> 
+			<input class="category-btn" type="button" name="boardCategoryNo1" value="가입인사" data-category-no="2"	onclick="selectCategory(2)"> 
+			<input class="category-btn" type="button" name="boardCategoryNo2" value="정모후기" data-category-no="3" onclick="selectCategory(3)"> 
+			<input class="category-btn" type="button" name="boardCategoryNo3" value="자유" data-category-no="4" onclick="selectCategory(4)"> 
+			<input class="category-btn" type="button" name="boardCategoryNo4" value="투표" data-category-no="5" onclick="selectCategory(5)"> 
+			<input type="hidden" name="boardCategoryNo" id="selectedCategoryNo" value="" />
+		</div>
+		
+		<label class="category-label">제목</label>
+      	<div class="board-input">	
+			<input type="text" name="boardTitle" id="boardTitle" class="board-register__boardName-input" />
+		</div>
+		
+		<label class="category-label">내용</label>
+        <div class="board-input">
+			<textarea class="summernote" name="boardContent" id="" cols="30" rows="10"></textarea>
+		</div>
+		
+		<input class="register-button" type="submit" value="등록" />
+		
+	</form>
+	</main>
+	<jsp:include page="../component/footer.jsp"></jsp:include>
+</div>
 </body>
 <script>
     const categoryBtns = document.querySelectorAll('.category-btn');

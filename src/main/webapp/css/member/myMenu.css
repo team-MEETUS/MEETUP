@@ -1,4 +1,7 @@
 @charset "UTF-8";
+.subContents {
+	margin-bottom: 50px;
+}
 .inner {
 	position : relative;
 	max-width: 1024px;

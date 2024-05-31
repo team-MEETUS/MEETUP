@@ -133,7 +133,7 @@
 		
 		<label class="category-label">설명</label>
         <div class="meeting-input">
-			<textarea class="meeting-register__crewContent-textarea" name="crewContent" id="crewContent" cols="80" rows="30" placeholder="최대 2000자" >${crewVO.crewContent}</textarea>
+			<textarea class="meeting-register__crewContent-textarea" name="crewContent" id="crewContent" cols="80" rows="26" placeholder="최대 2000자" >${crewVO.crewContent}</textarea>
 		</div>
 		
 		<p>대표 이미지</p>

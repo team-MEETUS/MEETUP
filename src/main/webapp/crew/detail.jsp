@@ -71,7 +71,7 @@
 			<p class="crew-name">${crewVO.crewName}</p>
 			<p class="crew-content">${formattedContent}</p>
 			<!-- 버튼&찜 -->
-			<div style="display: flex; margin-bottom: 20px;">
+			<div class="crew-btn-like" style="display: flex;">
 				<c:choose>
 					<c:when test="${role eq 'guest'}">
 						<a href="member?cmd=login" class="btn btn-main">로그인하고 모임 가입하기</a>
