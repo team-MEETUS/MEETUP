@@ -183,7 +183,7 @@
 							<span style="margin-right: 10px;"><fmt:formatDate value="${meetingDate}" pattern="MM/dd (E)"/></span>
 							<c:choose>
 								<c:when test="${meetingDDay eq 'D-0'}">
-									<span style=color:red>D-DAY</span>
+									<span style=color:red>오늘</span>
 								</c:when>
 								<c:otherwise>
 									<span style=color:red>${meetingDDay}</span>
@@ -198,7 +198,7 @@
 						<c:when test="${not empty meetingMemberList}">
 							<c:choose>
 								<c:when test="${isMeetingMember && meetingVO.memberNo eq MemberVO.memberNo}">
-									<span><a class="meeting-attendExit-btn crew-alert-confirm" data-message="모임을 삭제하시겠습니까?" href="meetingDelete?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">삭제</a></span>
+									<span><a class="meeting-attendExit-btn crew-alert-confirm" data-message="정모를 삭제하시겠습니까?" href="meetingDelete?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">삭제</a></span>
 								</c:when>
 								<c:when test="${isMeetingMember}">
 									<span><a class="meeting-attendExit-btn crew-alert" data-message="${meetingVO.meetingName} 정모에서 나갔습니다." href="meetingExit?meetingNo=${meetingVO.meetingNo}&crewNo=${crewVO.crewNo}">취소</a></span>

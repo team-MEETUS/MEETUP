@@ -66,8 +66,8 @@
                     <img class="meeting-img" src="upload/${meetingVO.meetingSaveImg}" onerror="this.onerror=null; this.src='upload/imgDefault.png'" alt="${meetingVO.meetingName} 정모 이미지" />
                     <div class="meeting-details">
                         <span class="meeting-category">${meetingVO.categorySmallName != null ? meetingVO.categorySmallName : meetingVO.categoryBigName}</span>
-                        <p class="meeting-name">${meetingVO.meetingName}</p>
-                        <p class="meeting-geo">${meetingVO.geoDistrict != null ? meetingVO.geoDistrict : meetingVO.geoCity} · ${meetingVO.crewName}</p>
+                        <p class="meeting-name" id="meetingName-${crewVO.crewNo}" >${meetingVO.meetingName}</p>
+                        <p class="meeting-geo"><p id="crewName-${crewVO.crewNo}" > ${meetingVO.geoDistrict != null ? meetingVO.geoDistrict : meetingVO.geoCity} · ${meetingVO.crewName}</p>
 						<p class="meeting-attend">
 							<span style="margin-right:10px;">${pdMeetingDate}</span>
 							<box-icon style="position:relative; top:7px;" name='group' type='solid' ></box-icon> 
@@ -127,5 +127,24 @@
 	</div>
 	<jsp:include page="../component/footer.jsp"></jsp:include>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const maxNameLength = 19; // crewName 최대 글자 수
+    const maxIntroLength = 20; // crewIntro 최대 글자 수
+
+    document.querySelectorAll('.meeting-name').forEach(function(element) {
+        if (element.textContent.length > maxNameLength) {
+            element.textContent = element.textContent.substring(0, maxNameLength) + '...';
+        }
+    });
+
+    document.querySelectorAll('.crew-crew').forEach(function(element) {
+        if (element.textContent.length > maxIntroLength) {
+            element.textContent = element.textContent.substring(0, maxIntroLength) + '...';
+        }
+    });
+});
+
+</script>
 </body>
 </html>
